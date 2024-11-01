@@ -1,105 +1,68 @@
-# Convert PayPal Bot
-
-![Convert PayPal Bot](assets/logo.png)
-
-Chatbot Facebook Messenger untuk layanan konversi saldo PayPal ke Rupiah secara cepat dan aman.
+# PayPal Conversion Bot
+Chatbot Facebook Messenger untuk layanan konversi saldo PayPal ke Rupiah.
 
 ## 🌟 Fitur Utama
-
-- 💱 Konversi PayPal ke IDR real-time
-- 💨 Proses cepat (1-24 jam)
-- 🔒 Keamanan transaksi terjamin
-- 💬 Customer service 24/7
-- 📊 Rate update otomatis
-- 🏦 Support berbagai bank lokal
+- 💱 Konversi PayPal ke IDR dengan rate kompetitif
+- 💬 Respon otomatis 24/7
+- 🔒 Proses verifikasi bukti transfer
+- 📊 Cek rate real-time
+- 📱 Notifikasi status transaksi
 
 ## 🤖 Cara Menggunakan Bot
-
-1. Buka Facebook Messenger
-2. Chat ke [Nama Page Facebook Anda]
-3. Ketik 'menu' untuk melihat layanan
+1. Mulai chat dengan ["Lapak Bang Ade"](https://m.me/lapakbangade)
+2. Ketik `/start` untuk memulai
+3. Gunakan command yang tersedia
 4. Ikuti instruksi bot
 
 ## 💻 Perintah Bot
-
 ```
-rate     : Cek kurs terkini
-convert  : Mulai konversi saldo
-status   : Cek status transaksi
-help     : Bantuan penggunaan
-contact  : Hubungi admin
+/start    : Mulai bot dan lihat menu
+/convert  : Mulai konversi saldo
+/rate     : Cek kurs terkini
+/help     : Bantuan penggunaan
+/check    : Cek status transaksi
+/agent    : Hubungi customer service
 ```
+## 🔄 Alur Transaksi
+1. Cek rate dengan command `/rate`
+2. Mulai konversi dengan `/convert`
+3. Input jumlah USD yang akan dikonversi
+4. Upload bukti transfer PayPal
+5. Tunggu verifikasi dan notifikasi status
+6. Cek status dengan `/check`
 
-## 🏦 Bank yang Didukung
-
-- BCA
-- Mandiri
-- BNI
-- BRI
-- DANA
-- GoPay
-- OVO
-- ShopeePay
-
-## 📱 Kontak
-
-- Facebook: [Link Page Facebook]
-- WhatsApp: [Nomor WhatsApp]
-- Email: [Email]
-- Website: [URL Website]
+## 💬 Customer Service
+- Bot aktif 24/7 untuk layanan otomatis
+- Ketik `/agent` untuk berbicara dengan CS
+- Response time < 24 jam kerja
 
 ## 🔒 Keamanan
+- Verifikasi bukti transfer
+- Tracking ID transaksi
+- Penyimpanan data terenkripsi
+- Monitoring transaksi real-time
 
-- SSL/TLS encryption
-- Verifikasi identitas
-- Monitoring transaksi 24/7
-- Backup data berkala
-- Sistem anti-fraud
+## 📊 Status Transaksi
+- `pending`: Menunggu verifikasi admin
+- `processing`: Sedang diproses
+- `completed`: Transaksi selesai
+- `rejected`: Bukti transfer ditolak
 
-## 📜 Dokumen Legal
+## ⚡ Quick Start
+[Mulai Chat dengan Bot](https://m.me/lapakbangade)
 
-- [Privacy Policy](privacy-policy.html)
-- [Terms of Service](terms.html)
-- [FAQ](faq.html)
-
-## ⚡ Quick Links
-
-- [Mulai Transaksi](https://m.me/[username-page])
-- [Cek Status](https://m.me/[username-page]?ref=status)
-- [Hubungi Admin](https://wa.me/[nomor-whatsapp])
-
-## 🚀 Update Terbaru
-
-### Version 1.0.0 (Oktober 2024)
-- Launch awal bot
+## 🔄 Versi Terkini
+### v1.0.0 (November 2024)
 - Fitur konversi otomatis
-- Integrasi dengan sistem pembayaran
-- Dashboard admin
-- Monitoring transaksi
-
-## 📈 Statistik
-
-- Response Time: < 5 menit
-- Success Rate: 99.9%
-- User Rating: ⭐⭐⭐⭐⭐ (4.9/5)
-- Active Users: 1000+
-
-## 💼 Partnership
-
-Untuk kerjasama bisnis, silakan hubungi:
-- Email: [business-email]
-- Tel: [business-phone]
+- Verifikasi bukti transfer
+- Status tracking
+- Notifikasi real-time
+- CS integration
 
 ## 🛡️ Disclaimer
-
 ```
-Layanan ini independen dan tidak berafiliasi dengan PayPal, Inc.
+Layanan ini adalah bot independen dan tidak berafiliasi dengan PayPal, Inc.
 Semua merek dagang adalah milik dari pemiliknya masing-masing.
 ```
-
-## 📝 Lisensi
-
-Copyright © 2024 [Nama Bisnis Anda]
-
 ---
-Made with ❤️ in Indonesia
+© 2024 Lapak Bang Ade | Made in Indonesia
