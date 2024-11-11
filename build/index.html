@@ -67,52 +67,53 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="pt-24 pb-16 bg-gradient-to-br from-blue-600 to-blue-800">
-        <div class="md:w-1/2 text-left text-white mb-8 md:mb-0 lg:pr-12">
-			<h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-				Konversi PayPal ke Rupiah <span class="block mt-2">Otomatis</span>
-			</h1>
-			<p class="text-xl mb-8 text-blue-100 leading-relaxed">
-				Bot Facebook Messenger untuk konversi PayPal dengan rate kompetitif, proses cepat, dan aman 24/7
-			</p>
-			<div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
-				<a href="https://www.facebook.com/lapakbangade" 
-				   target="_blank" 
-				   rel="noopener noreferrer" 
-				   class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors w-full sm:w-auto text-center">
-					Mulai Sekarang
-				</a>
-				<a href="#how-it-works"
-				   class="border border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors w-full sm:w-auto text-center">
-					Pelajari Cara Kerja
-				</a>
-			</div>
-		</div>
+	<!-- Hero Section -->
+	<section class="pt-24 pb-16 bg-gradient-to-br from-blue-600 to-blue-800 relative">
+		<div class="container mx-auto px-4">
+			<div class="flex flex-col md:flex-row items-center justify-between">
+				<!-- Hero Text -->
+				<div class="md:w-1/2 text-left text-white mb-8 md:mb-0 lg:pr-12">
+					<h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+						Konversi PayPal ke Rupiah <span class="block mt-2">Otomatis</span>
+					</h1>
+					<p class="text-xl mb-8 text-blue-100 leading-relaxed">
+						Bot Facebook Messenger untuk konversi PayPal dengan rate kompetitif, proses cepat, dan aman 24/7
+					</p>
+					<div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
+						<a href="https://www.facebook.com/lapakbangade" 
+						   target="_blank" 
+						   rel="noopener noreferrer" 
+						   class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors w-full sm:w-auto text-center">
+							Mulai Sekarang
+						</a>
+						<a href="#how-it-works"
+						   class="border border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors w-full sm:w-auto text-center">
+							Pelajari Cara Kerja
+						</a>
+					</div>
+				</div>
 
-                <!-- Hero Image -->
-                <div class="md:w-1/2 flex justify-center">
+				<!-- Hero Image -->
+				<div class="md:w-1/2 flex justify-center">
 					<img 
-						src="/images/hero-paypal-conversion.png" 
+						src="/images/hero-paypal-conversion.jpg" 
 						alt="PayPal to Rupiah Conversion" 
 						class="max-w-full h-auto rounded-lg shadow-xl object-cover"
 						style="max-height: 500px; width: 100%;"
 						loading="lazy"
 					/>
 				</div>
-            </div>
-        </div>
+			</div>
+		</div>
 
-        <!-- Wave Divider -->
-        <div class="absolute bottom-0 left-0 w-full overflow-hidden">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-[60px]">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" 
-                      class="fill-gray-50"></path>
-            </svg>
-        </div>
-    </section>
-</body>
-</html>
+		<!-- Wave Divider -->
+		<div class="absolute bottom-0 left-0 w-full overflow-hidden">
+			<svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-[60px]">
+				<path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" 
+					  class="fill-gray-50"></path>
+			</svg>
+		</div>
+	</section>
 
 <!-- Features Section -->
     <section id="features" class="py-20 bg-gray-50">
@@ -418,14 +419,21 @@
         </div>
     </footer>
 
-<script>
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const section = document.querySelector(this.getAttribute('href'));
-        section.scrollIntoView({
-            behavior: 'smooth'
+<script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const section = document.querySelector(this.getAttribute('href'));
+                    if (section) {
+                        section.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
         });
-    });
-});
-</script>
+    </script>
+</body>
+</html>
