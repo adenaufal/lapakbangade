@@ -9,10 +9,25 @@
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
+	.faq-content {
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.3s ease-out;
+	}
+
+	details[open] .faq-content {
+		max-height: 500px;
+		transition: max-height 0.5s ease-in;
+	}
+
+	.faq-arrow {
+		transition: transform 0.3s ease;
+	}
+
+	details[open] .faq-arrow {
+		transform: rotate(180deg);
+	}
+	</style>
 </head>
 <body class="bg-gray-50">
     <!-- Navbar -->
@@ -31,14 +46,16 @@
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#features" class="text-gray-600 hover:text-blue-600 font-medium">Fitur</a>
-                    <a href="#how-it-works" class="text-gray-600 hover:text-blue-600 font-medium">Cara Kerja</a>
-                    <a href="#faq" class="text-gray-600 hover:text-blue-600 font-medium">FAQ</a>
-                    <a href="https://m.me/lapakbangade" 
-                       class="bg-blue-600 text-white px-6 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors">
-                        Mulai Chat
-                    </a>
-                </div>
+					<a href="#features" class="text-gray-600 hover:text-blue-600 font-medium">Fitur</a>
+					<a href="#how-it-works" class="text-gray-600 hover:text-blue-600 font-medium">Cara Kerja</a>
+					<a href="#faq" class="text-gray-600 hover:text-blue-600 font-medium">FAQ</a>
+					<a href="https://convert.adenaufal.my.id/privacy-policy.html" 
+					   target="_blank" 
+					   rel="noopener noreferrer" 
+					   class="text-gray-600 hover:text-blue-600 font-medium">
+						Kebijakan Privasi
+					</a>
+				</div>
 
                 <!-- Mobile Menu Button -->
                 <button class="md:hidden text-gray-600 hover:text-blue-600">
@@ -52,27 +69,26 @@
 
     <!-- Hero Section -->
     <section class="pt-24 pb-16 bg-gradient-to-br from-blue-600 to-blue-800">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center justify-between">
-                <!-- Hero Text -->
-                <div class="md:w-1/2 text-center md:text-left text-white mb-8 md:mb-0">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                        Konversi PayPal ke Rupiah <span class="text-blue-200">Otomatis</span>
-                    </h1>
-                    <p class="text-xl mb-8 text-blue-100">
-                        Bot Facebook Messenger untuk konversi PayPal dengan rate kompetitif, proses cepat, dan aman 24/7
-                    </p>
-                    <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="https://m.me/lapakbangade" 
-                           class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors w-full sm:w-auto text-center">
-                            Mulai Sekarang
-                        </a>
-                        <a href="#how-it-works"
-                           class="border border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors w-full sm:w-auto text-center">
-                            Pelajari Cara Kerja
-                        </a>
-                    </div>
-                </div>
+        <div class="md:w-1/2 text-left text-white mb-8 md:mb-0 lg:pr-12">
+			<h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+				Konversi PayPal ke Rupiah <span class="block mt-2">Otomatis</span>
+			</h1>
+			<p class="text-xl mb-8 text-blue-100 leading-relaxed">
+				Bot Facebook Messenger untuk konversi PayPal dengan rate kompetitif, proses cepat, dan aman 24/7
+			</p>
+			<div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
+				<a href="https://www.facebook.com/lapakbangade" 
+				   target="_blank" 
+				   rel="noopener noreferrer" 
+				   class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors w-full sm:w-auto text-center">
+					Mulai Sekarang
+				</a>
+				<a href="#how-it-works"
+				   class="border border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors w-full sm:w-auto text-center">
+					Pelajari Cara Kerja
+				</a>
+			</div>
+		</div>
 
                 <!-- Hero Image -->
                 <div class="md:w-1/2 flex justify-center">
@@ -227,20 +243,20 @@
             <div class="max-w-3xl mx-auto space-y-6">
                 <!-- FAQ Item 1 -->
                 <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                    <details class="group">
-                        <summary class="flex items-center justify-between p-6 cursor-pointer">
-                            <h3 class="text-lg font-semibold text-gray-900">Berapa minimal dan maksimal konversi?</h3>
-                            <span class="relative flex-shrink-0 ml-1.5 w-5 h-5">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 w-5 h-5 transition duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </span>
-                        </summary>
-                        <div class="px-6 pb-6 text-gray-600">
-                            <p>Minimal konversi adalah $10 dan maksimal $5,000 per hari. Fee konversi flat $5 per transaksi.</p>
-                        </div>
-                    </details>
-                </div>
+					<details class="group">
+						<summary class="flex items-center justify-between p-6 cursor-pointer">
+							<h3 class="text-lg font-semibold text-gray-900">Berapa minimal dan maksimal konversi?</h3>
+							<span class="relative flex-shrink-0 ml-1.5 w-5 h-5 faq-arrow">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+								</svg>
+							</span>
+						</summary>
+						<div class="faq-content px-6 pb-6 text-gray-600">
+							<p>Minimal konversi adalah $10 dan maksimal $5,000 per hari. Fee konversi flat $5 per transaksi.</p>
+						</div>
+					</details>
+				</div>
 
                 <!-- FAQ Item 2 -->
                 <div class="bg-white rounded-xl shadow-sm overflow-hidden">
@@ -340,13 +356,21 @@
 
                 <!-- Quick Links -->
                 <div>
-                    <h4 class="text-white font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#features" class="hover:text-white transition-colors">Fitur</a></li>
-                        <li><a href="#how-it-works" class="hover:text-white transition-colors">Cara Kerja</a></li>
-                        <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
-                    </ul>
-                </div>
+					<h4 class="text-white font-semibold mb-4">Quick Links</h4>
+					<ul class="space-y-2">
+						<li><a href="#features" class="hover:text-white transition-colors">Fitur</a></li>
+						<li><a href="#how-it-works" class="hover:text-white transition-colors">Cara Kerja</a></li>
+						<li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+						<li>
+							<a href="https://convert.adenaufal.my.id/privacy-policy.html" 
+							   target="_blank" 
+							   rel="noopener noreferrer" 
+							   class="hover:text-white transition-colors">
+								Kebijakan Privasi
+							</a>
+						</li>
+					</ul>
+				</div>
 
                 <!-- Contact -->
                 <div>
@@ -393,3 +417,15 @@
             </div>
         </div>
     </footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const section = document.querySelector(this.getAttribute('href'));
+        section.scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
