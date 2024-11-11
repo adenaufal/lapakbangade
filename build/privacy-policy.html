@@ -10,25 +10,52 @@
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="bg-blue-600 text-white py-4">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <a href="index.html" class="text-xl font-bold">Lapak Bang Ade</a>
-            
-            <nav class="space-x-4">
-                <a href="index.html#layanan" class="hover:text-gray-200">Fitur</a>
-                <a href="index.html#cara-kerja" class="hover:text-gray-200">Cara Kerja</a>
-                <a href="index.html#faq" class="hover:text-gray-200">FAQ</a>
-                <a href="privacy-policy.html" class="hover:text-gray-200">Kebijakan Privasi</a>
-            </nav>
-        </div>
+    <header class="bg-blue-600 text-white relative">
+		<div class="container mx-auto px-4">
+			<div class="flex justify-between items-center py-4">
+				<!-- Logo -->
+				<a href="index.html" class="text-xl font-bold flex items-center space-x-2">
+					<img src="/images/logo-lba.png" alt="Logo Lapak Bang Ade" class="w-8 h-8"/>
+					<span>Lapak Bang Ade</span>
+				</a>
+				
+				<!-- Desktop Menu - Hidden on mobile -->
+				<nav class="hidden md:flex items-center space-x-8">
+					<a href="index.html#features" class="hover:text-gray-200">Fitur</a>
+					<a href="index.html#how-it-works" class="hover:text-gray-200">Cara Kerja</a>
+					<a href="index.html#faq" class="hover:text-gray-200">FAQ</a>
+					<a href="privacy-policy.html" class="hover:text-gray-200">Kebijakan Privasi</a>
+				</nav>
+
+				<!-- Mobile Menu Button -->
+				<button class="md:hidden text-white" id="mobileMenuBtn">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+					</svg>
+				</button>
+			</div>
+
+			<!-- Mobile Menu - Hidden by default -->
+			<div class="md:hidden hidden" id="mobileMenu">
+				<nav class="py-4 space-y-4">
+					<a href="index.html#features" class="block hover:text-gray-200">Fitur</a>
+					<a href="index.html#how-it-works" class="block hover:text-gray-200">Cara Kerja</a>
+					<a href="index.html#faq" class="block hover:text-gray-200">FAQ</a>
+					<a href="privacy-policy.html" class="block hover:text-gray-200">Kebijakan Privasi</a>
+				</nav>
+			</div>
+
+			<!-- Title Section -->
+			<div class="py-12">
+				<h1 class="text-4xl font-bold mb-4">Kebijakan Privasi Layanan PayPal Converter</h1>
+				<p class="text-blue-100">Terakhir diperbarui: 11 November 2024</p>
+			</div>
+		</div>
     </header>
 
     <!-- Content -->
     <main class="container mx-auto px-4 py-8">
         <article class="bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
-            <h1 class="text-3xl font-bold mb-6">Kebijakan Privasi Layanan PayPal Converter</h1>
-            <p class="mb-8 text-gray-600">Terakhir diperbarui: 11 November 2024</p>
-
             <section class="mb-8">
                 <h2 class="text-2xl font-bold mb-4">1. Informasi yang Kami Kumpulkan</h2>
                 <p class="text-gray-600 mb-4">Dalam proses penggunaan layanan kami, kami mengumpulkan beberapa informasi penting:</p>
@@ -206,5 +233,37 @@
             });
         });
     </script>
+	
+	<script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+        // Toggle menu
+        mobileMenu.classList.toggle('hidden');
+        
+        // Toggle icon between hamburger and close
+        if (mobileMenu.classList.contains('hidden')) {
+            mobileMenuBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>`;
+        } else {
+            mobileMenuBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>`;
+        }
+    });
+
+    // Close menu when clicking menu items
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenuBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>`;
+        });
+    });
+</script>
 </body>
 </html>

@@ -68,7 +68,7 @@
     </nav>
 
 	<!-- Hero Section -->
-	<section class="pt-24 pb-16 bg-gradient-to-br from-blue-600 to-blue-800 relative">
+	<section class="pt-24 pb-32 bg-gradient-to-br from-blue-600 to-blue-800 relative">
 		<div class="container mx-auto px-4">
 			<div class="flex flex-col md:flex-row items-center justify-between">
 				<!-- Hero Text -->
@@ -94,13 +94,13 @@
 				</div>
 
 				<!-- Hero Image -->
-				<div class="md:w-1/2 flex justify-center">
+				<div class="md:w-1/2 flex justify-center pt-8 md:pt-0"> <!-- tambah pt-8 untuk mobile -->
 					<img 
-						src="/images/hero-paypal-conversion.png" 
-						alt="PayPal to Rupiah Conversion" 
-						class="max-w-full h-auto rounded-lg shadow-xl object-cover"
-						style="max-height: 500px; width: 100%;"
-						loading="lazy"
+					  src="/images/hero-paypal-conversion.png" 
+					  alt="PayPal to Rupiah Conversion" 
+					  class="max-w-full h-auto rounded-lg shadow-xl object-cover"
+					  style="max-height: 400px; width: 100%;" <!-- kurangi max-height jadi 400px -->
+					  loading="lazy"
 					/>
 				</div>
 			</div>
@@ -218,7 +218,7 @@
 
                 <!-- Action Button -->
                 <div class="text-center mt-12">
-                    <a href="https://m.me/lapakbangade" 
+                    <a href="https://www.facebook.com/lapakbangade" 
                        class="inline-flex items-center justify-center bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors">
                         Mulai Konversi
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
@@ -320,7 +320,7 @@
                 <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
                     Konversi PayPal ke Rupiah dengan mudah dan aman menggunakan bot Messenger kami
                 </p>
-                <a href="https://m.me/lapakbangade" 
+                <a href="https://www.facebook.com/lapakbangade" 
                    class="inline-flex items-center bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors">
                     Mulai Chat Sekarang
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
@@ -417,6 +417,63 @@
             </div>
         </div>
     </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const section = document.querySelector(this.getAttribute('href'));
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Mobile menu
+    const mobileMenuBtn = document.querySelector('.md\\:hidden');
+    const mobileMenu = document.createElement('div');
+    mobileMenu.className = 'md:hidden fixed top-[60px] left-0 w-full bg-white shadow-lg transform transition-transform duration-300 translate-x-full';
+    mobileMenu.innerHTML = `
+        <div class="py-4 px-4 space-y-4">
+            <a href="#features" class="block text-gray-600 hover:text-blue-600 font-medium py-2">Fitur</a>
+            <a href="#how-it-works" class="block text-gray-600 hover:text-blue-600 font-medium py-2">Cara Kerja</a>
+            <a href="#faq" class="block text-gray-600 hover:text-blue-600 font-medium py-2">FAQ</a>
+            <a href="privacy-policy.html" class="block text-gray-600 hover:text-blue-600 font-medium py-2">Kebijakan Privasi</a>
+        </div>
+    `;
+    document.body.appendChild(mobileMenu);
+
+    let isMenuOpen = false;
+    mobileMenuBtn.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
+        mobileMenu.style.transform = isMenuOpen ? 'translateX(0)' : 'translateX(100%)';
+        
+        // Update icon
+        mobileMenuBtn.innerHTML = isMenuOpen 
+            ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+               </svg>`
+            : `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+               </svg>`;
+    });
+
+    // Close menu when clicking menu items
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            isMenuOpen = false;
+            mobileMenu.style.transform = 'translateX(100%)';
+            mobileMenuBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>`;
+        });
+    });
+});
+</script>
 
 <script src="https://cdn.tailwindcss.com"></script>
     <script>
