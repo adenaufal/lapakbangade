@@ -72,7 +72,7 @@ Chatbot Facebook Messenger untuk layanan konversi saldo PayPal ke Rupiah dengan 
 
 ## 📞 Kontak Support
 
-- Facebook: [@adenaufal](https://facebook.com/adenaufal)
+- Facebook: [@aadenaufall](https://facebook.com/aadenaufall)
 - WhatsApp: [0821-1330-4116](https://wa.me/6282113304116)
 - Email: ade.naufal@gmail.com
 
