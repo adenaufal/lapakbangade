@@ -126,3 +126,5 @@ export const TermsOfService = () => {
     </div>
   );
 };
+
+export default TermsOfService;
