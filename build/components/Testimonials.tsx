@@ -45,6 +45,10 @@ export const Testimonials = () => {
                   src={item.avatar} 
                   alt={item.name} 
                   className="w-12 h-12 rounded-full object-cover border-2 border-brand-50"
+                  width="48"
+                  height="48"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div>
                   <h4 className="font-bold text-gray-900">{item.name}</h4>

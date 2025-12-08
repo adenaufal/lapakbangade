@@ -128,10 +128,10 @@ export const Hero = () => {
             {/* Social Proof Avatars */}
             <div className="flex items-center justify-center lg:justify-start gap-4 mb-8">
               <div className="flex -space-x-3">
-                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=11" alt="User 1" />
-                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=32" alt="User 2" />
-                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=12" alt="User 3" />
-                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=53" alt="User 4" />
+                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=11" alt="User 1" width="40" height="40" loading="lazy" decoding="async" />
+                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=32" alt="User 2" width="40" height="40" loading="lazy" decoding="async" />
+                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=12" alt="User 3" width="40" height="40" loading="lazy" decoding="async" />
+                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=53" alt="User 4" width="40" height="40" loading="lazy" decoding="async" />
                 <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 shadow-sm">
                   99+
                 </div>
