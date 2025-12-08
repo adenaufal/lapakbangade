@@ -8,14 +8,14 @@ export const TermsOfService = () => {
     <div className="min-h-screen bg-white flex flex-col">
       <Navbar />
       <main className="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Syarat dan Ketentuan</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Syarat dan Ketentuan</h1>
+        <p className="text-sm text-gray-500 mb-8">Terakhir diperbarui: 8 Desember 2025</p>
         
         <div className="prose prose-blue max-w-none text-gray-600 space-y-8">
           <section>
             <p className="lead text-lg text-gray-700">
               Selamat datang di <strong>{CONFIG.APP_NAME}</strong>. Dengan menggunakan layanan kami, Anda dianggap telah membaca, memahami, dan menyetujui Syarat dan Ketentuan berikut ini.
             </p>
-            <p className="text-sm text-gray-500">Terakhir diperbarui: Desember 2025</p>
           </section>
 
           <section>
