@@ -213,51 +213,44 @@ export const Hero = () => {
                                     <span>Applied!</span>
                                 </div>
                             )}
-                            <div className="flex justify-between text-sm text-gray-600 pt-2 border-t border-blue-100">
-                                <span>Rate Konversi (setelah -550)</span>
-                                <span className="font-medium">Rp {convertRate.toLocaleString()}</span>
-                            </div>
-                          </div>
+                        </div>
 
-                          <div>
-                              <label className="block text-sm font-semibold text-gray-700 mb-2">Kamu Terima (IDR)</label>
-                              <div className="relative">
-                                  <input 
-                                      type="text" 
-                                      readOnly
-                                      value={formatIDR(idrReceived)}
-                                      className="w-full pl-4 pr-4 py-3 bg-brand-50 border border-brand-200 rounded-lg text-2xl font-bold text-brand-700"
-                                  />
-                              </div>
-                          </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">Kamu Terima (IDR)</label>
+                            <div className="relative">
+                                <input 
+                                    type="text" 
+                                    readOnly
+                                    value={formatIDR(idrReceived)}
+                                    className="w-full pl-4 pr-4 py-3 bg-brand-50 border border-brand-200 rounded-lg text-2xl font-bold text-brand-700"
+                                />
+                            </div>
+                        </div>
                       </div>
                     ) : (
-                      <div className="space-y-4">
+                      <div className="space-y-3">
                         <div>
                           <label className="block text-sm font-semibold text-gray-700 mb-2">Kondisi saldo PayPal admin</label>
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                             <button
-                              className={`px-4 py-3 rounded-lg border text-xs font-semibold transition ${topupCondition === 'promo' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
+                              className={`px-3 py-2.5 rounded-lg border text-xs font-semibold transition ${topupCondition === 'promo' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
                               onClick={() => setTopupCondition('promo')}
                             >
                               Promo (saldo tersedia)
                             </button>
                             <button
-                              className={`px-4 py-3 rounded-lg border text-xs font-semibold transition ${topupCondition === 'normal' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
+                              className={`px-3 py-2.5 rounded-lg border text-xs font-semibold transition ${topupCondition === 'normal' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
                               onClick={() => setTopupCondition('normal')}
                             >
                               Normal (saldo kosong)
                             </button>
                             <button
-                              className={`px-4 py-3 rounded-lg border text-xs font-semibold transition ${topupCondition === 'mixed' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
+                              className={`px-3 py-2.5 rounded-lg border text-xs font-semibold transition ${topupCondition === 'mixed' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
                               onClick={() => setTopupCondition('mixed')}
                             >
                               Mixed (perkiraan)
                             </button>
                           </div>
-                          <p className="text-xs text-gray-500 mt-2">
-                            Top-up tidak ada fee. Rate promo: base -100; normal: base +2000; mixed: gabungan keduanya.
-                          </p>
                         </div>
 
                         <div className="bg-blue-50/50 p-4 rounded-lg space-y-2 border border-dashed border-blue-100">
@@ -280,10 +273,6 @@ export const Hero = () => {
                         <span>{mode === 'convert' ? 'Lanjut Convert ke Rupiah' : 'Lanjut Top-up USD'}</span>
                         <Send size={18} />
                     </button>
-                    <div className="flex items-center gap-2 text-xs text-gray-500">
-                      <TrendingUp size={14} />
-                      <span>Base rate: {formatIDR(baseRate)} - Penyesuaian convert -550</span>
-                    </div>
                 </div>
             </div>
           </div>
