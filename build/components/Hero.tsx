@@ -229,6 +229,7 @@ export const Hero = () => {
                                 <input 
                                     type="text" 
                                     readOnly
+                                    aria-label="Jumlah Rupiah yang kamu terima"
                                     value={formatIDR(idrReceived)}
                                     className="w-full pl-4 pr-4 py-3 bg-brand-50 border border-brand-200 rounded-lg text-2xl font-bold text-brand-700"
                                 />

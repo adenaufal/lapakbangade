@@ -51,7 +51,7 @@ export const Testimonials = () => {
                   decoding="async"
                 />
                 <div>
-                  <h4 className="font-bold text-gray-900">{item.name}</h4>
+                  <h3 className="font-bold text-gray-900">{item.name}</h3>
                   <span className="text-xs font-medium text-brand-600 bg-brand-50 px-2 py-0.5 rounded-full">
                     via {item.platform}
                   </span>
