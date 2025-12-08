@@ -55,6 +55,10 @@ export const initAnalytics = () => {
 
   const loadPixel = () => {
     if (pixelLoaded || !CONFIG.META_PIXEL_ID) return;
+    if (window.fbq) {
+      pixelLoaded = true;
+      return;
+    }
     pixelLoaded = true;
     addScriptOnce('meta-pixel', () => {
       const scriptPixel = document.createElement('script');
