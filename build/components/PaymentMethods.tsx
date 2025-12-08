@@ -1,6 +1,21 @@
 import React from 'react';
-import { BANKS, WALLETS } from '../constants';
 import { Landmark, Smartphone } from 'lucide-react';
+
+const BANK_LOGOS = [
+  { name: 'BCA', src: '/logos/BCA.svg' },
+  { name: 'Mandiri', src: '/logos/Mandiri.svg' },
+  { name: 'BNI', src: '/logos/BNI.svg' },
+  { name: 'BRI', src: '/logos/BRI.svg' },
+  { name: 'BSI', src: '/logos/BSI.svg' },
+];
+
+const WALLET_LOGOS = [
+  { name: 'DANA', src: '/logos/DANA.svg' },
+  { name: 'OVO', src: '/logos/OVO.svg' },
+  { name: 'GoPay', src: '/logos/GoPay.svg' },
+  { name: 'ShopeePay', src: '/logos/ShopeePay.svg' },
+  { name: 'LinkAja', src: '/logos/LinkAja.svg' },
+];
 
 export const PaymentMethods = () => {
   return (
@@ -15,12 +30,17 @@ export const PaymentMethods = () => {
                     <Landmark size={20} />
                     <span className="font-bold uppercase tracking-wider text-sm">Transfer Bank</span>
                 </div>
-                <div className="flex flex-wrap justify-center gap-4">
-                    {BANKS.map((bank, idx) => (
-                        <div key={idx} className="px-6 py-3 bg-gray-50 rounded-lg border border-gray-100 font-bold text-gray-700 min-w-[100px]">
-                            {bank}
-                        </div>
+                <div className="flex flex-wrap justify-center gap-6 items-center">
+                    {BANK_LOGOS.map((bank) => (
+                      <img
+                        key={bank.name}
+                        src={bank.src}
+                        alt={bank.name}
+                        className="h-9 object-contain"
+                        loading="lazy"
+                      />
                     ))}
+                    <span className="text-xs font-semibold text-gray-500">+ puluhan bank lainnya</span>
                 </div>
             </div>
 
@@ -30,11 +50,15 @@ export const PaymentMethods = () => {
                     <Smartphone size={20} />
                     <span className="font-bold uppercase tracking-wider text-sm">E-Wallet</span>
                 </div>
-                <div className="flex flex-wrap justify-center gap-4">
-                    {WALLETS.map((wallet, idx) => (
-                        <div key={idx} className="px-6 py-3 bg-gray-50 rounded-lg border border-gray-100 font-bold text-gray-700 min-w-[100px]">
-                            {wallet}
-                        </div>
+                <div className="flex flex-wrap justify-center gap-6 items-center">
+                    {WALLET_LOGOS.map((wallet) => (
+                      <img
+                        key={wallet.name}
+                        src={wallet.src}
+                        alt={wallet.name}
+                        className="h-9 object-contain"
+                        loading="lazy"
+                      />
                     ))}
                 </div>
             </div>
