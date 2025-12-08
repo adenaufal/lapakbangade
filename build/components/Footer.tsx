@@ -9,7 +9,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-1 md:col-span-2 pr-8">
             <h3 className="text-xl font-bold text-gray-900 mb-4">{CONFIG.APP_NAME}</h3>
-            <p className="text-gray-600 text-sm leading-relaxed mb-6">
+            <p className="text-gray-700 text-sm leading-relaxed mb-6">
               Jasa convert PayPal ke Rupiah yang mengutamakan keamanan dan kepercayaan. 
               Diproses manual, rate transparan, dan tanpa biaya tersembunyi.
             </p>
@@ -47,8 +47,8 @@ export const Footer = () => {
         </div>
         
         <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
-          <p>&copy; {new Date().getFullYear()} {CONFIG.APP_NAME}. All rights reserved.</p>
-          <p>
+          <p className="text-gray-700">&copy; {new Date().getFullYear()} {CONFIG.APP_NAME}. All rights reserved.</p>
+          <p className="text-gray-700">
             Disclaimer: Kami bukan bagian dari PayPal Inc.
           </p>
         </div>

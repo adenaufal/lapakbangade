@@ -2,19 +2,19 @@ import React from 'react';
 import { Landmark, Smartphone } from 'lucide-react';
 
 const BANK_LOGOS = [
-  { name: 'BCA', src: '/logos/BCA.svg' },
-  { name: 'Mandiri', src: '/logos/Mandiri.svg' },
-  { name: 'BNI', src: '/logos/BNI.svg' },
-  { name: 'BRI', src: '/logos/BRI.svg' },
-  { name: 'BSI', src: '/logos/BSI.svg' },
+  { name: 'BCA', src: '/logos/BCA.svg', width: 120, height: 40 },
+  { name: 'Mandiri', src: '/logos/Mandiri.svg', width: 130, height: 40 },
+  { name: 'BNI', src: '/logos/BNI.svg', width: 110, height: 40 },
+  { name: 'BRI', src: '/logos/BRI.svg', width: 110, height: 40 },
+  { name: 'BSI', src: '/logos/BSI.svg', width: 120, height: 40 },
 ];
 
 const WALLET_LOGOS = [
-  { name: 'DANA', src: '/logos/DANA.svg' },
-  { name: 'OVO', src: '/logos/OVO.svg' },
-  { name: 'GoPay', src: '/logos/GoPay.svg' },
-  { name: 'ShopeePay', src: '/logos/ShopeePay.svg' },
-  { name: 'LinkAja', src: '/logos/LinkAja.svg' },
+  { name: 'DANA', src: '/logos/DANA.svg', width: 120, height: 40 },
+  { name: 'OVO', src: '/logos/OVO.svg', width: 110, height: 40 },
+  { name: 'GoPay', src: '/logos/GoPay.svg', width: 120, height: 40 },
+  { name: 'ShopeePay', src: '/logos/ShopeePay.svg', width: 130, height: 40 },
+  { name: 'LinkAja', src: '/logos/LinkAja.svg', width: 110, height: 40 },
 ];
 
 export const PaymentMethods = () => {
@@ -30,18 +30,19 @@ export const PaymentMethods = () => {
                     <Landmark size={20} />
                     <span className="font-bold uppercase tracking-wider text-sm">Transfer Bank</span>
                 </div>
-                <div className="flex flex-wrap justify-center gap-6 items-center">
+                <div className="flex flex-wrap justify-center gap-x-8 gap-y-6 items-center">
                     {BANK_LOGOS.map((bank) => (
-                      <img
-                        key={bank.name}
-                        src={bank.src}
-                        alt={bank.name}
-                        className="object-contain"
-                        width="120"
-                        height="36"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <div key={bank.name} className="h-10 flex items-center justify-center">
+                        <img
+                          src={bank.src}
+                          alt={bank.name}
+                          className="h-full w-auto"
+                          width={bank.width}
+                          height={bank.height}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
                     ))}
                     <span className="text-xs font-semibold text-gray-600">+ puluhan bank lainnya</span>
                 </div>
@@ -53,18 +54,19 @@ export const PaymentMethods = () => {
                     <Smartphone size={20} />
                     <span className="font-bold uppercase tracking-wider text-sm">E-Wallet</span>
                 </div>
-                <div className="flex flex-wrap justify-center gap-6 items-center">
+                <div className="flex flex-wrap justify-center gap-x-8 gap-y-6 items-center">
                     {WALLET_LOGOS.map((wallet) => (
-                      <img
-                        key={wallet.name}
-                        src={wallet.src}
-                        alt={wallet.name}
-                        className="object-contain"
-                        width="120"
-                        height="36"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <div key={wallet.name} className="h-10 flex items-center justify-center">
+                        <img
+                          src={wallet.src}
+                          alt={wallet.name}
+                          className="h-full w-auto"
+                          width={wallet.width}
+                          height={wallet.height}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
                     ))}
                 </div>
             </div>
