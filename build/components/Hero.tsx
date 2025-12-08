@@ -1,16 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { Send, Clock, CheckCircle, MessageCircle, RefreshCw, Star } from 'lucide-react';
+import { Send, Clock, CheckCircle, MessageCircle, RefreshCw, Star, TrendingUp } from 'lucide-react';
 import { RATE, CONFIG } from '../constants';
 import { trackConversion, trackEvent } from '../services/analytics';
+import { fetchUsdIdrRate, rateConfig } from '../services/rates';
+
+type Mode = 'convert' | 'topup';
+type TopupCondition = 'promo' | 'normal' | 'mixed';
 
 export const Hero = () => {
   const [usdAmount, setUsdAmount] = useState<number | string>(60);
+  const [mode, setMode] = useState<Mode>('convert');
+  const [topupCondition, setTopupCondition] = useState<TopupCondition>('promo');
+  const [baseRate, setBaseRate] = useState(rateConfig.fallbackBase);
+  const [rateSource, setRateSource] = useState<'api' | 'fallback'>('fallback');
+  const [isLoadingRate, setIsLoadingRate] = useState(false);
   // Mock Friday logic: in a real app, use new Date().getDay() === 5
-  const [isFriday, setIsFriday] = useState(false);
+  const [isFriday] = useState(false);
   
   const rawUsd = Number(usdAmount) || 0;
-  
-  // Calculate Fee
+
+  useEffect(() => {
+    const loadRate = async () => {
+      setIsLoadingRate(true);
+      const result = await fetchUsdIdrRate();
+      setBaseRate(result.baseRate);
+      setRateSource(result.source);
+      setIsLoadingRate(false);
+      trackEvent('rate_viewed', { base_rate: result.baseRate, source: result.source });
+    };
+    loadRate();
+  }, []);
+
+  const convertRate = Math.max(0, baseRate - rateConfig.convertAdjustment);
+
+  // Convert fee logic
   let fee = 0;
   let isPromoApplied = false;
 
@@ -25,7 +48,19 @@ export const Hero = () => {
   }
 
   const finalUsd = Math.max(0, rawUsd - fee);
-  const idrReceived = finalUsd * RATE.USD_TO_IDR;
+  const idrReceived = finalUsd * convertRate;
+
+  // Top-up (IDR -> USD) uses different adjustments
+  const promoTopupRate = Math.max(0, baseRate + rateConfig.topupPromoDelta);
+  const normalTopupRate = Math.max(0, baseRate + rateConfig.topupNormalDelta);
+  const mixedTopupRate = (promoTopupRate + normalTopupRate) / 2;
+  const effectiveTopupRate =
+    topupCondition === 'promo'
+      ? promoTopupRate
+      : topupCondition === 'normal'
+      ? normalTopupRate
+      : mixedTopupRate;
+  const topupIdrTotal = rawUsd * effectiveTopupRate;
   
   const formatIDR = (val: number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -36,13 +71,13 @@ export const Hero = () => {
     }).format(val);
   };
 
-  useEffect(() => {
-    trackEvent('rate_viewed', { rate: RATE.USD_TO_IDR });
-  }, []);
-
   const handleConvertClick = () => {
-    trackConversion('USD', rawUsd);
-    trackEvent('cta_hero_click', { amount: rawUsd });
+    if (mode === 'convert') {
+      trackConversion('USD', rawUsd);
+      trackEvent('cta_hero_click', { amount: rawUsd, mode: 'convert', rate: convertRate });
+    } else {
+      trackEvent('cta_hero_click', { amount: rawUsd, mode: 'topup', rate: effectiveTopupRate });
+    }
     window.open(CONFIG.MESSENGER_URL, '_blank');
   };
 
@@ -125,17 +160,32 @@ export const Hero = () => {
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden ring-1 ring-gray-100">
                 <div className="bg-gray-900 p-4 text-white text-center">
                     <div className="font-bold text-lg">
-                       1 USD = Rp {RATE.USD_TO_IDR.toLocaleString('id-ID')}
+                       1 USD = Rp {(mode === 'convert' ? convertRate : effectiveTopupRate).toLocaleString('id-ID')}
                     </div>
                     <div className="text-xs text-gray-400 mt-1 flex items-center justify-center gap-1">
-                        <RefreshCw size={12} className="animate-spin-slow" />
-                        Update otomatis tiap 1-3 jam
+                        <RefreshCw size={12} className={isLoadingRate ? 'animate-spin' : ''} />
+                        {isLoadingRate ? 'Memuat rate...' : `Sumber: ${rateSource === 'api' ? 'API' : 'Fallback'}`}
                     </div>
                 </div>
                 
                 <div className="p-6 md:p-8 space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <button
+                        className={`w-full px-4 py-3 rounded-lg border text-sm font-semibold transition ${mode === 'convert' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
+                        onClick={() => setMode('convert')}
+                      >
+                        Convert USD ke IDR
+                      </button>
+                      <button
+                        className={`w-full px-4 py-3 rounded-lg border text-sm font-semibold transition ${mode === 'topup' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
+                        onClick={() => setMode('topup')}
+                      >
+                        Top-up USD (IDR to USD)
+                      </button>
+                    </div>
+
                     <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Kamu Kirim (USD)</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">Nominal (USD)</label>
                         <div className="relative group">
                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">$</span>
                             <input 
@@ -147,46 +197,93 @@ export const Hero = () => {
                                 min={RATE.MIN_TRANSACTION}
                             />
                         </div>
+                        <p className="text-xs text-gray-500 mt-1">Min ${RATE.MIN_TRANSACTION}, maks ${RATE.MAX_TRANSACTION} per hari.</p>
                     </div>
 
-                    <div className="bg-blue-50/50 p-4 rounded-lg space-y-2 border border-dashed border-blue-100">
-                        <div className="flex justify-between text-sm text-gray-600">
-                            <span>Estimasi Fee</span>
-                            <span className="font-medium">-${fee.toFixed(2)}</span>
-                        </div>
-                        {isPromoApplied && (
-                             <div className="flex justify-between text-xs text-green-600 font-bold">
-                                <span>Promo Jumat (50% Off Fee)</span>
-                                <span>Applied!</span>
+                    {mode === 'convert' ? (
+                      <div className="space-y-4">
+                        <div className="bg-blue-50/50 p-4 rounded-lg space-y-2 border border-dashed border-blue-100">
+                            <div className="flex justify-between text-sm text-gray-600">
+                                <span>Estimasi Fee</span>
+                                <span className="font-medium">-${fee.toFixed(2)}</span>
                             </div>
-                        )}
-                        <div className="flex justify-between text-sm text-gray-600 pt-2 border-t border-blue-100">
-                            <span>Rate Konversi</span>
-                            <span className="font-medium">Rp {RATE.USD_TO_IDR.toLocaleString()}</span>
-                        </div>
-                    </div>
+                            {isPromoApplied && (
+                                 <div className="flex justify-between text-xs text-green-600 font-bold">
+                                    <span>Promo Jumat (50% Off Fee)</span>
+                                    <span>Applied!</span>
+                                </div>
+                            )}
+                            <div className="flex justify-between text-sm text-gray-600 pt-2 border-t border-blue-100">
+                                <span>Rate Konversi (setelah -550)</span>
+                                <span className="font-medium">Rp {convertRate.toLocaleString()}</span>
+                            </div>
+                          </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Kamu Terima (IDR)</label>
-                        <div className="relative">
-                            <input 
-                                type="text" 
-                                readOnly
-                                value={formatIDR(idrReceived)}
-                                className="w-full pl-4 pr-4 py-3 bg-brand-50 border border-brand-200 rounded-lg text-2xl font-bold text-brand-700"
-                            />
+                          <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">Kamu Terima (IDR)</label>
+                              <div className="relative">
+                                  <input 
+                                      type="text" 
+                                      readOnly
+                                      value={formatIDR(idrReceived)}
+                                      className="w-full pl-4 pr-4 py-3 bg-brand-50 border border-brand-200 rounded-lg text-2xl font-bold text-brand-700"
+                                  />
+                              </div>
+                          </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">Kondisi saldo PayPal admin</label>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <button
+                              className={`px-4 py-3 rounded-lg border text-xs font-semibold transition ${topupCondition === 'promo' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
+                              onClick={() => setTopupCondition('promo')}
+                            >
+                              Promo (saldo tersedia)
+                            </button>
+                            <button
+                              className={`px-4 py-3 rounded-lg border text-xs font-semibold transition ${topupCondition === 'normal' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
+                              onClick={() => setTopupCondition('normal')}
+                            >
+                              Normal (saldo kosong)
+                            </button>
+                            <button
+                              className={`px-4 py-3 rounded-lg border text-xs font-semibold transition ${topupCondition === 'mixed' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
+                              onClick={() => setTopupCondition('mixed')}
+                            >
+                              Mixed (perkiraan)
+                            </button>
+                          </div>
+                          <p className="text-xs text-gray-500 mt-2">
+                            Top-up tidak ada fee. Rate promo: base -100; normal: base +2000; mixed: gabungan keduanya.
+                          </p>
                         </div>
-                    </div>
+
+                        <div className="bg-blue-50/50 p-4 rounded-lg space-y-2 border border-dashed border-blue-100">
+                          <div className="flex justify-between text-sm text-gray-600">
+                              <span>Rate Top-up</span>
+                              <span className="font-medium">Rp {effectiveTopupRate.toLocaleString()}</span>
+                          </div>
+                          <div className="flex justify-between text-sm text-gray-600 pt-2 border-t border-blue-100">
+                              <span>IDR yang harus dibayar</span>
+                              <span className="font-bold text-gray-900">{formatIDR(topupIdrTotal)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     <button 
                         onClick={handleConvertClick}
                         className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-lg transition-colors flex items-center justify-center gap-2"
                     >
-                        <span>Lanjut Chat Admin</span>
+                        <span>{mode === 'convert' ? 'Lanjut Convert ke Rupiah' : 'Lanjut Top-up USD'}</span>
                         <Send size={18} />
                     </button>
-                    {/* Dev Toggle for Friday Promo */}
-                    {/* <button onClick={() => setIsFriday(!isFriday)} className="w-full text-xs text-center text-gray-300 mt-2">Toggle Friday Promo</button> */}
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <TrendingUp size={14} />
+                      <span>Base rate: {formatIDR(baseRate)} - Penyesuaian convert -550</span>
+                    </div>
                 </div>
             </div>
           </div>

@@ -12,8 +12,18 @@ const App: React.FC = () => {
     initAnalytics();
 
     const handleHashChange = () => {
-      setRoute(window.location.hash || '#/');
-      window.scrollTo(0, 0);
+      const nextHash = window.location.hash || '#/';
+      setRoute(nextHash);
+
+      // Scroll behavior: smooth scroll to section anchors, or reset for page-level routes
+      if (nextHash === '#/' || nextHash === '#/privacy' || nextHash === '#/terms') {
+        window.scrollTo(0, 0);
+      } else {
+        const target = document.querySelector(nextHash);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
     };
 
     window.addEventListener('hashchange', handleHashChange);
