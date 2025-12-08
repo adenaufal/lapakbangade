@@ -128,11 +128,11 @@ export const Hero = () => {
             {/* Social Proof Avatars */}
             <div className="flex items-center justify-center lg:justify-start gap-4 mb-8">
               <div className="flex -space-x-3">
-                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=11" alt="User 1" width="40" height="40" loading="lazy" decoding="async" />
-                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=32" alt="User 2" width="40" height="40" loading="lazy" decoding="async" />
-                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=12" alt="User 3" width="40" height="40" loading="lazy" decoding="async" />
-                <img className="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/100?img=53" alt="User 4" width="40" height="40" loading="lazy" decoding="async" />
-                <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 shadow-sm">
+                <img className="w-12 h-12 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/96?img=11" alt="User 1" width="48" height="48" loading="lazy" decoding="async" />
+                <img className="w-12 h-12 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/96?img=32" alt="User 2" width="48" height="48" loading="lazy" decoding="async" />
+                <img className="w-12 h-12 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/96?img=12" alt="User 3" width="48" height="48" loading="lazy" decoding="async" />
+                <img className="w-12 h-12 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/96?img=53" alt="User 4" width="48" height="48" loading="lazy" decoding="async" />
+                <div className="w-12 h-12 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 shadow-sm">
                   99+
                 </div>
               </div>
@@ -144,7 +144,7 @@ export const Hero = () => {
                   <Star size={14} className="text-yellow-400 fill-yellow-400" />
                   <Star size={14} className="text-yellow-400 fill-yellow-400" />
                 </div>
-                <p className="text-xs text-gray-500 font-medium">Dipercaya <span className="text-gray-900 font-bold">500+ Freelancer</span></p>
+                <p className="text-xs text-gray-600 font-medium">Dipercaya <span className="text-gray-900 font-bold">500+ Freelancer</span></p>
               </div>
             </div>
 
@@ -156,7 +156,7 @@ export const Hero = () => {
                     <MessageCircle size={24} />
                     Chat via Messenger
                 </button>
-                <div className="text-sm text-gray-500 font-medium bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
+                <div className="text-sm text-gray-600 font-medium bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
                     Jam operasional {CONFIG.OPERATIONAL_HOURS}
                 </div>
             </div>
@@ -192,19 +192,20 @@ export const Hero = () => {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Nominal (USD)</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2" htmlFor="usd-amount">Nominal (USD)</label>
                         <div className="relative group">
                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">$</span>
                             <input 
                                 type="number" 
                                 value={usdAmount}
                                 onChange={handleInputChange}
+                                id="usd-amount"
                                 className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none text-xl font-bold text-gray-900 transition-all"
                                 placeholder="50"
                                 min={RATE.MIN_TRANSACTION}
                             />
                         </div>
-                        <p className="text-xs text-gray-500 mt-1">Min ${RATE.MIN_TRANSACTION}, maks ${RATE.MAX_TRANSACTION} per hari.</p>
+                        <p className="text-xs text-gray-600 mt-1">Min ${RATE.MIN_TRANSACTION}, maks ${RATE.MAX_TRANSACTION} per hari.</p>
                     </div>
 
                     {mode === 'convert' ? (
@@ -238,7 +239,7 @@ export const Hero = () => {
                       <div className="flex flex-col gap-4 min-h-[160px]">
                         <div className="rounded-lg border border-blue-100 bg-blue-50/50 p-4 space-y-1.5">
                           <div className="text-sm text-gray-700 font-semibold">Top-up rate (saldo tersedia)</div>
-                          <p className="text-xs text-gray-500">Jika saldo admin kosong, rate normal akan dikonfirmasi dulu.</p>
+                          <p className="text-xs text-gray-600">Jika saldo admin kosong, rate normal akan dikonfirmasi dulu.</p>
                           <div className="flex justify-between text-sm text-gray-600 pt-1 border-t border-blue-100">
                               <span>IDR yang harus dibayar</span>
                               <span className="font-bold text-gray-900">{formatIDR(topupIdrTotal)}</span>

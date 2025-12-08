@@ -9,7 +9,7 @@ export const TermsOfService = () => {
       <Navbar />
       <main className="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Syarat dan Ketentuan</h1>
-        <p className="text-sm text-gray-500 mb-8">Terakhir diperbarui: 8 Desember 2025</p>
+        <p className="text-sm text-gray-600 mb-8">Terakhir diperbarui: 8 Desember 2025</p>
         
         <div className="prose prose-blue max-w-none text-gray-600 space-y-8">
           <section>

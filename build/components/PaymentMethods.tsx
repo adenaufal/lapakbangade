@@ -36,11 +36,14 @@ export const PaymentMethods = () => {
                         key={bank.name}
                         src={bank.src}
                         alt={bank.name}
-                        className="h-9 object-contain"
+                        className="object-contain"
+                        width="120"
+                        height="36"
                         loading="lazy"
+                        decoding="async"
                       />
                     ))}
-                    <span className="text-xs font-semibold text-gray-500">+ puluhan bank lainnya</span>
+                    <span className="text-xs font-semibold text-gray-600">+ puluhan bank lainnya</span>
                 </div>
             </div>
 
@@ -56,15 +59,18 @@ export const PaymentMethods = () => {
                         key={wallet.name}
                         src={wallet.src}
                         alt={wallet.name}
-                        className="h-9 object-contain"
+                        className="object-contain"
+                        width="120"
+                        height="36"
                         loading="lazy"
+                        decoding="async"
                       />
                     ))}
                 </div>
             </div>
         </div>
         
-        <div className="mt-12 text-sm text-gray-500">
+        <div className="mt-12 text-sm text-gray-600">
             Transaksi aman & langsung ke akun kamu sendiri.
         </div>
       </div>

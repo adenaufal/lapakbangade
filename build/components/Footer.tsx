@@ -9,7 +9,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-1 md:col-span-2 pr-8">
             <h3 className="text-xl font-bold text-gray-900 mb-4">{CONFIG.APP_NAME}</h3>
-            <p className="text-gray-500 text-sm leading-relaxed mb-6">
+            <p className="text-gray-600 text-sm leading-relaxed mb-6">
               Jasa convert PayPal ke Rupiah yang mengutamakan keamanan dan kepercayaan. 
               Diproses manual, rate transparan, dan tanpa biaya tersembunyi.
             </p>
@@ -21,7 +21,7 @@ export const Footer = () => {
           
           <div>
             <h4 className="font-bold text-gray-900 mb-4">Menu</h4>
-            <ul className="space-y-2 text-sm text-gray-500">
+            <ul className="space-y-2 text-sm text-gray-600">
               <li><a href="#calculator" className="hover:text-brand-600 transition">Hitung Rate</a></li>
               <li><a href="#how-it-works" className="hover:text-brand-600 transition">Cara Convert</a></li>
               <li><a href="#testimonials" className="hover:text-brand-600 transition">Testimoni</a></li>
@@ -31,7 +31,7 @@ export const Footer = () => {
 
           <div>
             <h4 className="font-bold text-gray-900 mb-4">Legal & Kontak</h4>
-            <ul className="space-y-2 text-sm text-gray-500 mb-6">
+            <ul className="space-y-2 text-sm text-gray-600 mb-6">
                <li><a href="#/privacy" className="hover:text-brand-600 transition">Privacy Policy</a></li>
                <li><a href="#/terms" className="hover:text-brand-600 transition">Terms of Service</a></li>
             </ul>

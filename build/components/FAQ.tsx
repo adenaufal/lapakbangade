@@ -39,6 +39,10 @@ export const FAQ = () => {
               <button
                 className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none hover:bg-gray-50 transition-colors"
                 onClick={() => toggleFAQ(index)}
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-panel-${index}`}
+                type="button"
+                id={`faq-question-${index}`}
               >
                 <span className="font-semibold text-gray-900 text-sm md:text-base pr-4">
                   {faq.question}
@@ -50,6 +54,9 @@ export const FAQ = () => {
               
               <div 
                 className={`transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+                id={`faq-panel-${index}`}
+                role="region"
+                aria-labelledby={`faq-question-${index}`}
               >
                 <div className="px-6 pb-6 pt-0 text-gray-600 text-sm leading-relaxed border-t border-gray-100 mt-2">
                    <div className="pt-4">{faq.answer}</div>

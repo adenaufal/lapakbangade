@@ -6,21 +6,21 @@ const TESTIMONIALS: Testimonial[] = [
   {
     id: 1,
     name: "Rian Saputra",
-    avatar: "https://i.pravatar.cc/150?img=11",
+    avatar: "https://i.pravatar.cc/96?img=11",
     content: "Awalnya ragu karena baru pertama kali convert, eh ternyata cepet banget. 30 menit duit udah masuk DANA. Adminnya juga ramah banget jelasinnya.",
     platform: "Facebook"
   },
   {
     id: 2,
     name: "Siska Wijaya",
-    avatar: "https://i.pravatar.cc/150?img=5",
+    avatar: "https://i.pravatar.cc/96?img=5",
     content: "Langganan di sini buat cairin hasil freelance. Rate-nya berani diadu sama lapak lain, dan yang paling penting fee-nya transparan ga ada potongan aneh2.",
     platform: "WhatsApp"
   },
   {
     id: 3,
     name: "Budi Santoso",
-    avatar: "https://i.pravatar.cc/150?img=59",
+    avatar: "https://i.pravatar.cc/96?img=59",
     content: "Pas banget butuh cairin saldo malem-malem, ternyata masih dilayani. Recommended banget buat yang butuh urgent.",
     platform: "Facebook"
   }

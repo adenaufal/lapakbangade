@@ -29,7 +29,7 @@ export const CallToAction = () => {
                     <MessageCircle size={28} />
                     Chat via Messenger
                 </a>
-                <p className="text-sm text-gray-500 font-medium">
+                <p className="text-sm text-gray-600 font-medium">
                     Diproses di jam operasional {CONFIG.OPERATIONAL_HOURS}
                 </p>
             </div>

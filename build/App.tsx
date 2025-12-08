@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { LandingPage } from './components/LandingPage';
-import { PrivacyPolicy } from './components/PrivacyPolicy';
-import { TermsOfService } from './components/TermsOfService';
 import { initAnalytics } from './services/analytics';
+
+const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
+const TermsOfService = React.lazy(() => import('./components/TermsOfService'));
 
 const App: React.FC = () => {
   const [route, setRoute] = useState(typeof window !== 'undefined' ? window.location.hash : '#/');
@@ -32,11 +33,19 @@ const App: React.FC = () => {
 
   // Simple Hash Router
   if (route === '#/privacy') {
-    return <PrivacyPolicy />;
+    return (
+      <Suspense fallback={<div className="p-8 text-center text-gray-700">Memuat...</div>}>
+        <PrivacyPolicy />
+      </Suspense>
+    );
   }
   
   if (route === '#/terms') {
-    return <TermsOfService />;
+    return (
+      <Suspense fallback={<div className="p-8 text-center text-gray-700">Memuat...</div>}>
+        <TermsOfService />
+      </Suspense>
+    );
   }
 
   // Default to Landing Page

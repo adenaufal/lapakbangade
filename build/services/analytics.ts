@@ -23,12 +23,25 @@ const addScriptOnce = (id: string, getScript: () => HTMLScriptElement) => {
 export const initAnalytics = () => {
   if (typeof window === 'undefined') return;
 
-  // Initialize GA4 if ID is provided
-  if (CONFIG.GA_MEASUREMENT_ID) {
+  let gaLoaded = false;
+  let pixelLoaded = false;
+
+  const runOnIdle = (cb: () => void, timeout = 1500) => {
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(cb, { timeout });
+    } else {
+      window.setTimeout(cb, timeout);
+    }
+  };
+
+  const loadGA = () => {
+    if (gaLoaded || !CONFIG.GA_MEASUREMENT_ID) return;
+    gaLoaded = true;
     addScriptOnce('ga4', () => {
       const scriptGA = document.createElement('script');
       scriptGA.async = true;
       scriptGA.src = `https://www.googletagmanager.com/gtag/js?id=${CONFIG.GA_MEASUREMENT_ID}`;
+      scriptGA.defer = true;
       return scriptGA;
     });
 
@@ -38,12 +51,11 @@ export const initAnalytics = () => {
     };
     window.gtag('js', new Date());
     window.gtag('config', CONFIG.GA_MEASUREMENT_ID);
-  } else {
-    console.warn('GA_MEASUREMENT_ID is missing; GA4 will not be initialized.');
-  }
+  };
 
-  // Initialize Meta Pixel if ID is provided
-  if (CONFIG.META_PIXEL_ID) {
+  const loadPixel = () => {
+    if (pixelLoaded || !CONFIG.META_PIXEL_ID) return;
+    pixelLoaded = true;
     addScriptOnce('meta-pixel', () => {
       const scriptPixel = document.createElement('script');
       scriptPixel.innerHTML = `
@@ -60,9 +72,22 @@ export const initAnalytics = () => {
       `;
       return scriptPixel;
     });
-  } else {
-    console.warn('META_PIXEL_ID is missing; Meta Pixel will not be initialized.');
-  }
+  };
+
+  const triggerLoad = () => {
+    loadGA();
+    loadPixel();
+    ['pointerdown', 'keydown', 'scroll'].forEach((evt) =>
+      window.removeEventListener(evt, triggerLoad)
+    );
+  };
+
+  ['pointerdown', 'keydown', 'scroll'].forEach((evt) =>
+    window.addEventListener(evt, triggerLoad, { once: true, passive: true })
+  );
+
+  runOnIdle(loadGA, 500);
+  runOnIdle(loadPixel, 2000);
 };
 
 // Track Custom & Standard Events
