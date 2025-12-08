@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Send, Clock, CheckCircle, MessageCircle, RefreshCw, Star, TrendingUp } from 'lucide-react';
+import { Send, Clock, CheckCircle, MessageCircle, RefreshCw, Star } from 'lucide-react';
 import { RATE, CONFIG } from '../constants';
 import { trackConversion, trackEvent } from '../services/analytics';
 import { fetchUsdIdrRate, rateConfig } from '../services/rates';
@@ -10,7 +10,7 @@ type TopupCondition = 'promo' | 'normal' | 'mixed';
 export const Hero = () => {
   const [usdAmount, setUsdAmount] = useState<number | string>(60);
   const [mode, setMode] = useState<Mode>('convert');
-  const [topupCondition, setTopupCondition] = useState<TopupCondition>('promo');
+  const topupCondition: TopupCondition = 'promo';
   const [baseRate, setBaseRate] = useState(rateConfig.fallbackBase);
   const [rateSource, setRateSource] = useState<'api' | 'fallback'>('fallback');
   const [isLoadingRate, setIsLoadingRate] = useState(false);
@@ -201,7 +201,7 @@ export const Hero = () => {
                     </div>
 
                     {mode === 'convert' ? (
-                      <div className="space-y-4">
+                      <div className="flex flex-col gap-4 min-h-[160px]">
                         <div className="bg-blue-50/50 p-4 rounded-lg space-y-2 border border-dashed border-blue-100">
                             <div className="flex justify-between text-sm text-gray-600">
                                 <span>Estimasi Fee</span>
@@ -215,7 +215,7 @@ export const Hero = () => {
                             )}
                         </div>
 
-                        <div>
+                        <div className="flex-1">
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Kamu Terima (IDR)</label>
                             <div className="relative">
                                 <input 
@@ -228,36 +228,11 @@ export const Hero = () => {
                         </div>
                       </div>
                     ) : (
-                      <div className="space-y-3">
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <label className="block text-sm font-semibold text-gray-700">Kondisi saldo PayPal admin</label>
-                            <span className="text-[11px] text-gray-500">Promo hanya berlaku jika saldo tersedia</span>
-                          </div>
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <button
-                              className={`px-3 py-2.5 rounded-lg border text-xs font-semibold transition ${topupCondition === 'promo' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
-                              onClick={() => setTopupCondition('promo')}
-                            >
-                              Promo (saldo tersedia)
-                            </button>
-                            <button
-                              className={`px-3 py-2.5 rounded-lg border text-xs font-semibold transition ${topupCondition === 'normal' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
-                              onClick={() => setTopupCondition('normal')}
-                            >
-                              Normal (saldo kosong)
-                            </button>
-                            <button
-                              className={`px-3 py-2.5 rounded-lg border text-xs font-semibold transition ${topupCondition === 'mixed' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
-                              onClick={() => setTopupCondition('mixed')}
-                            >
-                              Mixed (perkiraan)
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="bg-blue-50/50 p-4 rounded-lg space-y-2 border border-dashed border-blue-100">
-                          <div className="flex justify-between text-sm text-gray-600">
+                      <div className="flex flex-col gap-4 min-h-[160px]">
+                        <div className="rounded-lg border border-blue-100 bg-blue-50/50 p-4 space-y-1.5">
+                          <div className="text-sm text-gray-700 font-semibold">Top-up rate (saldo tersedia)</div>
+                          <p className="text-xs text-gray-500">Jika saldo admin kosong, rate normal akan dikonfirmasi dulu.</p>
+                          <div className="flex justify-between text-sm text-gray-600 pt-1 border-t border-blue-100">
                               <span>IDR yang harus dibayar</span>
                               <span className="font-bold text-gray-900">{formatIDR(topupIdrTotal)}</span>
                           </div>
