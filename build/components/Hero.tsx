@@ -180,7 +180,7 @@ export const Hero = () => {
                         className={`w-full px-4 py-3 rounded-lg border text-sm font-semibold transition ${mode === 'topup' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
                         onClick={() => setMode('topup')}
                       >
-                        Top-up USD (IDR to USD)
+                        Top-up USD
                       </button>
                     </div>
 
@@ -229,8 +229,11 @@ export const Hero = () => {
                       </div>
                     ) : (
                       <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">Kondisi saldo PayPal admin</label>
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <label className="block text-sm font-semibold text-gray-700">Kondisi saldo PayPal admin</label>
+                            <span className="text-[11px] text-gray-500">Promo hanya berlaku jika saldo tersedia</span>
+                          </div>
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                             <button
                               className={`px-3 py-2.5 rounded-lg border text-xs font-semibold transition ${topupCondition === 'promo' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
@@ -255,10 +258,6 @@ export const Hero = () => {
 
                         <div className="bg-blue-50/50 p-4 rounded-lg space-y-2 border border-dashed border-blue-100">
                           <div className="flex justify-between text-sm text-gray-600">
-                              <span>Rate Top-up</span>
-                              <span className="font-medium">Rp {effectiveTopupRate.toLocaleString()}</span>
-                          </div>
-                          <div className="flex justify-between text-sm text-gray-600 pt-2 border-t border-blue-100">
                               <span>IDR yang harus dibayar</span>
                               <span className="font-bold text-gray-900">{formatIDR(topupIdrTotal)}</span>
                           </div>
