@@ -16,9 +16,11 @@ View your app in AI Studio: https://ai.studio/apps/drive/1EzrxpWeI_W6YkQq753ujdm
 1. Install dependencies:
    `npm install`
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. (Optional but recommended) Set `VITE_EXCHANGE_RATE_API_KEY` for live USD/IDR rates from ExchangeRate API.
+3. Set `EXCHANGE_RATE_API_KEY` in [.env.local](.env.local) (and in Netlify env) for live USD/IDR rates. The key is used server-side via Netlify Function.
 3. Run the app:
    `npm run dev`
+
+For local testing of the rate function, run with `netlify dev` so the function endpoint `/.netlify/functions/rate` is available.
 
 ## Deploy to Netlify
 
