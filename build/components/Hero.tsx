@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Clock, CheckCircle, MessageCircle, RefreshCw, Star } from 'lucide-react';
 import { RATE, CONFIG } from '../constants';
-import { trackConversion, trackEvent } from '../services/analytics';
+import { trackConversion, trackEvent, trackInitiateCheckout } from '../services/analytics';
 import { fetchUsdIdrRate, rateConfig } from '../services/rates';
 
 type Mode = 'convert' | 'topup';
@@ -72,10 +72,17 @@ export const Hero = () => {
   };
 
   const handleConvertClick = () => {
+    trackInitiateCheckout({
+      amount: rawUsd,
+      mode,
+      rate: mode === 'convert' ? convertRate : effectiveTopupRate,
+    });
+
     if (mode === 'convert') {
       trackConversion('USD', rawUsd);
       trackEvent('cta_hero_click', { amount: rawUsd, mode: 'convert', rate: convertRate });
     } else {
+      trackConversion('USD', rawUsd);
       trackEvent('cta_hero_click', { amount: rawUsd, mode: 'topup', rate: effectiveTopupRate });
     }
     window.open(CONFIG.MESSENGER_URL, '_blank');

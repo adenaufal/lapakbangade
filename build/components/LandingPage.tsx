@@ -9,12 +9,14 @@ import { Testimonials } from './Testimonials';
 import { FAQ } from './FAQ';
 import { CallToAction } from './CallToAction';
 import { Footer } from './Footer';
-import { trackEvent } from '../services/analytics';
+import { trackEvent, trackViewContent } from '../services/analytics';
 import { CONFIG } from '../constants';
 import { MessageCircle } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
   useEffect(() => {
+    trackViewContent({ page: 'landing', section: 'hero' });
+
     // Scroll Tracking
     const handleScroll = () => {
        const scrolledPercentage = (window.scrollY + window.innerHeight) / document.body.scrollHeight;
