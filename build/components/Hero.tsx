@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Send, Clock, CheckCircle, MessageCircle, RefreshCw, Star } from 'lucide-react';
 import { RATE, CONFIG } from '../constants';
 import { trackConversion, trackEvent, trackInitiateCheckout } from '../services/analytics';
@@ -6,6 +6,17 @@ import { fetchUsdIdrRate, rateConfig } from '../services/rates';
 
 type Mode = 'convert' | 'topup';
 type TopupCondition = 'promo' | 'normal' | 'mixed';
+
+const HERO_AVATAR_POOL = [
+  { src: 'https://i.pravatar.cc/96?img=11', alt: 'User 1' },
+  { src: 'https://i.pravatar.cc/96?img=32', alt: 'User 2' },
+  { src: 'https://i.pravatar.cc/96?img=12', alt: 'User 3' },
+  { src: 'https://i.pravatar.cc/96?img=53', alt: 'User 4' },
+  { src: 'https://i.pravatar.cc/96?img=24', alt: 'User 5' },
+  { src: 'https://i.pravatar.cc/96?img=18', alt: 'User 6' },
+  { src: 'https://i.pravatar.cc/96?img=64', alt: 'User 7' },
+  { src: 'https://i.pravatar.cc/96?img=29', alt: 'User 8' },
+];
 
 export const Hero = () => {
   const [usdAmount, setUsdAmount] = useState<number | string>(60);
@@ -16,6 +27,10 @@ export const Hero = () => {
   const [isLoadingRate, setIsLoadingRate] = useState(false);
   // Mock Friday logic: in a real app, use new Date().getDay() === 5
   const [isFriday] = useState(false);
+  const heroAvatars = useMemo(() => {
+    const shuffled = [...HERO_AVATAR_POOL].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 4);
+  }, []);
   
   const rawUsd = Number(usdAmount) || 0;
 
@@ -128,10 +143,18 @@ export const Hero = () => {
             {/* Social Proof Avatars */}
             <div className="flex items-center justify-center lg:justify-start gap-4 mb-8">
               <div className="flex -space-x-3">
-                <img className="w-12 h-12 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/96?img=11" alt="User 1" width="48" height="48" loading="lazy" decoding="async" />
-                <img className="w-12 h-12 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/96?img=32" alt="User 2" width="48" height="48" loading="lazy" decoding="async" />
-                <img className="w-12 h-12 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/96?img=12" alt="User 3" width="48" height="48" loading="lazy" decoding="async" />
-                <img className="w-12 h-12 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/96?img=53" alt="User 4" width="48" height="48" loading="lazy" decoding="async" />
+                {heroAvatars.map((avatar, idx) => (
+                  <img
+                    key={avatar.src + idx}
+                    className="w-12 h-12 rounded-full border-2 border-white shadow-sm"
+                    src={avatar.src}
+                    alt={avatar.alt}
+                    width="48"
+                    height="48"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ))}
                 <div className="w-12 h-12 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 shadow-sm">
                   99+
                 </div>
