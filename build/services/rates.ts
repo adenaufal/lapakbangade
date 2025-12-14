@@ -9,12 +9,12 @@ export interface RateResult {
 }
 
 /**
- * Fetch USD->IDR market rate from Netlify Function proxy.
+ * Fetch USD->IDR market rate from API endpoint.
  * Falls back to a default base rate when the request fails.
  */
 export const fetchUsdIdrRate = async (): Promise<RateResult> => {
   try {
-    const res = await fetch('/.netlify/functions/rate');
+    const res = await fetch('/api/rate');
     if (!res.ok) {
       throw new Error(`Rate function error ${res.status}`);
     }
