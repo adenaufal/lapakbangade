@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Wallet } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { CONFIG, NAV_LINKS } from '../constants';
 
 export const Navbar = () => {
@@ -23,10 +23,12 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <a href="#/" className="flex items-center gap-2 group">
-                <div className="bg-brand-600 text-white p-2 rounded-lg group-hover:bg-brand-700 transition-colors">
-                    <Wallet size={20} />
-                </div>
+            <a href="#/" className="flex items-center gap-3 group">
+                <img 
+                  src="/favicon/apple-icon-180x180.png" 
+                  alt="Lapak Bang Ade Logo" 
+                  className="h-10 w-10 rounded-lg group-hover:opacity-90 transition-opacity"
+                />
                 <span className="font-bold text-xl text-gray-900 tracking-tight">
                     {CONFIG.APP_NAME}
                 </span>
