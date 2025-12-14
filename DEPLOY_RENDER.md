@@ -62,16 +62,30 @@ Untuk production dengan traffic tinggi, upgrade ke paid plan ($7/bulan) untuk me
 
 ## Troubleshooting
 
+### Blank White Page
+**Penyebab umum:**
+1. Build command gagal - cek logs di Render Dashboard
+2. Path static files salah - pastikan `build/dist` folder ter-generate
+3. HTML parse error - sudah diperbaiki (noscript tag dipindah ke body)
+
+**Solusi:**
+- Pastikan build berhasil: lihat "Build succeeded" di logs
+- Check file structure: `build/dist/index.html` dan `build/dist/assets/` harus ada
+- Test lokal: `cd build && npm run build` (harus sukses tanpa error)
+
 ### Service gagal build
 - Periksa build logs di Render Dashboard
 - Pastikan semua dependencies terinstall
+- Cek error parse HTML jika ada - pastikan HTML valid
 
 ### API rate tidak bekerja
 - Periksa environment variable `EXCHANGE_RATE_API_KEY` sudah diset
 - Test endpoint: `curl https://your-app.onrender.com/api/rate`
+- Should return: `{"baseRate":16500,"source":"fallback_no_key"}` jika API key belum diset
 
 ### 404 pada routing
 - Sudah dihandle dengan `app.get('*')` di server.js untuk SPA routing
+- Semua route akan serve index.html untuk client-side routing React
 
 ## Manual Deploy (Alternative)
 

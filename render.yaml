@@ -6,7 +6,7 @@ services:
     env: node
     region: singapore
     plan: free
-    buildCommand: cd build && npm install && npm run build
+    buildCommand: npm install && cd build && npm install && npm run build && cd ..
     # Serve static files dan handle API endpoint
     startCommand: node server.js
     envVars:
