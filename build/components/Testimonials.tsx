@@ -77,6 +77,7 @@ const TESTIMONIALS: Testimonial[] = [
   }
 ];
 
+// Reusing the card component
 const TestimonialCard = ({ item, className = "" }: { item: Testimonial; className?: string }) => (
   <div className={`bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative h-full flex flex-col ${className}`}>
     <div className="absolute top-6 right-6 text-brand-100">
@@ -114,12 +115,8 @@ const TestimonialCard = ({ item, className = "" }: { item: Testimonial; classNam
 );
 
 export const Testimonials = () => {
-  // Logic: Keep first 3 static, the rest go to marquee
-  const featuredTestimonials = TESTIMONIALS.slice(0, 3);
-  const marqueeTestimonials = TESTIMONIALS.slice(3);
-
-  // Duplicate marquee items to ensure seamless loop
-  const marqueeItems = [...marqueeTestimonials, ...marqueeTestimonials];
+  // Use ALL testimonials for the marquee now
+  const allTestimonials = TESTIMONIALS;
 
   return (
     <section id="testimonials" className="py-20 bg-white overflow-hidden">
@@ -130,47 +127,36 @@ export const Testimonials = () => {
             Lebih dari sekadar konversi, kami membangun kepercayaan. Inilah pengalaman asli dari freelancer dan pengguna setia LapakBangAde.
           </p>
         </div>
-
-        {/* Featured Grid (Top 3) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {featuredTestimonials.map((item) => (
-            <div key={item.id} className="h-full">
-              <TestimonialCard item={item} />
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Marquee Section */}
-      <div className="relative w-full py-4 bg-gray-50/50 border-y border-gray-100/50">
-        <div className="flex overflow-hidden mask-linear-fade">
-          {/* Animated Track */}
+      <div className="relative w-full">
+        {/* White Gradients for Seamless Effect */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
+
+        <div className="flex overflow-hidden">
+          {/* 
+            Seamless Loop Logic:
+            - Parent container has no gap.
+            - Children sets have gap-8.
+            - Children sets have padding-right-8 (equivalent to gap-8) to create space between the end of Set 1 and start of Set 2.
+            - Wrapper moves -50% (exactly one Set width).
+          */}
           <motion.div
-            className="flex gap-8 px-4"
+            className="flex gap-0"
             animate={{ x: "-50%" }}
             transition={{
               repeat: Infinity,
               ease: "linear",
-              duration: 30
+              duration: 80 // Slower speed
             }}
             initial={{ x: 0 }}
             style={{ width: "fit-content" }}
           >
-            {/* Render items twice for seamless loop (handled by marqueeItems construction above, wait I need to be careful about width) */}
-            {/* Actually, for x: -50% to work as a loop, we need TWO sets of the SAME content.
-                If marqueeItems already has 2 sets of original data (slice 3 onwards), 
-                we simply map them. But to be safe for "infinite" feeling, 
-                let's wrap them in a fragment or simply map needed amount.
-                
-                The technique:
-                [ A B C D E ] [ A B C D E ] 
-                animate 0 -> -50% (which is the start of the second set).
-                Snap back to 0.
-            */}
-
             {/* First Set */}
-            <div className="flex gap-8 shrink-0">
-              {marqueeTestimonials.map((item) => (
+            <div className="flex gap-8 pr-8 shrink-0">
+              {allTestimonials.map((item) => (
                 <div key={`set1-${item.id}`} className="w-[350px] md:w-[400px]">
                   <TestimonialCard item={item} />
                 </div>
@@ -178,18 +164,9 @@ export const Testimonials = () => {
             </div>
 
             {/* Second Set (Duplicate) */}
-            <div className="flex gap-8 shrink-0">
-              {marqueeTestimonials.map((item) => (
+            <div className="flex gap-8 pr-8 shrink-0">
+              {allTestimonials.map((item) => (
                 <div key={`set2-${item.id}`} className="w-[350px] md:w-[400px]">
-                  <TestimonialCard item={item} />
-                </div>
-              ))}
-            </div>
-
-            {/* Third Set (Extra buffer for wide screens if needed, but 2 sets is usually enough if width > viewport) */}
-            <div className="flex gap-8 shrink-0">
-              {marqueeTestimonials.map((item) => (
-                <div key={`set3-${item.id}`} className="w-[350px] md:w-[400px]">
                   <TestimonialCard item={item} />
                 </div>
               ))}
@@ -201,4 +178,3 @@ export const Testimonials = () => {
     </section>
   );
 };
-
