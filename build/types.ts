@@ -5,7 +5,7 @@ export interface Testimonial {
   name: string;
   avatar: string;
   content: string;
-  platform: 'Facebook' | 'WhatsApp';
+  platform: 'Facebook' | 'WhatsApp' | 'Upwork' | 'Fiverr' | 'Freelancer.com' | string;
 }
 
 export interface FAQItem {
