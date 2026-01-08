@@ -1,0 +1,8 @@
+# Cloudflare Pages Redirects
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+# Redirect www to apex domain (301 permanent)
+https://www.lapakbangade.com/* https://lapakbangade.com/:splat 301
+
+# SPA fallback - serve index.html for all routes (this is automatic in CF Pages, but explicit for clarity)
+/* /index.html 200
