@@ -1,55 +1,64 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useEffect, Suspense } from 'react';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { LandingPage } from './components/LandingPage';
 import { initAnalytics } from './services/analytics';
 
 const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
 const TermsOfService = React.lazy(() => import('./components/TermsOfService'));
 
-const App: React.FC = () => {
-  const [route, setRoute] = useState(typeof window !== 'undefined' ? window.location.hash : '#/');
+const ScrollToAnchor = () => {
+  const { hash } = useLocation();
 
   useEffect(() => {
-    // Initialize Analytics
-    initAnalytics();
-
-    const handleHashChange = () => {
-      const nextHash = window.location.hash || '#/';
-      setRoute(nextHash);
-
-      // Scroll behavior: smooth scroll to section anchors, or reset for page-level routes
-      if (nextHash === '#/' || nextHash === '#/privacy' || nextHash === '#/terms') {
-        window.scrollTo(0, 0);
-      } else {
-        const target = document.querySelector(nextHash);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (hash && !hash.startsWith('#/')) {
+      try {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+      } catch (e) {
+        console.warn('Invalid hash selector:', hash);
       }
-    };
+    } else if (!hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [hash]);
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+  return null;
+};
+
+const LegacyRedirect = () => {
+  const { hash } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (hash.startsWith('#/')) {
+      const newPath = hash.substring(1); // e.g. #/terms -> /terms
+      navigate(newPath, { replace: true });
+    }
+  }, [hash, navigate]);
+
+  return null;
+};
+
+const App: React.FC = () => {
+  useEffect(() => {
+    initAnalytics();
   }, []);
 
-  // Simple Hash Router
-  if (route === '#/privacy') {
-    return (
+  return (
+    <BrowserRouter>
+      <ScrollToAnchor />
+      <LegacyRedirect />
       <Suspense fallback={<div className="p-8 text-center text-gray-700">Memuat...</div>}>
-        <PrivacyPolicy />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
+        </Routes>
       </Suspense>
-    );
-  }
-  
-  if (route === '#/terms') {
-    return (
-      <Suspense fallback={<div className="p-8 text-center text-gray-700">Memuat...</div>}>
-        <TermsOfService />
-      </Suspense>
-    );
-  }
-
-  // Default to Landing Page
-  return <LandingPage />;
+    </BrowserRouter>
+  );
 };
 
 export default App;
