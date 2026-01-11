@@ -4,7 +4,7 @@ Dokumen ini berisi panduan untuk menambahkan atau mengubah data testimoni yang m
 
 ## Lokasi File
 Data testimoni saat ini berada di dalam file:
-`build/components/Testimonials.tsx` pada konstanta `TESTIMONIALS`.
+`build/TESTIMONIALS.ts`.
 
 ## Struktur Data
 Setiap testimoni harus mengikuti struktur (interface) berikut:
@@ -21,8 +21,8 @@ Setiap testimoni harus mengikuti struktur (interface) berikut:
 
 ## Cara Menambah Testimoni Baru
 
-1. Buka file `build/components/Testimonials.tsx`.
-2. Cari variabel `const TESTIMONIALS`.
+1. Buka file `build/TESTIMONIALS.ts`.
+2. Cari variabel `export const TESTIMONIALS`.
 3. Tambahkan objek baru di akhir array. Contoh:
 
 ```typescript
