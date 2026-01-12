@@ -22,7 +22,7 @@ export const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
             <Link to="/" className="flex items-center gap-3 group">
               <img
                 src="/favicon/apple-icon-180x180.png"
@@ -33,6 +33,13 @@ export const Navbar = () => {
                 {CONFIG.APP_NAME}
               </span>
             </Link>
+            {/* Live Status Badge */}
+            <div className="hidden sm:flex items-center gap-2 bg-green-50 border border-green-200 px-3 py-1.5 rounded-full">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+              <span className="text-xs font-semibold text-green-700">
+                {CONFIG.LIVE_STATUS} • {CONFIG.AVERAGE_PROCESS_TIME}
+              </span>
+            </div>
           </div>
 
           {/* Desktop Menu */}

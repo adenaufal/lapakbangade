@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Send, Clock, CheckCircle, MessageCircle, RefreshCw, Star } from 'lucide-react';
 import { RATE, CONFIG, TESTIMONIALS } from '../constants';
-import { trackConversion, trackEvent, trackInitiateCheckout } from '../services/analytics';
+import { trackEvent, trackInitiateCheckout, trackLeadWithValue } from '../services/analytics';
 import { fetchUsdIdrRate, rateConfig } from '../services/rates';
 
 type Mode = 'convert' | 'topup';
@@ -76,21 +76,49 @@ export const Hero = () => {
     }).format(val);
   };
 
+  const generatePrefilledMessage = (): string => {
+    if (mode === 'convert') {
+      return `Hi Bang Ade, saya mau convert $${rawUsd} USD ke Rupiah. Estimasi terima: ${formatIDR(idrReceived)}. Rate: Rp ${convertRate.toLocaleString('id-ID')}/USD.`;
+    } else {
+      return `Hi Bang Ade, saya mau top-up $${rawUsd} USD ke PayPal. Total bayar: ${formatIDR(topupIdrTotal)}. Rate: Rp ${effectiveTopupRate.toLocaleString('id-ID')}/USD.`;
+    }
+  };
+
+  const getMessengerUrl = (): string => {
+    const message = encodeURIComponent(generatePrefilledMessage());
+    return `${CONFIG.MESSENGER_URL}?text=${message}`;
+  };
+
+  const getWhatsAppUrl = (): string => {
+    const message = encodeURIComponent(generatePrefilledMessage());
+    return `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${message}`;
+  };
+
   const handleConvertClick = () => {
+    const currentRate = mode === 'convert' ? convertRate : effectiveTopupRate;
+
     trackInitiateCheckout({
       amount: rawUsd,
       mode,
-      rate: mode === 'convert' ? convertRate : effectiveTopupRate,
+      rate: currentRate,
     });
 
-    if (mode === 'convert') {
-      trackConversion('USD', rawUsd);
-      trackEvent('cta_hero_click', { amount: rawUsd, mode: 'convert', rate: convertRate });
-    } else {
-      trackConversion('USD', rawUsd);
-      trackEvent('cta_hero_click', { amount: rawUsd, mode: 'topup', rate: effectiveTopupRate });
-    }
-    window.open(CONFIG.MESSENGER_URL, '_blank');
+    // Fire enhanced Lead event with value for Meta Pixel optimization
+    trackLeadWithValue({
+      value: rawUsd,
+      currency: 'USD',
+      mode,
+      rate: currentRate,
+    });
+
+    trackEvent('cta_hero_click', {
+      amount: rawUsd,
+      mode,
+      rate: currentRate,
+      idr_amount: mode === 'convert' ? idrReceived : topupIdrTotal,
+    });
+
+    window.open(getMessengerUrl(), '_blank');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

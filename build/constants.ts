@@ -11,7 +11,15 @@ export const CONFIG = {
   MESSENGER_URL: VITE_MESSENGER_URL || 'https://m.me/lapakbangade', // Placeholder
   GA_MEASUREMENT_ID: VITE_GA_MEASUREMENT_ID || 'G-XXXXXXXXXX',
   META_PIXEL_ID: VITE_META_PIXEL_ID || '1234567890',
-  OPERATIONAL_HOURS: '08:00 - 20:00 WIB'
+  OPERATIONAL_HOURS: '08:00 - 20:00 WIB',
+  // Social Media Links
+  FACEBOOK_URL: 'https://www.facebook.com/lapakbangade',
+  INSTAGRAM_URL: 'https://instagram.com/lapakbangade',
+  // Live Status (easily editable)
+  LIVE_STATUS: 'Admin Online',
+  AVERAGE_PROCESS_TIME: '15 Menit',
+  // WhatsApp for support/help only
+  WHATSAPP_SUPPORT: '6282113304116',
 };
 
 // Central source of truth for testimonials

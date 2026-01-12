@@ -114,7 +114,7 @@ export const trackEvent = (eventName: string, params?: Record<string, any>) => {
   if (window.gtag) {
     window.gtag('event', eventName, payload);
   }
-  
+
   if (window.fbq) {
     window.fbq('trackCustom', eventName, payload);
   }
@@ -131,3 +131,37 @@ export const trackInitiateCheckout = (params?: Record<string, any>) => {
 export const trackConversion = (currency: string, value: number) => {
   trackEvent('Lead', { currency, value });
 };
+
+/**
+ * Track Lead event with value for Meta Pixel optimization.
+ * This helps Facebook optimize ads for high-value conversions.
+ */
+export const trackLeadWithValue = (params: {
+  value: number;
+  currency: string;
+  mode: 'convert' | 'topup';
+  rate: number;
+}) => {
+  if (typeof window === 'undefined') return;
+
+  // Fire standard Lead event with value/currency for Meta Pixel
+  if (window.fbq) {
+    window.fbq('track', 'Lead', {
+      value: params.value,
+      currency: params.currency,
+      content_name: params.mode === 'convert' ? 'Convert USD to IDR' : 'Top-up USD',
+      content_category: 'PayPal Conversion',
+    });
+  }
+
+  // Also fire to GA4
+  if (window.gtag) {
+    window.gtag('event', 'generate_lead', {
+      value: params.value,
+      currency: params.currency,
+      transaction_type: params.mode,
+      rate: params.rate,
+    });
+  }
+};
+
