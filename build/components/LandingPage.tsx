@@ -7,7 +7,6 @@ import { FeeSection } from './FeeSection';
 import { PaymentMethods } from './PaymentMethods';
 import { Testimonials } from './Testimonials';
 import { FAQ } from './FAQ';
-import { CallToAction } from './CallToAction';
 import { SocialFollow } from './SocialFollow';
 import { Footer } from './Footer';
 import { trackEvent, trackViewContent, trackLeadWithValue } from '../services/analytics';
@@ -42,7 +41,6 @@ export const LandingPage: React.FC = () => {
         <FeeSection />
         <PaymentMethods />
         <FAQ />
-        <CallToAction />
         <SocialFollow />
 
         {/* Sticky Mobile CTA */}
