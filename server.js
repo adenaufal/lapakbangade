@@ -1,18 +1,96 @@
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const { configurePassport, passport } = require('./auth');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 const FALLBACK_BASE_RATE = 16500;
 
-// Set Cache-Control headers
+// Middleware
+app.use(cookieParser());
+app.use(express.json());
+
+// Session configuration
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'lapakbangade-secret-change-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  },
+}));
+
+// Initialize Passport
+configurePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Set Cache-Control headers for API
 app.use((req, res, next) => {
   if (req.path.startsWith('/api/')) {
     res.set('Cache-Control', 'public, max-age=300');
   }
   next();
 });
+
+// ==================== AUTH ROUTES ====================
+
+// Start Google OAuth
+app.get('/auth/google', passport.authenticate('google', {
+  scope: ['profile', 'email'],
+  prompt: 'select_account',
+}));
+
+// Google OAuth callback
+app.get('/auth/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/login?error=auth_failed',
+  }),
+  (req, res) => {
+    // Successful authentication
+    console.log('User logged in:', req.user?.email);
+    res.redirect('/dashboard');
+  }
+);
+
+// Logout
+app.get('/auth/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.error('Logout error:', err);
+    }
+    res.redirect('/');
+  });
+});
+
+// Get current user (API)
+app.get('/api/auth/me', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({
+      authenticated: true,
+      user: {
+        id: req.user.id,
+        email: req.user.email,
+        name: req.user.name,
+        picture: req.user.picture,
+      },
+    });
+  } else {
+    res.json({ authenticated: false, user: null });
+  }
+});
+
+// Check auth status
+app.get('/api/auth/status', (req, res) => {
+  res.json({ authenticated: req.isAuthenticated() });
+});
+
+// ==================== EXISTING API ROUTES ====================
 
 // API endpoint untuk rate
 app.get('/api/rate', async (req, res) => {
@@ -40,6 +118,8 @@ app.get('/api/rate', async (req, res) => {
   }
 });
 
+// ==================== STATIC FILES ====================
+
 // Serve static files dari build/dist dengan proper caching
 const distPath = path.join(__dirname, 'build', 'dist');
 app.use(express.static(distPath, {
@@ -54,4 +134,5 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`OAuth configured: ${process.env.GOOGLE_CLIENT_ID ? 'Yes' : 'No (missing GOOGLE_CLIENT_ID)'}`);
 });
