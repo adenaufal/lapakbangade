@@ -327,6 +327,20 @@ export const Dashboard = () => {
 
             <main className="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
+                    {/* Info Banner - Moved to Top */}
+                    <div className="mb-8 bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                            <MessageCircle size={16} className="text-blue-600" />
+                        </div>
+                        <div>
+                            <p className="text-sm text-blue-900 font-medium">Transaksi via Messenger/Discord</p>
+                            <p className="text-sm text-blue-700">
+                                Untuk saat ini, transaksi dilakukan melalui chat Messenger atau Discord.
+                                Dashboard ini menampilkan riwayat transaksi Anda.
+                            </p>
+                        </div>
+                    </div>
+
                     {/* Header */}
                     <div className="mb-8">
                         <div className="flex items-center gap-4 mb-2">
@@ -523,19 +537,6 @@ export const Dashboard = () => {
                         )}
                     </div>
 
-                    {/* Info Banner */}
-                    <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                            <MessageCircle size={16} className="text-blue-600" />
-                        </div>
-                        <div>
-                            <p className="text-sm text-blue-900 font-medium">Transaksi via Messenger/Discord</p>
-                            <p className="text-sm text-blue-700">
-                                Untuk saat ini, transaksi dilakukan melalui chat Messenger atau Discord.
-                                Dashboard ini menampilkan riwayat transaksi Anda.
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </main>
 

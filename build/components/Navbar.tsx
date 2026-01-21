@@ -57,14 +57,7 @@ export const Navbar = () => {
 
 
             <LoginButton />
-            <a
-              href={CONFIG.MESSENGER_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="bg-gray-900 hover:bg-black text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg shadow-gray-900/10"
-            >
-              Hubungi Admin
-            </a>
+
           </div>
 
           {/* Mobile menu button */}
@@ -100,13 +93,7 @@ export const Navbar = () => {
             <div className="pt-2">
               <LoginButton variant="mobile" />
             </div>
-            <a
-              href={CONFIG.MESSENGER_URL}
-              className="block w-full text-center px-4 py-3 text-base font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-lg mt-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Chat Messenger
-            </a>
+
           </div>
         </div>
       )}

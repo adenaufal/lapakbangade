@@ -2,6 +2,7 @@ import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { LandingPage } from './components/LandingPage';
 import { AuthProvider } from './hooks/useAuth';
+import { FloatingChatButton } from './components/FloatingChatButton';
 import { initAnalytics } from './services/analytics';
 
 const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
@@ -53,6 +54,7 @@ const App: React.FC = () => {
       <BrowserRouter>
         <ScrollToAnchor />
         <LegacyRedirect />
+        <FloatingChatButton />
         <Suspense fallback={<div className="p-8 text-center text-gray-700">Memuat...</div>}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
