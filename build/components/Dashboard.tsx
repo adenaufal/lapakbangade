@@ -60,6 +60,7 @@ const StatusBadge = ({ status }: { status: string }) => {
         processing: { bg: 'bg-blue-100', text: 'text-blue-700', icon: Loader2, label: 'Processing' },
         completed: { bg: 'bg-green-100', text: 'text-green-700', icon: CheckCircle2, label: 'Selesai' },
         cancelled: { bg: 'bg-red-100', text: 'text-red-700', icon: XCircle, label: 'Dibatalkan' },
+        failed: { bg: 'bg-red-100', text: 'text-red-700', icon: XCircle, label: 'Gagal' },
     }[status] || { bg: 'bg-gray-100', text: 'text-gray-700', icon: Clock, label: status };
 
     const Icon = config.icon;
@@ -72,7 +73,7 @@ const StatusBadge = ({ status }: { status: string }) => {
     );
 };
 
-const TransactionCard = ({ tx }: { tx: typeof mockTransactions[0] }) => {
+const TransactionCard = ({ tx }: { tx: any }) => {
     const isConvert = tx.type === 'convert';
     const date = new Date(tx.created_at).toLocaleDateString('id-ID', {
         day: 'numeric',
@@ -118,7 +119,7 @@ const TransactionCard = ({ tx }: { tx: typeof mockTransactions[0] }) => {
                 </div>
                 <div>
                     <p className="text-gray-500">ID</p>
-                    <p className="font-mono text-xs text-gray-600">#{tx.id}</p>
+                    <p className="font-mono text-xs text-gray-600">#{tx.display_id || tx.id.substring(0, 8)}</p>
                 </div>
             </div>
         </div>
@@ -140,9 +141,8 @@ export const Dashboard = () => {
         return <Navigate to="/" replace />;
     }
 
-    const completedCount = mockTransactions.filter(t => t.status === 'completed').length;
-    const pendingCount = mockTransactions.filter(t => t.status === 'pending' || t.status === 'processing').length;
-    const totalVolume = mockTransactions.reduce((sum, t) => sum + t.amount_usd, 0);
+    const [transactions, setTransactions] = React.useState<any[]>([]);
+    const [isLoadingTransactions, setIsLoadingTransactions] = React.useState(true);
 
     const [linkedAccounts, setLinkedAccounts] = React.useState<{ google?: boolean; facebook?: boolean; discord?: boolean }>({
         google: true, // Always true if logged in via Google
@@ -165,8 +165,23 @@ export const Dashboard = () => {
                     }
                 })
                 .catch(console.error);
+
+            // Fetch Transactions
+            fetch('/api/transactions/list')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && Array.isArray(data.transactions)) {
+                        setTransactions(data.transactions);
+                    }
+                })
+                .catch(console.error)
+                .finally(() => setIsLoadingTransactions(false));
         }
     }, [user]);
+
+    const completedCount = transactions.filter(t => t.status === 'completed' || t.status === 'success').length;
+    const pendingCount = transactions.filter(t => ['pending', 'processing', 'waiting_payment', 'waiting_transfer'].includes(t.status)).length;
+    const totalVolume = transactions.reduce((sum, t) => sum + (t.amount_usd || 0), 0);
 
     const generateLinkCode = async () => {
         setIsGeneratingCode(true);
@@ -290,7 +305,7 @@ export const Dashboard = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                         <div className="bg-white rounded-xl border border-gray-200 p-5">
                             <p className="text-sm text-gray-500 mb-1">Total Transaksi</p>
-                            <p className="text-2xl font-bold text-gray-900">{mockTransactions.length}</p>
+                            <p className="text-2xl font-bold text-gray-900">{transactions.length}</p>
                         </div>
                         <div className="bg-white rounded-xl border border-gray-200 p-5">
                             <p className="text-sm text-gray-500 mb-1">Selesai / Pending</p>
@@ -436,7 +451,11 @@ export const Dashboard = () => {
                             </a>
                         </div>
 
-                        {mockTransactions.length === 0 ? (
+                        {isLoadingTransactions ? (
+                            <div className="flex justify-center p-12">
+                                <Loader2 size={32} className="animate-spin text-brand-600" />
+                            </div>
+                        ) : transactions.length === 0 ? (
                             <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
                                 <p className="text-gray-500 mb-4">Belum ada transaksi</p>
                                 <a
@@ -448,7 +467,7 @@ export const Dashboard = () => {
                             </div>
                         ) : (
                             <div className="grid gap-4">
-                                {mockTransactions.map((tx) => (
+                                {transactions.map((tx) => (
                                     <TransactionCard key={tx.id} tx={tx} />
                                 ))}
                             </div>
