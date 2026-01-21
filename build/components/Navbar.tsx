@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, LayoutDashboard } from 'lucide-react';
 import { CONFIG, NAV_LINKS } from '../constants';
 import { LoginButton } from './LoginButton';
+import { useAuth } from '../hooks/useAuth';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,12 +19,15 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Don't show confusing nav links on dashboard
+  const isDashboard = location.pathname === '/dashboard';
+
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 border-b ${scrolled ? 'bg-white/95 backdrop-blur-sm border-gray-200 py-3 shadow-sm' : 'bg-white border-transparent py-4'
         }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
             <Link to="/" className="flex items-center gap-3 group">
@@ -45,7 +51,7 @@ export const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6">
-            {NAV_LINKS.map((link) => (
+            {!isDashboard && NAV_LINKS.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
@@ -54,6 +60,17 @@ export const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+
+            {isAuthenticated && !isDashboard && (
+              <Link
+                to="/dashboard"
+                className="flex items-center gap-2 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors bg-brand-50 px-3 py-2 rounded-lg"
+              >
+                <LayoutDashboard size={16} />
+                Dashboard
+              </Link>
+            )}
+
             <LoginButton />
             <a
               href={CONFIG.MESSENGER_URL}
@@ -92,6 +109,17 @@ export const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+
+            {isAuthenticated && (
+              <Link
+                to="/dashboard"
+                className="block px-4 py-3 text-base font-medium text-brand-600 hover:bg-brand-50 rounded-lg"
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard
+              </Link>
+            )}
+
             <div className="pt-2">
               <LoginButton variant="mobile" />
             </div>
