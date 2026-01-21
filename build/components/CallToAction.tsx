@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, Facebook } from 'lucide-react';
 import { CONFIG } from '../constants';
 import { trackEvent } from '../services/analytics';
 
@@ -28,16 +28,33 @@ export const CallToAction = () => {
                         target="_blank"
                         rel="noreferrer"
                         onClick={handleClick}
-                        className="group relative inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-brand-700 font-bold text-xl px-12 py-5 rounded-2xl shadow-2xl shadow-brand-900/50 transition-all hover:scale-105 hover:shadow-white/10"
+                        className="group relative inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-brand-700 font-bold text-xl px-12 py-5 rounded-2xl shadow-2xl shadow-brand-900/50 transition-all hover:scale-105 hover:shadow-white/10 w-full md:w-auto justify-center"
                     >
                         <div className="absolute inset-0 rounded-2xl ring-4 ring-white/20 group-hover:ring-white/40 transition-all"></div>
                         <MessageCircle size={28} className="text-brand-600 group-hover:scale-110 transition-transform" />
                         <span>Chat Admin Sekarang</span>
                     </a>
 
-                    <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
+                    <div className="flex items-center gap-2 text-sm text-gray-400 font-medium">
                         <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                         Diproses di jam operasional {CONFIG.OPERATIONAL_HOURS}
+                    </div>
+
+                    {/* Social Follow Link */}
+                    <div className="mt-8 pt-8 border-t border-white/10 w-full max-w-sm text-center">
+                        <p className="text-gray-500 text-sm mb-4">Mau update rate harian?</p>
+                        <a
+                            href={CONFIG.FACEBOOK_URL}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={() => trackEvent('social_follow_click', { platform: 'facebook' })}
+                            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-semibold group/social"
+                        >
+                            <div className="p-2 bg-gray-800 rounded-lg group-hover/social:bg-[#1877F2] transition-colors">
+                                <Facebook size={18} />
+                            </div>
+                            Follow Lapak Bang Ade di Facebook
+                        </a>
                     </div>
                 </div>
             </div>
