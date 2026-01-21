@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 const {
   VITE_GA_MEASUREMENT_ID,
   VITE_META_PIXEL_ID,
@@ -9,8 +10,8 @@ export const CONFIG = {
   APP_NAME: 'Lapak Bang Ade',
   WHATSAPP_NUMBER: VITE_WHATSAPP_NUMBER || '6281234567890', // Placeholder
   MESSENGER_URL: VITE_MESSENGER_URL || 'https://m.me/lapakbangade', // Placeholder
-  GA_MEASUREMENT_ID: VITE_GA_MEASUREMENT_ID || 'G-XXXXXXXXXX',
-  META_PIXEL_ID: VITE_META_PIXEL_ID || '1234567890',
+  GA_MEASUREMENT_ID: VITE_GA_MEASUREMENT_ID || 'G-ZTR1QX14YK',
+  META_PIXEL_ID: VITE_META_PIXEL_ID || '837636162306241',
   OPERATIONAL_HOURS: '08:00 - 20:00 WIB',
   // Social Media Links
   FACEBOOK_URL: 'https://www.facebook.com/lapakbangade',

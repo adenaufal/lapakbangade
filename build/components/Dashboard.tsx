@@ -21,6 +21,42 @@ import {
     RefreshCw
 } from 'lucide-react';
 
+// Type definitions for API responses
+interface Transaction {
+    id: string;
+    type: string;
+    amount_usd: number;
+    amount_idr: number;
+    rate: number;
+    status: string;
+    created_at: string;
+    completed_at?: string;
+    display_id?: string;
+}
+
+interface LinkedAccounts {
+    google?: boolean;
+    facebook?: boolean;
+    discord?: boolean;
+}
+
+interface UserRefreshResponse {
+    success: boolean;
+    linked_accounts?: LinkedAccounts;
+}
+
+interface TransactionsListResponse {
+    success: boolean;
+    transactions?: Transaction[];
+}
+
+interface LinkGenerateResponse {
+    success: boolean;
+    code?: string;
+    error?: string;
+    expires_in_seconds?: number;
+}
+
 // Mock transactions for demo - will be replaced with API call
 const mockTransactions = [
     {
@@ -141,7 +177,7 @@ export const Dashboard = () => {
         return <Navigate to="/" replace />;
     }
 
-    const [transactions, setTransactions] = React.useState<any[]>([]);
+    const [transactions, setTransactions] = React.useState<Transaction[]>([]);
     const [isLoadingTransactions, setIsLoadingTransactions] = React.useState(true);
 
     const [linkedAccounts, setLinkedAccounts] = React.useState<{ google?: boolean; facebook?: boolean; discord?: boolean }>({
@@ -159,7 +195,7 @@ export const Dashboard = () => {
             // Initial fetch of linked status
             fetch('/api/user/refresh')
                 .then(res => res.json())
-                .then(data => {
+                .then((data: UserRefreshResponse) => {
                     if (data.success && data.linked_accounts) {
                         setLinkedAccounts(prev => ({ ...prev, ...data.linked_accounts }));
                     }
@@ -169,7 +205,7 @@ export const Dashboard = () => {
             // Fetch Transactions
             fetch('/api/transactions/list')
                 .then(res => res.json())
-                .then(data => {
+                .then((data: TransactionsListResponse) => {
                     if (data.success && Array.isArray(data.transactions)) {
                         setTransactions(data.transactions);
                     }
@@ -187,7 +223,7 @@ export const Dashboard = () => {
         setIsGeneratingCode(true);
         try {
             const res = await fetch('/api/link/generate', { method: 'POST' });
-            const data = await res.json();
+            const data = await res.json() as LinkGenerateResponse;
             if (data.success) {
                 setLinkCode(data.code);
                 // Expiry is in seconds from now, calculate absolute time or just countdown
