@@ -9,8 +9,8 @@ export const PrivacyPolicy = () => {
       <Navbar />
       <main className="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Kebijakan Privasi</h1>
-        <p className="text-sm text-gray-600 mb-8">Terakhir diperbarui: 8 Desember 2025</p>
-        
+        <p className="text-sm text-gray-600 mb-8">Terakhir diperbarui: 21 Januari 2026</p>
+
         <div className="prose prose-blue max-w-none text-gray-600 space-y-8">
           <section>
             <p className="lead text-lg text-gray-700">
@@ -34,11 +34,23 @@ export const PrivacyPolicy = () => {
               <li>Data transaksi: nominal USD/IDR, jenis layanan (convert/top-up), status, waktu transaksi.</li>
               <li>Data teknis: log aktivitas, device/browser metadata, dan catatan error untuk debugging.</li>
               <li>Riwayat percakapan: chat dengan admin/bot untuk keperluan audit dan dukungan.</li>
+              <li>Data login Google: email, nama, dan foto profil jika Anda login menggunakan akun Google.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">3. Tujuan Penggunaan Data</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">3. Login dengan Google (OAuth)</h2>
+            <p>Jika Anda memilih login menggunakan akun Google:</p>
+            <ul className="list-disc pl-5 space-y-2 mt-2">
+              <li>Kami hanya mengakses informasi dasar: email, nama, dan foto profil.</li>
+              <li>Kami <strong>TIDAK</strong> mengakses kontak, email, Google Drive, atau data sensitif lainnya.</li>
+              <li>Data login disimpan dalam sesi terenkripsi dan tidak dibagikan ke pihak ketiga.</li>
+              <li>Anda dapat logout kapan saja dan memutuskan koneksi melalui pengaturan akun Google Anda.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">4. Tujuan Penggunaan Data</h2>
             <p>Data digunakan untuk:</p>
             <ul className="list-disc pl-5 space-y-2 mt-2">
               <li>Memproses transaksi convert/top-up dan mengirim konfirmasi status.</li>
@@ -50,14 +62,14 @@ export const PrivacyPolicy = () => {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">4. Dasar Hukum Pemrosesan</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">5. Dasar Hukum Pemrosesan</h2>
             <p>
               Kami memproses data berdasarkan: (a) persetujuan Anda, (b) pelaksanaan perjanjian layanan, (c) kewajiban hukum, dan (d) kepentingan sah untuk menjaga keamanan dan mencegah fraud. Jika Anda menarik persetujuan, beberapa layanan mungkin tidak dapat diberikan sepenuhnya.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">5. Penyimpanan & Keamanan</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">6. Penyimpanan & Keamanan</h2>
             <p>Kami menerapkan langkah-langkah berikut untuk menjaga kerahasiaan data:</p>
             <ul className="list-disc pl-5 space-y-2 mt-2">
               <li>Penyimpanan terenkripsi dan akses terbatas hanya untuk admin terverifikasi.</li>
@@ -67,7 +79,7 @@ export const PrivacyPolicy = () => {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">6. Retensi Data</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">7. Retensi Data</h2>
             <p>Data disimpan sesuai kebutuhan operasional dan hukum, antara lain:</p>
             <ul className="list-disc pl-5 space-y-2 mt-2">
               <li>Data transaksi: hingga 5 tahun (atau sesuai kewajiban audit/pajak).</li>
@@ -78,7 +90,7 @@ export const PrivacyPolicy = () => {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">7. Berbagi Data</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">8. Berbagi Data</h2>
             <p>Data dapat dibagikan secara terbatas dengan:</p>
             <ul className="list-disc pl-5 space-y-2 mt-2">
               <li>Penyedia layanan pembayaran/hosting/analitik yang mendukung operasional.</li>
@@ -89,40 +101,40 @@ export const PrivacyPolicy = () => {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">8. Hak Anda</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">9. Hak Anda</h2>
             <p>Anda dapat mengajukan: akses, koreksi, penghapusan, keberatan/pembatasan pemrosesan, dan penarikan persetujuan. Permintaan akan diverifikasi untuk memastikan keamanan data.</p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">9. Cookie & Analitik</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">10. Cookie & Analitik</h2>
             <p>
               Kami dapat menggunakan cookie atau pelacakan serupa untuk analitik dan pengukuran kampanye (misal Google Analytics). Anda dapat menonaktifkan cookie melalui pengaturan browser, namun beberapa fitur mungkin terpengaruh.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">10. Transfer Internasional</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">11. Transfer Internasional</h2>
             <p>
               Jika data diproses di luar Indonesia oleh penyedia layanan pihak ketiga, kami akan memastikan perlindungan yang sebanding sesuai praktik industri dan ketentuan yang berlaku.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">11. Anak di Bawah Umur</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">12. Anak di Bawah Umur</h2>
             <p>
               Layanan ini tidak ditujukan bagi individu di bawah usia yang diizinkan untuk membuat akun pembayaran secara mandiri. Jika kami mengetahui ada data anak di bawah umur, kami akan menghapusnya setelah verifikasi yang wajar.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">12. Perubahan Kebijakan</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">13. Perubahan Kebijakan</h2>
             <p>
               Pembaruan Kebijakan Privasi akan dipublikasikan di halaman ini dan berlaku sejak tanggal penerbitan. Penggunaan layanan setelah pembaruan menandakan persetujuan Anda atas versi terbaru.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">13. Kontak</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">14. Kontak</h2>
             <p>Jika ada pertanyaan atau permintaan terkait privasi:</p>
             <ul className="list-disc pl-5 space-y-2 mt-2">
               <li>Facebook: <a href="https://facebook.com/aadenaufall" className="text-brand-600 hover:underline">@aadenaufall</a></li>
