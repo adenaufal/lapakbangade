@@ -22,10 +22,7 @@ export const CookieConsent: React.FC = () => {
         setIsVisible(false);
     };
 
-    const handleDecline = () => {
-        localStorage.setItem('cookie_consent', 'declined');
-        setIsVisible(false);
-    };
+
 
     return (
         <AnimatePresence>
@@ -52,28 +49,15 @@ export const CookieConsent: React.FC = () => {
 
                         <div className="flex items-center gap-3 mt-4 md:mt-0">
                             <button
-                                onClick={handleDecline}
-                                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
-                                aria-label="Tolak cookie"
-                            >
-                                Tolak
-                            </button>
-                            <button
                                 onClick={handleAccept}
                                 className="px-6 py-2 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-lg shadow-blue-600/20 transition-all transform hover:scale-[1.02]"
                                 aria-label="Terima cookie"
                             >
-                                Terima Semua
+                                Oke, Mengerti
                             </button>
                         </div>
 
-                        <button
-                            onClick={handleDecline}
-                            className="absolute top-2 right-2 p-1 text-gray-400 hover:text-gray-600 md:hidden"
-                            aria-label="Tutup"
-                        >
-                            <X size={16} />
-                        </button>
+
                     </div>
                 </motion.div>
             )}
