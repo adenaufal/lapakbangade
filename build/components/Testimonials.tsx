@@ -47,13 +47,31 @@ export const Testimonials = () => {
   const allTestimonials = TESTIMONIALS;
 
   return (
-    <section id="testimonials" className="py-16 md:py-20 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">Pengalaman Mereka Bersama Kami</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">
+    <section id="testimonials" className="py-24 relative overflow-hidden bg-white">
+      {/* Background Decor */}
+      <div className="absolute inset-0 bg-white"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-50"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4"
+          >
+            Pengalaman Mereka <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-500">Bersama Kami</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-lg text-gray-600 max-w-2xl mx-auto"
+          >
             Lebih dari sekadar konversi, kami membangun kepercayaan. Inilah pengalaman asli dari freelancer dan pengguna setia LapakBangAde.
-          </p>
+          </motion.p>
         </div>
       </div>
 
