@@ -55,6 +55,45 @@ export async function onRequestGet(context) {
         const sessionCookie = createSessionCookie(sessionToken);
         const clearStateCookie = 'oauth_state=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0';
 
+        // Sync user to backend
+        try {
+            const apiUrl = env.API_URL || 'https://admin.lapakbangade.com';
+            const timestamp = Math.floor(Date.now() / 1000).toString();
+            const userData = JSON.stringify(user);
+
+            const encoder = new TextEncoder();
+            const key = await crypto.subtle.importKey(
+                'raw', encoder.encode(env.SESSION_SECRET),
+                { name: 'HMAC', hash: 'SHA-256' },
+                false, ['sign']
+            );
+
+            const signatureBuffer = await crypto.subtle.sign(
+                'HMAC',
+                key,
+                encoder.encode(timestamp + "." + userData)
+            );
+
+            // Convert buffer to hex string
+            const signatureArray = Array.from(new Uint8Array(signatureBuffer));
+            const signature = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+            // Call backend sync endpoint (fire and forget-ish, but await to ensure it starts)
+            await fetch(`${apiUrl}/api/v1/sync/user`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Timestamp': timestamp,
+                    'X-Signature': signature
+                },
+                body: userData
+            });
+            console.log("User synced to backend");
+        } catch (syncError) {
+            console.error("Failed to sync user to backend:", syncError);
+            // Non-blocking error, user can still log in
+        }
+
         // Use HTML page with meta refresh to ensure cookies are set properly
         const redirectUrl = `${url.origin}/dashboard`;
         const html = `<!DOCTYPE html>
