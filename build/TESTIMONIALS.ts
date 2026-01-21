@@ -71,5 +71,19 @@ export const TESTIMONIALS: Testimonial[] = [
         avatar: "/assets/testimonials/satya.webp",
         content: "Service pencairan USD nya ngebantu banget buat lo yang takut cairin dari PayPal sendiri. Ratenya bagus dan yang paling penting sistemnya ngga bikin repot.",
         platform: "Facebook"
+    },
+    {
+        id: 11,
+        name: "Egatamma Nugraha",
+        avatar: "/assets/testimonials/ega.webp",
+        content: "Sering terselamatkan sama Lapak Bang Ade! Convert & top-up PayPal-nya beneran satset, apalagi sekarang ada sistem bot jadi makin kilat. Fee masuk akal & ngebantu banget buat yang nggak punya VCC. Trusted! 🚀🔥",
+        platform: "Facebook"
+    },
+    {
+        id: 12,
+        name: "Mei",
+        avatar: "/assets/testimonials/mei.webp",
+        content: "Convert di sini slalu dengan rate yg oke dan cara ordernya pun satsetsatset u w u very recommended~",
+        platform: "Facebook"
     }
 ];
