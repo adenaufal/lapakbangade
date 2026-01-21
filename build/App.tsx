@@ -1,6 +1,7 @@
 import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { LandingPage } from './components/LandingPage';
+import { AuthProvider } from './hooks/useAuth';
 import { initAnalytics } from './services/analytics';
 
 const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
@@ -47,17 +48,19 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <BrowserRouter>
-      <ScrollToAnchor />
-      <LegacyRedirect />
-      <Suspense fallback={<div className="p-8 text-center text-gray-700">Memuat...</div>}>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<TermsOfService />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <ScrollToAnchor />
+        <LegacyRedirect />
+        <Suspense fallback={<div className="p-8 text-center text-gray-700">Memuat...</div>}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
 

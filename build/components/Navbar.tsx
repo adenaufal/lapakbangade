@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { CONFIG, NAV_LINKS } from '../constants';
+import { LoginButton } from './LoginButton';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +44,7 @@ export const Navbar = () => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.name}
@@ -53,6 +54,7 @@ export const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            <LoginButton />
             <a
               href={CONFIG.MESSENGER_URL}
               target="_blank"
@@ -90,9 +92,12 @@ export const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            <div className="pt-2">
+              <LoginButton variant="mobile" />
+            </div>
             <a
               href={CONFIG.MESSENGER_URL}
-              className="block w-full text-center px-4 py-3 text-base font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-lg mt-4"
+              className="block w-full text-center px-4 py-3 text-base font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-lg mt-2"
               onClick={() => setIsOpen(false)}
             >
               Chat Messenger
