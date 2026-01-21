@@ -9,3 +9,4 @@ compatibility_flags = ["nodejs_compat"]
 # Environment variables (secrets should be set in Cloudflare Dashboard)
 [vars]
 # EXCHANGE_RATE_API_KEY = "set-in-dashboard"
+API_URL = "https://admin.lapakbangade.com"

@@ -5,6 +5,12 @@ interface User {
     email: string;
     name: string;
     picture?: string;
+    role?: string;
+    linked_accounts?: {
+        google?: boolean;
+        facebook?: boolean;
+        discord?: boolean;
+    };
 }
 
 interface AuthContextType {
