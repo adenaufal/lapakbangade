@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Send, Clock, CheckCircle, MessageCircle, RefreshCw, Star } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { RATE, CONFIG, TESTIMONIALS } from '../constants';
 import { trackEvent, trackInitiateCheckout, trackLeadWithValue } from '../services/analytics';
 import { fetchUsdIdrRate, rateConfig } from '../services/rates';
@@ -14,8 +15,15 @@ export const Hero = () => {
   const [baseRate, setBaseRate] = useState(rateConfig.fallbackBase);
   const [rateSource, setRateSource] = useState<'api' | 'fallback'>('fallback');
   const [isLoadingRate, setIsLoadingRate] = useState(false);
-  // Mock Friday logic: in a real app, use new Date().getDay() === 5
-  const [isFriday] = useState(false);
+  // Real Friday logic
+  const [isFriday, setIsFriday] = useState(false);
+
+  useEffect(() => {
+    // Check if today is Friday (5)
+    // We can also check time if needed, but simple day check is safer for now
+    const today = new Date();
+    setIsFriday(today.getDay() === 5);
+  }, []);
   const heroAvatars = useMemo(() => {
     // Pick 4 random avatars from the central TESTIMONIALS list
     const shuffled = [...TESTIMONIALS].sort(() => Math.random() - 0.5);
@@ -133,17 +141,36 @@ export const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
 
           {/* Text Content */}
-          <div className="flex-1 text-center lg:text-left">
-            <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6">
-              Convert PayPal ke Rupiah, <span className="text-brand-600">Cepat & Aman</span>
-            </h1>
+          <div className="flex-1 text-center lg:text-left z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {/* Live Status Badge */}
+              <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 px-3 py-1.5 rounded-full mb-6 mx-auto lg:mx-0">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span className="text-xs font-semibold text-green-700">
+                  {CONFIG.LIVE_STATUS} • {CONFIG.AVERAGE_PROCESS_TIME}
+                </span>
+              </div>
 
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0 font-medium">
-              Langsung cair ke bank atau e-wallet kamu.
-            </p>
+              <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6">
+                Convert PayPal ke Rupiah, <span className="text-brand-600 bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-blue-400">Cepat & Aman</span>
+              </h1>
+
+              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                Langsung cair ke bank atau e-wallet kamu. Rate terbaik setiap hari.
+              </p>
+            </motion.div>
 
             {/* Quick Points */}
-            <ul className="space-y-3 mb-8 text-gray-600 inline-block text-left">
+            <motion.ul
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="space-y-3 mb-8 text-gray-600 inline-block text-left"
+            >
               <li className="flex items-center gap-2">
                 <CheckCircle size={20} className="text-brand-600 flex-shrink-0" />
                 <span>Diproses manual oleh admin</span>
@@ -156,7 +183,7 @@ export const Hero = () => {
                 <Clock size={20} className="text-brand-600 flex-shrink-0" />
                 <span>Respon 30-60 menit</span>
               </li>
-            </ul>
+            </motion.ul>
 
             {/* Social Proof Avatars */}
             <div className="flex items-center justify-center lg:justify-start gap-4 mb-8">
@@ -189,23 +216,37 @@ export const Hero = () => {
               </div>
             </div>
 
-            <div className="flex flex-col items-center lg:items-start gap-4 mb-8">
-              <button
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="flex flex-col items-center lg:items-start gap-4 mb-8"
+            >
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={handleConvertClick}
-                className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold text-lg rounded-xl shadow-lg shadow-brand-500/20 transition-all flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white font-bold text-lg rounded-xl shadow-lg shadow-brand-500/30 transition-all flex items-center justify-center gap-2 ring-4 ring-brand-500/10"
               >
                 <MessageCircle size={24} />
                 Chat via Messenger
-              </button>
-              <div className="text-sm text-gray-600 font-medium bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
+              </motion.button>
+              <div className="flex items-center gap-2 text-sm text-gray-600 font-medium bg-white/50 backdrop-blur-sm px-4 py-1.5 rounded-full border border-gray-200">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 Jam operasional {CONFIG.OPERATIONAL_HOURS}
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Calculator Card */}
-          <div className="flex-1 w-full max-w-md" id="calculator">
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden ring-1 ring-gray-100">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 100 }}
+            className="flex-1 w-full max-w-md z-10"
+            id="calculator"
+          >
+            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/50 overflow-hidden ring-1 ring-black/5 transform transition-all hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
               <div className="bg-gray-900 p-4 text-white text-center">
                 <div className="font-bold text-lg">
                   1 USD = Rp {(mode === 'convert' ? convertRate : effectiveTopupRate).toLocaleString('id-ID')}
@@ -290,16 +331,19 @@ export const Hero = () => {
                   </div>
                 )}
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={handleConvertClick}
-                  className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-lg transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-lg transition-colors flex items-center justify-center gap-2 relative overflow-hidden group"
                 >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
                   <span>{mode === 'convert' ? 'Lanjut Convert ke Rupiah' : 'Lanjut Top-up USD'}</span>
                   <Send size={18} />
-                </button>
+                </motion.button>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

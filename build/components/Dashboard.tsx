@@ -20,25 +20,11 @@ import {
     Copy,
     RefreshCw
 } from 'lucide-react';
+import { Transaction } from '../types';
+import { TransactionDetailModal } from './TransactionDetailModal';
 
 // Type definitions for API responses
-interface Transaction {
-    id: string;
-    type: string;
-    amount_usd: number;
-    amount_idr: number;
-    rate: number;
-    status: string;
-    created_at: string;
-    completed_at?: string;
-    display_id?: string;
-    // Detailed fields
-    amount_usd_net?: number;
-    bank_name?: string;
-    account_number?: string;
-    account_name?: string;
-    is_express?: boolean;
-}
+// Local Transaction interface removed in favor of '../types'
 
 interface LinkedAccounts {
     google?: boolean;
@@ -115,162 +101,7 @@ const StatusBadge = ({ status }: { status: string }) => {
     );
 };
 
-const TransactionDetailModal = ({ tx, onClose }: { tx: Transaction; onClose: () => void }) => {
-    const isConvert = tx.type === 'convert';
-    const date = new Date(tx.created_at).toLocaleDateString('id-ID', {
-        day: 'numeric', month: 'long', year: 'numeric'
-    });
-    const time = new Date(tx.created_at).toLocaleTimeString('id-ID', {
-        hour: '2-digit', minute: '2-digit'
-    });
-
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl relative animate-in zoom-in-95 duration-200 overflow-hidden max-h-[90vh] flex flex-col">
-                {/* Header */}
-                <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
-                    <div className="flex items-center gap-3">
-                        <h3 className="text-xl font-bold text-gray-900">Transaction Details</h3>
-                        <StatusBadge status={tx.status} />
-                        <span className="text-sm text-gray-400 font-mono">
-                            {tx.display_id || tx.id.substring(0, 8)}
-                        </span>
-                    </div>
-                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors">
-                        <XCircle size={24} />
-                    </button>
-                </div>
-
-                <div className="p-6 overflow-y-auto custom-scrollbar">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {/* Left Column: Transaction Info */}
-                        <div className="space-y-6">
-                            <div>
-                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">TRANSACTION INFO</h4>
-                                <div className="space-y-4">
-                                    <div className="flex justify-between py-2 border-b border-gray-50">
-                                        <span className="text-gray-500">Internal ID</span>
-                                        <div className="flex items-center gap-2">
-                                            <span className="font-mono text-sm text-gray-700">{tx.id}</span>
-                                            <button className="text-gray-400 hover:text-gray-600" onClick={() => navigator.clipboard.writeText(tx.id)}>
-                                                <Copy size={14} />
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between py-2 border-b border-gray-50">
-                                        <span className="text-gray-500">Date</span>
-                                        <div className="text-right">
-                                            <p className="font-medium text-gray-900">{date}</p>
-                                            <p className="text-xs text-gray-400">{time}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between py-2 border-b border-gray-50">
-                                        <span className="text-gray-500">Type</span>
-                                        <span className="font-medium text-gray-900 capitalize">{tx.type}</span>
-                                    </div>
-                                    <div className="flex justify-between py-2 border-b border-gray-50">
-                                        <span className="text-gray-500 font-medium">Amount</span>
-                                        <span className="font-bold text-lg text-gray-900">${(tx.amount_usd || 0).toLocaleString()} USD</span>
-                                    </div>
-
-                                    {/* Breakdown */}
-                                    {isConvert && (
-                                        <div className="flex justify-between py-2 border-b border-gray-50 text-sm">
-                                            <div className="text-gray-500">
-                                                USD (Gross) <span className="text-gray-900 font-medium ml-2">${(tx.amount_usd || 0).toFixed(2)}</span>
-                                            </div>
-                                            <div className="text-gray-500">
-                                                USD (Net) <span className="text-gray-900 font-medium ml-2">${(tx.amount_usd_net || tx.amount_usd || 0).toFixed(2)}</span>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    <div className="flex justify-between py-2 border-b border-gray-50">
-                                        <span className="text-gray-500">Exchange Rate</span>
-                                        <span className="font-medium text-gray-900">Rp {(tx.rate || 0).toLocaleString()}</span>
-                                    </div>
-                                    <div className="flex justify-between py-2 border-b border-gray-50">
-                                        <span className="text-gray-500">Amount (IDR)</span>
-                                        <span className="font-bold text-lg text-gray-900">Rp {(tx.amount_idr || 0).toLocaleString()}</span>
-                                    </div>
-                                    <div className="flex justify-between py-2 border-b border-gray-50">
-                                        <span className="text-gray-500">Express</span>
-                                        <div className="text-right">
-                                            <span className={`font-medium ${tx.is_express ? 'text-brand-600' : 'text-gray-900'}`}>{tx.is_express ? 'Yes' : 'No'}</span>
-                                            {tx.is_express && <p className="text-xs text-gray-400">Surcharge applied</p>}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Right Column: Bank & User Info */}
-                        <div className="space-y-8">
-                            {/* User Info */}
-                            <div>
-                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">USER INFORMATION</h4>
-                                <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                                    <div className="flex items-center gap-4 mb-4">
-                                        <div className="w-12 h-12 rounded-full bg-brand-600 flex items-center justify-center text-white font-bold text-lg">
-                                            XX
-                                        </div>
-                                        <div>
-                                            <p className="font-bold text-gray-900">User</p>
-                                            <p className="text-sm text-gray-500">user@example.com</p>
-                                        </div>
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4 text-sm">
-                                        <div>
-                                            <p className="text-gray-500 text-xs mb-1">Platform</p>
-                                            <p className="font-medium text-gray-900">Messenger/Discord</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-gray-500 text-xs mb-1">User Role</p>
-                                            <p className="font-medium text-gray-900">User</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Bank Details (Only for Convert) */}
-                            {isConvert && (
-                                <div>
-                                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">BANK DETAILS</h4>
-                                    <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-                                        <div className="space-y-3">
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-500 text-sm">Bank Name</span>
-                                                <span className="font-medium text-gray-900">{tx.bank_name || '-'}</span>
-                                            </div>
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-500 text-sm">Account No.</span>
-                                                <span className="font-mono font-medium text-gray-900">{tx.account_number || '-'}</span>
-                                            </div>
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-500 text-sm">Account Name</span>
-                                                <span className="font-medium text-gray-900 text-right">{tx.account_name || '-'}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                {/* Footer Actions */}
-                <div className="bg-gray-50 p-4 border-t border-gray-200 flex justify-end gap-3 rounded-b-2xl">
-                    <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-                        <MessageCircle size={16} /> Contact Support
-                    </button>
-                    <button onClick={onClose} className="px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors">
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-};
+// TransactionDetailModal moved to separate file
 
 const TransactionCard = ({ tx, onClick }: { tx: Transaction; onClick: (tx: Transaction) => void }) => {
     const isConvert = tx.type === 'convert';

@@ -40,13 +40,6 @@ export const Navbar = () => {
                 {CONFIG.APP_NAME}
               </span>
             </Link>
-            {/* Live Status Badge */}
-            <div className="hidden sm:flex items-center gap-2 bg-green-50 border border-green-200 px-3 py-1.5 rounded-full">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              <span className="text-xs font-semibold text-green-700">
-                {CONFIG.LIVE_STATUS} • {CONFIG.AVERAGE_PROCESS_TIME}
-              </span>
-            </div>
           </div>
 
           {/* Desktop Menu */}
@@ -61,15 +54,7 @@ export const Navbar = () => {
               </Link>
             ))}
 
-            {isAuthenticated && !isDashboard && (
-              <Link
-                to="/dashboard"
-                className="flex items-center gap-2 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors bg-brand-50 px-3 py-2 rounded-lg"
-              >
-                <LayoutDashboard size={16} />
-                Dashboard
-              </Link>
-            )}
+
 
             <LoginButton />
             <a
@@ -110,15 +95,7 @@ export const Navbar = () => {
               </Link>
             ))}
 
-            {isAuthenticated && (
-              <Link
-                to="/dashboard"
-                className="block px-4 py-3 text-base font-medium text-brand-600 hover:bg-brand-50 rounded-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                Dashboard
-              </Link>
-            )}
+
 
             <div className="pt-2">
               <LoginButton variant="mobile" />

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { User, LogIn, LogOut, Loader2 } from 'lucide-react';
+import { User, LogOut, Loader2, LayoutDashboard, ChevronDown } from 'lucide-react';
 
 interface LoginButtonProps {
     variant?: 'default' | 'compact' | 'mobile';
@@ -12,6 +13,23 @@ export const LoginButton: React.FC<LoginButtonProps> = ({
     className = ''
 }) => {
     const { user, isLoading, isAuthenticated, login, logout } = useAuth();
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen]);
 
     if (isLoading) {
         return (
@@ -26,10 +44,10 @@ export const LoginButton: React.FC<LoginButtonProps> = ({
     }
 
     if (isAuthenticated && user) {
-        return (
-            <div className={`flex items-center gap-3 ${className}`}>
-                {variant !== 'compact' && (
-                    <div className="flex items-center gap-2">
+        if (variant === 'mobile') {
+            return (
+                <div className="space-y-2">
+                    <div className="flex items-center gap-3 px-2 py-2">
                         {user.picture ? (
                             <img
                                 src={user.picture}
@@ -41,18 +59,78 @@ export const LoginButton: React.FC<LoginButtonProps> = ({
                                 <User size={16} className="text-brand-600" />
                             </div>
                         )}
-                        <span className="text-sm font-medium text-gray-700 hidden lg:block">
-                            {user.name?.split(' ')[0]}
+                        <span className="text-sm font-medium text-gray-700">
+                            {user.name}
                         </span>
                     </div>
-                )}
+                    <Link
+                        to="/dashboard"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-brand-600 bg-brand-50 mx-2"
+                    >
+                        <LayoutDashboard size={18} />
+                        <span>Dashboard</span>
+                    </Link>
+                    <button
+                        onClick={logout}
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors text-sm font-medium w-full text-left mx-2"
+                    >
+                        <LogOut size={18} />
+                        <span>Logout</span>
+                    </button>
+                </div>
+            );
+        }
+
+        return (
+            <div className={`relative ${className}`} ref={dropdownRef}>
                 <button
-                    onClick={logout}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors text-sm font-medium"
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-200"
                 >
-                    <LogOut size={18} />
-                    {variant === 'mobile' && <span>Logout</span>}
+                    {user.picture ? (
+                        <img
+                            src={user.picture}
+                            alt={user.name}
+                            className="w-8 h-8 rounded-full border-2 border-brand-200"
+                        />
+                    ) : (
+                        <div className="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center">
+                            <User size={16} className="text-brand-600" />
+                        </div>
+                    )}
+                    <span className="text-sm font-medium text-gray-700 hidden lg:block max-w-[100px] truncate">
+                        {user.name?.split(' ')[0]}
+                    </span>
+                    <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
+
+                {isOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50 animate-in fade-in zoom-in-95 duration-100">
+                        <div className="px-4 py-3 border-b border-gray-100">
+                            <p className="text-sm font-medium text-gray-900 truncate">{user.name}</p>
+                            <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                        </div>
+
+                        <div className="p-1">
+                            <Link
+                                to="/dashboard"
+                                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 rounded-lg transition-colors"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                <LayoutDashboard size={16} />
+                                Dashboard
+                            </Link>
+
+                            <button
+                                onClick={logout}
+                                className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg w-full text-left transition-colors mt-1"
+                            >
+                                <LogOut size={16} />
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         );
     }
