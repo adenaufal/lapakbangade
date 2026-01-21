@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { motion } from 'motion/react';
 import { FAQS } from '../constants';
 import { trackEvent } from '../services/analytics';
 
@@ -17,52 +18,54 @@ export const FAQ = () => {
 
   const toggleFAQ = (index: number) => {
     if (openIndex !== index) {
-        trackEvent('faq_open_question', { question_index: index });
+      trackEvent('faq_open_question', { question_index: index });
     }
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <section id="faq" className="py-20 bg-gray-50 border-t border-gray-200">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">FAQ</h2>
-          <p className="text-gray-600">Pertanyaan umum seputar convert PayPal.</p>
+    <section id="faq" className="py-24 bg-gray-50 border-t border-gray-100/50">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+            Pertanyaan <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-500">Umum</span>
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Jawaban simpel buat kamu yang baru pertama kali convert.
+          </p>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {CUSTOM_FAQS.map((faq, index) => (
-            <div 
-                key={index} 
-                className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm"
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+              key={index}
+              className={`bg-white rounded-2xl border transition-all duration-300 ${openIndex === index ? 'shadow-md border-brand-200 ring-4 ring-brand-50' : 'shadow-sm border-transparent hover:border-gray-200'}`}
             >
               <button
-                className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none hover:bg-gray-50 transition-colors"
+                className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
                 onClick={() => toggleFAQ(index)}
                 aria-expanded={openIndex === index}
-                aria-controls={`faq-panel-${index}`}
-                type="button"
-                id={`faq-question-${index}`}
               >
-                <span className="font-semibold text-gray-900 text-sm md:text-base pr-4">
+                <span className={`font-bold text-base md:text-lg transition-colors ${openIndex === index ? 'text-brand-700' : 'text-gray-900'}`}>
                   {faq.question}
                 </span>
-                <span className="text-gray-400">
-                  {openIndex === index ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                <span className={`ml-4 p-1 rounded-full transition-colors ${openIndex === index ? 'bg-brand-100 text-brand-600' : 'bg-gray-100 text-gray-400'}`}>
+                  {openIndex === index ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </span>
               </button>
-              
-              <div 
-                className={`transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
-                id={`faq-panel-${index}`}
-                role="region"
-                aria-labelledby={`faq-question-${index}`}
+
+              <div
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
               >
-                <div className="px-6 pb-6 pt-0 text-gray-600 text-sm leading-relaxed border-t border-gray-100 mt-2">
-                   <div className="pt-4">{faq.answer}</div>
+                <div className="px-6 pb-6 text-gray-600 leading-relaxed">
+                  {faq.answer}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
