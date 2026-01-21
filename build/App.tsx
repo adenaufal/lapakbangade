@@ -11,7 +11,7 @@ const TermsOfService = React.lazy(() => import('./components/TermsOfService'));
 const Dashboard = React.lazy(() => import('./components/Dashboard'));
 
 const ScrollToAnchor = () => {
-  const { hash } = useLocation();
+  const { hash, pathname } = useLocation();
 
   useEffect(() => {
     if (hash && !hash.startsWith('#/')) {
@@ -23,10 +23,10 @@ const ScrollToAnchor = () => {
       } catch (e) {
         console.warn('Invalid hash selector:', hash);
       }
-    } else if (!hash) {
+    } else {
       window.scrollTo(0, 0);
     }
-  }, [hash]);
+  }, [hash, pathname]);
 
   return null;
 };
