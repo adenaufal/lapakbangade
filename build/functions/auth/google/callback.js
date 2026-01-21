@@ -58,7 +58,7 @@ export async function onRequestGet(context) {
         return new Response(null, {
             status: 302,
             headers: {
-                'Location': `${url.origin}/`,
+                'Location': `${url.origin}/dashboard`,
                 'Set-Cookie': [sessionCookie, clearStateCookie],
             },
         });
