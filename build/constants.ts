@@ -53,27 +53,39 @@ export const WALLETS = [
 
 export const FAQS = [
   {
-    question: 'Berapa lama prosesnya?',
-    answer: 'Biasanya 30-60 menit di jam aktif (08:00 - 20:00 WIB). Admin memproses antrian satu per satu secara manual agar aman.',
+    question: 'Berapa lama proses transaksi?',
+    answer: 'Biasanya 30-60 menit pada jam operasional (08:00 - 20:00 WIB). Kami memproses setiap transaksi secara manual satu per satu untuk menjamin keamanan.',
   },
   {
-    question: 'Ada minimal dan maksimal nominal?',
-    answer: 'Minimal convert $1, maksimal $5000 per transaksi. Untuk nominal besar, silakan chat admin terlebih dahulu.',
+    question: 'Apa saja layanan yang tersedia?',
+    answer: 'Saat ini kami melayani Convert PayPal (USD ke IDR) dan Top-up PayPal (IDR ke USD). Layanan lain seperti jasa bayar (eBay, Amazon, dll) akan segera hadir!',
   },
   {
-    question: 'Apakah aman?',
-    answer: 'Aman. Bukti transfer terekam dan transaksi diproses manual oleh admin. Kami juga menerapkan verifikasi untuk mencegah fraud.',
+    question: 'Berapa rate dan biayanya?',
+    answer: 'Rate update otomatis setiap jam mengikuti pasar. Untuk convert, fee 10% (min $1) untuk transaksi di bawah $50, dan flat fee $5 untuk transaksi di atas $50. Top-up PayPal tidak ada fee tambahan!',
   },
   {
-    question: 'Bisa e-wallet?',
-    answer: 'Bisa banget! Kami support pencairan ke DANA, OVO, GoPay, ShopeePay, dan LinkAja.',
+    question: 'Berapa minimal dan maksimal transaksi?',
+    answer: 'Minimal transaksi $1 dan maksimal $5,000 per hari. Untuk nominal besar di atas limit harian, silakan hubungi admin terlebih dahulu untuk verifikasi.',
   },
   {
-    question: 'Cara bayar gimana?',
-    answer: 'Cukup kirim USD via PayPal ke email yang diberikan admin (gunakan opsi Friends & Family). Step detailnya akan dijelaskan admin saat chat.',
+    question: 'Metode pembayaran apa saja yang didukung?',
+    answer: 'Kami support transfer ke semua bank besar (BCA, Mandiri, BNI, BRI, dll) dan e-wallet (GoPay, OVO, DANA, LinkAja, ShopeePay).',
   },
   {
-    question: 'Kalau butuh bantuan gimana?',
-    answer: 'Langsung klik tombol Messenger di halaman ini. Admin Lapak Bang Ade siap bantu kamu.',
+    question: 'Apakah transaksinya aman?',
+    answer: 'Sangat aman. Semua transaksi diproses manual oleh admin dan bukti transfer selalu kami simpan. Kami juga melakukan verifikasi ketat untuk mencegah penipuan.',
+  },
+  {
+    question: 'Bagaimana jika transaksi gagal?',
+    answer: 'Jangan khawatir, dana Anda aman 100%. Jika ada kendala teknis atau transaksi tidak dapat diproses, kami akan melakukan refund penuh.',
+  },
+  {
+    question: 'Kenapa harus pakai "Friends & Family"?',
+    answer: 'Untuk menghindari hold dan limit dari pihak PayPal. Dengan opsi ini, dana bisa langsung masuk dan kami proses dengan cepat tanpa resiko keamanan tambahan.',
+  },
+  {
+    question: 'Butuh bantuan lebih lanjut?',
+    answer: 'Admin kami siap membantu! Hubungi kami via Messenger atau WhatsApp (0821-1330-4116) pada jam kerja untuk respon tercepat.',
   },
 ];

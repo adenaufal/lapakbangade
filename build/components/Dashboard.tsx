@@ -143,15 +143,15 @@ const TransactionCard = ({ tx }: { tx: any }) => {
             <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                     <p className="text-gray-500">Amount USD</p>
-                    <p className="font-semibold text-gray-900">${tx.amount_usd.toLocaleString()}</p>
+                    <p className="font-semibold text-gray-900">${(tx.amount_usd || 0).toLocaleString()}</p>
                 </div>
                 <div>
                     <p className="text-gray-500">Amount IDR</p>
-                    <p className="font-semibold text-gray-900">Rp {tx.amount_idr.toLocaleString()}</p>
+                    <p className="font-semibold text-gray-900">Rp {(tx.amount_idr || 0).toLocaleString()}</p>
                 </div>
                 <div>
                     <p className="text-gray-500">Rate</p>
-                    <p className="font-medium text-gray-700">Rp {tx.rate.toLocaleString()}</p>
+                    <p className="font-medium text-gray-700">Rp {(tx.rate || 0).toLocaleString()}</p>
                 </div>
                 <div>
                     <p className="text-gray-500">ID</p>
