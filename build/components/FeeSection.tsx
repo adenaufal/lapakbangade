@@ -4,10 +4,9 @@ import { motion } from 'motion/react';
 
 export const FeeSection = () => {
     return (
-        <section id="fees" className="py-24 relative overflow-hidden">
+        <section id="fees" className="py-24 relative overflow-hidden bg-gradient-to-b from-white via-blue-50/50 to-white">
             {/* Background Decor */}
-            <div className="absolute inset-0 bg-white"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-50"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-30"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-16">

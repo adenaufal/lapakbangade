@@ -20,10 +20,9 @@ const WALLET_LOGOS = [
 
 export const PaymentMethods = () => {
   return (
-    <section className="py-24 relative overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute inset-0 bg-white"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-50"></div>
+    <section className="py-24 relative overflow-hidden bg-gray-50">
+      {/* Background Decor: Diagonal Lines */}
+      <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#e5e7eb_10px,#e5e7eb_11px)] opacity-60"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <motion.h2
