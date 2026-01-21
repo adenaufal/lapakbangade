@@ -55,14 +55,27 @@ export async function onRequestGet(context) {
         const sessionCookie = createSessionCookie(sessionToken);
         const clearStateCookie = 'oauth_state=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0';
 
-        // Use Headers object to properly set multiple Set-Cookie headers
+        // Use HTML page with meta refresh to ensure cookies are set properly
+        const redirectUrl = `${url.origin}/dashboard`;
+        const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="refresh" content="0;url=${redirectUrl}">
+  <script>window.location.href="${redirectUrl}";</script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>`;
+
+        // Set cookies using Headers.append
         const headers = new Headers();
-        headers.set('Location', `${url.origin}/dashboard`);
+        headers.set('Content-Type', 'text/html');
         headers.append('Set-Cookie', sessionCookie);
         headers.append('Set-Cookie', clearStateCookie);
 
-        return new Response(null, {
-            status: 302,
+        return new Response(html, {
+            status: 200,
             headers,
         });
     } catch (error) {
