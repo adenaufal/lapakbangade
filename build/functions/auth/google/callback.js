@@ -55,12 +55,15 @@ export async function onRequestGet(context) {
         const sessionCookie = createSessionCookie(sessionToken);
         const clearStateCookie = 'oauth_state=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0';
 
+        // Use Headers object to properly set multiple Set-Cookie headers
+        const headers = new Headers();
+        headers.set('Location', `${url.origin}/dashboard`);
+        headers.append('Set-Cookie', sessionCookie);
+        headers.append('Set-Cookie', clearStateCookie);
+
         return new Response(null, {
             status: 302,
-            headers: {
-                'Location': `${url.origin}/dashboard`,
-                'Set-Cookie': [sessionCookie, clearStateCookie],
-            },
+            headers,
         });
     } catch (error) {
         console.error('OAuth callback error:', error);
