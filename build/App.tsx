@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-ro
 import { LandingPage } from './components/LandingPage';
 import { AuthProvider } from './hooks/useAuth';
 import { FloatingChatButton } from './components/FloatingChatButton';
+import { CookieConsent } from './components/CookieConsent';
 import { initAnalytics } from './services/analytics';
 
 const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
@@ -46,7 +47,10 @@ const LegacyRedirect = () => {
 
 const App: React.FC = () => {
   useEffect(() => {
-    initAnalytics();
+    // Implicit Consent: Initialize analytics unless explicitly declined
+    if (localStorage.getItem('cookie_consent') !== 'declined') {
+      initAnalytics();
+    }
   }, []);
 
   return (
@@ -55,6 +59,7 @@ const App: React.FC = () => {
         <ScrollToAnchor />
         <LegacyRedirect />
         <FloatingChatButton />
+        <CookieConsent />
         <Suspense fallback={<div className="p-8 text-center text-gray-700">Memuat...</div>}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
