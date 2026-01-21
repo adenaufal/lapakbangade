@@ -6,6 +6,7 @@ import { initAnalytics } from './services/analytics';
 
 const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
 const TermsOfService = React.lazy(() => import('./components/TermsOfService'));
+const Dashboard = React.lazy(() => import('./components/Dashboard'));
 
 const ScrollToAnchor = () => {
   const { hash } = useLocation();
@@ -57,6 +58,7 @@ const App: React.FC = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
