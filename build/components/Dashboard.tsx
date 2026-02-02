@@ -162,6 +162,8 @@ const TransactionCard = ({ tx, onClick }: { tx: Transaction; onClick: (tx: Trans
     );
 };
 
+import { TransactionWizard } from './TransactionWizard';
+
 export const Dashboard = () => {
     const { user, isLoading, isAuthenticated } = useAuth();
 
@@ -180,6 +182,7 @@ export const Dashboard = () => {
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
     const [isLoadingTransactions, setIsLoadingTransactions] = React.useState(true);
     const [selectedTransaction, setSelectedTransaction] = React.useState<Transaction | null>(null);
+    const [isWizardOpen, setIsWizardOpen] = React.useState(false);
 
     const [linkedAccounts, setLinkedAccounts] = React.useState<{ google?: boolean; facebook?: boolean; discord?: boolean }>({
         google: true, // Always true if logged in via Google
@@ -188,8 +191,20 @@ export const Dashboard = () => {
     });
     const [isLinkModalOpen, setIsLinkModalOpen] = React.useState(false);
     const [linkCode, setLinkCode] = React.useState<string | null>(null);
-    const [codeExpiry, setCodeExpiry] = React.useState<number | null>(null);
     const [isGeneratingCode, setIsGeneratingCode] = React.useState(false);
+
+    const fetchTransactions = () => {
+        setIsLoadingTransactions(true);
+        fetch('/api/transactions/list')
+            .then(res => res.json())
+            .then((data: TransactionsListResponse) => {
+                if (data.success && Array.isArray(data.transactions)) {
+                    setTransactions(data.transactions);
+                }
+            })
+            .catch(console.error)
+            .finally(() => setIsLoadingTransactions(false));
+    };
 
     React.useEffect(() => {
         if (user) {
@@ -204,15 +219,7 @@ export const Dashboard = () => {
                 .catch(console.error);
 
             // Fetch Transactions
-            fetch('/api/transactions/list')
-                .then(res => res.json())
-                .then((data: TransactionsListResponse) => {
-                    if (data.success && Array.isArray(data.transactions)) {
-                        setTransactions(data.transactions);
-                    }
-                })
-                .catch(console.error)
-                .finally(() => setIsLoadingTransactions(false));
+            fetchTransactions();
         }
     }, [user]);
 
@@ -226,9 +233,7 @@ export const Dashboard = () => {
             const res = await fetch('/api/link/generate', { method: 'POST' });
             const data = await res.json() as LinkGenerateResponse;
             if (data.success) {
-                setLinkCode(data.code);
-                // Expiry is in seconds from now, calculate absolute time or just countdown
-                // data.expires_in_seconds 
+                setLinkCode(data.code || null);
                 setIsLinkModalOpen(true);
             } else {
                 alert('Gagal generate code: ' + (data.error || 'Unknown error'));
@@ -244,6 +249,18 @@ export const Dashboard = () => {
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
             <Navbar />
+
+            {/* Transaction Wizard */}
+            {isWizardOpen && (
+                <TransactionWizard
+                    onClose={() => setIsWizardOpen(false)}
+                    onSuccess={() => {
+                        fetchTransactions(); // Refresh
+                        // Don't close immediately, wizard shows success step
+                    }}
+                    user={user}
+                />
+            )}
 
             {/* Transaction Detail Modal */}
             {selectedTransaction && (
@@ -386,14 +403,23 @@ export const Dashboard = () => {
                         <div className="bg-white rounded-xl border border-gray-200 p-5 col-span-1 md:col-span-3">
                             <div className="flex items-center justify-between mb-4">
                                 <h3 className="font-bold text-gray-900">Linked Accounts</h3>
-                                <button
-                                    onClick={generateLinkCode}
-                                    disabled={isGeneratingCode}
-                                    className="text-sm bg-brand-50 hover:bg-brand-100 text-brand-700 px-3 py-1.5 rounded-lg font-medium transition-colors flex items-center gap-1.5"
-                                >
-                                    {isGeneratingCode ? <Loader2 size={14} className="animate-spin" /> : <Link size={14} />}
-                                    Link New Account
-                                </button>
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() => setIsWizardOpen(true)}
+                                        className="text-sm bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors flex items-center gap-1.5 shadow-sm shadow-brand-200"
+                                    >
+                                        <ArrowRightLeft size={14} />
+                                        Transaksi Baru
+                                    </button>
+                                    <button
+                                        onClick={generateLinkCode}
+                                        disabled={isGeneratingCode}
+                                        className="text-sm bg-brand-50 hover:bg-brand-100 text-brand-700 px-3 py-1.5 rounded-lg font-medium transition-colors flex items-center gap-1.5"
+                                    >
+                                        {isGeneratingCode ? <Loader2 size={14} className="animate-spin" /> : <Link size={14} />}
+                                        Link New Account
+                                    </button>
+                                </div>
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -460,24 +486,20 @@ export const Dashboard = () => {
 
                     {/* Quick Actions */}
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-                        <a
-                            href="https://m.me/lapakbangade?text=Halo%20min%2C%20mau%20convert"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-3 rounded-lg font-medium text-sm transition-colors"
+                        <button
+                            onClick={() => setIsWizardOpen(true)}
+                            className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-3 rounded-lg font-medium text-sm transition-colors text-left"
                         >
                             <ArrowRightLeft size={18} />
                             Convert
-                        </a>
-                        <a
-                            href="https://m.me/lapakbangade?text=Halo%20min%2C%20mau%20topup"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium text-sm transition-colors"
+                        </button>
+                        <button
+                            onClick={() => setIsWizardOpen(true)}
+                            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium text-sm transition-colors text-left"
                         >
                             <ArrowUpCircle size={18} />
                             Top-up
-                        </a>
+                        </button>
                         <a
                             href="https://m.me/lapakbangade"
                             target="_blank"
@@ -518,7 +540,8 @@ export const Dashboard = () => {
                             <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
                                 <p className="text-gray-500 mb-4">Belum ada transaksi</p>
                                 <a
-                                    href="https://m.me/lapakbangade"
+                                    href="#"
+                                    onClick={(e) => { e.preventDefault(); setIsWizardOpen(true); }}
                                     className="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
                                 >
                                     Mulai Transaksi Pertama

@@ -8,6 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const FALLBACK_BASE_RATE = 16500;
+const BOT_BACKEND_URL = process.env.BOT_BACKEND_URL || 'http://localhost:5000';
+const crypto = require('crypto');
 
 // Middleware
 app.use(cookieParser());
@@ -115,6 +117,87 @@ app.get('/api/rate', async (req, res) => {
   } catch (error) {
     console.error('Rate function error, using fallback:', error);
     return res.json({ baseRate: FALLBACK_BASE_RATE, source: 'fallback_error' });
+  }
+});
+
+// ==================== TRANSACTION API PROXY ====================
+
+// Helper to sign request
+const signPayload = (payload, secret) => {
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const body = JSON.stringify(payload);
+  const message = `${timestamp}.${body}`;
+  const signature = crypto.createHmac('sha256', secret).update(message).digest('hex');
+  return { signature, timestamp, body };
+};
+
+// Proxy create transaction
+app.post('/api/transaction/create', async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const secret = process.env.SESSION_SECRET || 'lapakbangade-secret-change-in-production';
+
+  try {
+    const payload = {
+      ...req.body,
+      user_id: req.user.id // Enforce user ID from session
+    };
+
+    const { signature, timestamp, body } = signPayload(payload, secret);
+
+    const backendRes = await fetch(`${BOT_BACKEND_URL}/api/v1/transaction/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Signature': signature,
+        'X-Timestamp': timestamp
+      },
+      body: body
+    });
+
+    const data = await backendRes.json();
+    res.status(backendRes.status).json(data);
+
+  } catch (error) {
+    console.error('Transaction create error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Proxy get rate
+app.post('/api/transaction/rate', async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const secret = process.env.SESSION_SECRET || 'lapakbangade-secret-change-in-production';
+
+  try {
+    const payload = {
+      ...req.body,
+      user_id: req.user.id
+    };
+
+    const { signature, timestamp, body } = signPayload(payload, secret);
+
+    const backendRes = await fetch(`${BOT_BACKEND_URL}/api/v1/transaction/rate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Signature': signature,
+        'X-Timestamp': timestamp
+      },
+      body: body
+    });
+
+    const data = await backendRes.json();
+    res.status(backendRes.status).json(data);
+
+  } catch (error) {
+    console.error('Rate fetch error:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
