@@ -12,7 +12,7 @@ export const PrivacyPolicy = () => {
           Kebijakan Privasi
         </h1>
         <p className="text-sm text-gray-600 mb-8">
-          Terakhir diperbarui: 21 Januari 2026
+          Terakhir diperbarui: 3 Februari 2026
         </p>
 
         <div className="prose prose-blue max-w-none text-gray-600 space-y-8">
