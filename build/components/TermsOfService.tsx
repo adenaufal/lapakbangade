@@ -64,8 +64,8 @@ export const TermsOfService = () => {
               </li>
             </ul>
             <p className="mt-3">
-              Pengguna menyatakan bahwa dana yang ditranser adalah milik pribadi
-              atau dana yang memiliki otorisasi lengkap untuk digunakan.{" "}
+              Pengguna menyatakan bahwa dana yang ditransfer adalah milik
+              pribadi atau dana yang memiliki otorisasi lengkap untuk digunakan.{" "}
               {CONFIG.APP_NAME} berhak menolak transaksi yang melibatkan dana
               dengan kepemilikan pihak ketiga yang tidak dapat diverifikasi atau
               dicurigai sebagai "akun penampung" (buffer account).
@@ -92,7 +92,8 @@ export const TermsOfService = () => {
                 Jika dikemudian hari ditemukan indikasi dana ilegal yang
                 menyebabkan akun pembayaran kami terkena limit, pembekuan, atau
                 dispute, kami berhak melaporkan data Anda ke pihak berwajib dan
-                mengumumkan data penipu di jaringan exchanger Indonesia.
+                mengumumkan informasi terkait pelanggaran kepada jaringan
+                exchanger Indonesia sesuai kebutuhan pencegahan penipuan.
               </li>
             </ul>
           </section>
@@ -255,7 +256,7 @@ export const TermsOfService = () => {
                 untuk melakukan transaksi.
               </li>
               <li>
-                Memastikan bahwa dana yang ditranser bukan berasal dari
+                Memastikan bahwa dana yang ditransfer bukan berasal dari
                 aktivitas yang melanggar ketentuan layanan penyedia pembayaran
                 pihak ketiga manapun.
               </li>
