@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CONFIG } from '../constants';
 import { MessageCircle } from 'lucide-react';
+import { ProgrammaticLinks } from './ProgrammaticLinks';
 
 export const Footer = () => {
   return (
     <footer className="bg-white border-t border-gray-200 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Programmatic SEO Links Section */}
+        <div className="mb-12 pb-12 border-b border-gray-200">
+          <ProgrammaticLinks variant="compact" />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-1 md:col-span-2 pr-8">
             <h3 className="text-xl font-bold text-gray-900 mb-4">{CONFIG.APP_NAME}</h3>

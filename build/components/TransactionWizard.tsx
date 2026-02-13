@@ -29,6 +29,7 @@ import {
     TopupBreakdown,
     CreateTransactionResponse
 } from '../services/transaction';
+import { BANKS, WALLETS } from '../constants';
 
 interface TransactionWizardProps {
     onClose: () => void;
@@ -241,14 +242,28 @@ const DetailsInputStep = ({
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Bank / E-Wallet</label>
                         <div className="relative">
-                            <Building2 className="absolute left-3 top-3 text-gray-400" size={18} />
-                            <input
-                                type="text"
+                            <Building2 className="absolute left-3 top-3 text-gray-400 pointer-events-none z-10" size={18} />
+                            <select
                                 value={details.bank_name || ''}
                                 onChange={e => setDetails({ ...details, bank_name: e.target.value })}
-                                className="block w-full pl-10 p-2.5 border border-gray-300 rounded-lg focus:ring-brand-500 focus:border-brand-500"
-                                placeholder="Contoh: BCA, GoPay, DANA"
-                            />
+                                className="block w-full pl-10 p-2.5 border border-gray-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 bg-white appearance-none"
+                                required
+                            >
+                                <option value="">Pilih Bank atau E-Wallet</option>
+                                <optgroup label="Bank">
+                                    {BANKS.map(bank => (
+                                        <option key={bank} value={bank}>{bank}</option>
+                                    ))}
+                                </optgroup>
+                                <optgroup label="E-Wallet">
+                                    {WALLETS.map(wallet => (
+                                        <option key={wallet} value={wallet}>{wallet}</option>
+                                    ))}
+                                </optgroup>
+                            </select>
+                            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <ChevronRight size={16} className="text-gray-400 rotate-90" />
+                            </div>
                         </div>
                     </div>
                     <div>

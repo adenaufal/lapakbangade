@@ -37,3 +37,18 @@ Thumbs.db
 # Docs (optional)
 /docs
 /docs/*
+
+# Social media & marketing content (unrelated to codebase)
+/social-library/
+/social-library/*
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Analytics temporary data
+build/analytics-temp/
+build/.analytics-cache/

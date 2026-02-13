@@ -1,5 +1,6 @@
 import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { LandingPage } from './components/LandingPage';
 import { AuthProvider } from './hooks/useAuth';
 import { FloatingChatButton } from './components/FloatingChatButton';
@@ -9,6 +10,11 @@ import { initAnalytics } from './services/analytics';
 const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
 const TermsOfService = React.lazy(() => import('./components/TermsOfService'));
 const Dashboard = React.lazy(() => import('./components/Dashboard'));
+
+// Programmatic SEO Pages
+const BankPage = React.lazy(() => import('./components/programmatic/BankPage').then(m => ({ default: m.BankPage })));
+const EWalletPage = React.lazy(() => import('./components/programmatic/EWalletPage').then(m => ({ default: m.EWalletPage })));
+const UseCasePage = React.lazy(() => import('./components/programmatic/UseCasePage').then(m => ({ default: m.UseCasePage })));
 
 const ScrollToAnchor = () => {
   const { hash, pathname } = useLocation();
@@ -54,22 +60,34 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <ScrollToAnchor />
-        <LegacyRedirect />
-        <FloatingChatButton />
-        <CookieConsent />
-        <Suspense fallback={<div className="p-8 text-center text-gray-700">Memuat...</div>}>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/terms" element={<TermsOfService />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <ScrollToAnchor />
+          <LegacyRedirect />
+          <FloatingChatButton />
+          <CookieConsent />
+          <Suspense fallback={<div className="p-8 text-center text-gray-700">Memuat...</div>}>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+
+              {/* Programmatic SEO Routes */}
+              {/* Bank-specific pages */}
+              <Route path="/convert-paypal-ke-:bankId" element={<BankPage />} />
+
+              {/* E-wallet specific pages */}
+              <Route path="/convert-paypal-ke-:ewalletId" element={<EWalletPage />} />
+
+              {/* Use case pages */}
+              <Route path="/untuk-:useCaseSlug" element={<UseCasePage />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </AuthProvider>
+    </HelmetProvider>
   );
 };
 

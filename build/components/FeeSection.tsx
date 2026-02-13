@@ -1,8 +1,58 @@
-import React from 'react';
-import { Percent, Gift, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Percent, Gift, ArrowRight, Clock } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export const FeeSection = () => {
+    const [timeUntilFriday, setTimeUntilFriday] = useState<string>('');
+    const [isFriday, setIsFriday] = useState(false);
+
+    useEffect(() => {
+        const calculateTimeUntilFriday = () => {
+            const now = new Date();
+            const currentDay = now.getDay();
+            const currentHours = now.getHours();
+            const currentMinutes = now.getMinutes();
+            const currentSeconds = now.getSeconds();
+
+            // Check if it's Friday (5)
+            const todayIsFriday = currentDay === 5;
+            setIsFriday(todayIsFriday);
+
+            if (todayIsFriday) {
+                // Calculate time until end of Friday (23:59:59)
+                const hoursLeft = 23 - currentHours;
+                const minutesLeft = 59 - currentMinutes;
+                const secondsLeft = 59 - currentSeconds;
+
+                if (hoursLeft >= 0 && minutesLeft >= 0 && secondsLeft >= 0) {
+                    const hours = String(hoursLeft).padStart(2, '0');
+                    const minutes = String(minutesLeft).padStart(2, '0');
+                    const seconds = String(secondsLeft).padStart(2, '0');
+                    setTimeUntilFriday(`${hours}:${minutes}:${seconds}`);
+                } else {
+                    setTimeUntilFriday('00:00:00');
+                }
+            } else {
+                // Calculate days until next Friday
+                const daysUntilFriday = currentDay < 5 ? 5 - currentDay : 7 - currentDay + 5;
+                const nextFriday = new Date(now);
+                nextFriday.setDate(now.getDate() + daysUntilFriday);
+                nextFriday.setHours(23, 59, 59, 999);
+
+                const diff = nextFriday.getTime() - now.getTime();
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                setTimeUntilFriday(`${days} hari ${hours} jam`);
+            }
+        };
+
+        calculateTimeUntilFriday();
+        const interval = setInterval(calculateTimeUntilFriday, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <section id="fees" className="py-24 relative overflow-hidden bg-gradient-to-b from-white via-blue-50/50 to-white">
             {/* Background Decor */}
@@ -63,7 +113,7 @@ export const FeeSection = () => {
                                     <span className="font-semibold text-gray-700 group-hover/item:text-gray-900 transition-colors">Nominal Besar</span>
                                     <span className="text-xs text-gray-500">Convert {'>='} $50</span>
                                 </div>
-                                <span className="font-bold text-brand-600 text-lg bg-brand-50 px-3 py-1 rounded-lg border border-brand-100">Flat $5</span>
+                                <span className="font-bold text-brand-600 text-lg bg-brand-50 px-3 py-1 rounded-lg border border-brand-100">Just $4.97</span>
                             </div>
                         </div>
 
@@ -96,9 +146,16 @@ export const FeeSection = () => {
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-bold text-white">Promo Jumat Spesial</h3>
-                                        <div className="flex items-center gap-1 text-xs font-semibold text-brand-100 bg-brand-800/40 px-2 py-0.5 rounded-full w-fit mt-1 border border-brand-400/30">
+                                        <div className="flex items-center gap-2 text-xs font-semibold text-brand-100 bg-brand-800/40 px-2 py-1 rounded-full w-fit mt-1 border border-brand-400/30">
                                             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
-                                            Limited Time
+                                            {isFriday ? (
+                                                <span className="flex items-center gap-1">
+                                                    <Clock size={12} />
+                                                    Berakhir dalam {timeUntilFriday}
+                                                </span>
+                                            ) : (
+                                                <span>Promo berikutnya: {timeUntilFriday}</span>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

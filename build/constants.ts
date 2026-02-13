@@ -32,7 +32,7 @@ export const RATE = {
   MIN_TRANSACTION: 1,
   MAX_TRANSACTION: 5000,
   FEE_UNDER_50_PERCENT: 0.10, // 10%
-  FEE_OVER_50_FLAT: 5, // $5
+  FEE_OVER_50_FLAT: 4.97, // $4.97 (charm pricing)
 };
 
 export const NAV_LINKS = [

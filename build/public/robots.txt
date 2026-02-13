@@ -1,4 +1,47 @@
+# robots.txt for lapakbangade.com
+
 User-agent: *
 Allow: /
 
+# Important pages
+Allow: /convert-paypal-ke-*
+Allow: /untuk-*
+Allow: /privacy
+Allow: /terms
+
+# Disallow admin and API routes
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /api/
+
+# Sitemaps
 Sitemap: https://lapakbangade.com/sitemap.xml
+
+# Common bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Block bad bots (aggressive scrapers)
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
