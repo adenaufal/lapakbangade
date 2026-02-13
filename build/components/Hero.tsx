@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { RATE, CONFIG, TESTIMONIALS } from '../constants';
 import { trackEvent, trackInitiateCheckout, trackLeadWithValue } from '../services/analytics';
 import { fetchUsdIdrRate, rateConfig } from '../services/rates';
+import { RealtimeProof } from './RealtimeProof';
+import { RateVolatilityAlert } from './RateVolatilityAlert';
 
 type Mode = 'convert' | 'topup';
 type TopupCondition = 'promo' | 'normal' | 'mixed';
@@ -138,6 +140,9 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Rate Volatility Alert */}
+        <RateVolatilityAlert currentRate={convertRate} />
+
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
 
           {/* Text Content */}
@@ -148,11 +153,14 @@ export const Hero = () => {
               transition={{ duration: 0.5 }}
             >
               {/* Live Status Badge */}
-              <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 px-3 py-1.5 rounded-full mb-6 mx-auto lg:mx-0">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span className="text-xs font-semibold text-green-700">
-                  {CONFIG.LIVE_STATUS} • {CONFIG.AVERAGE_PROCESS_TIME}
-                </span>
+              <div className="flex flex-col gap-3 mb-6 mx-auto lg:mx-0 items-center lg:items-start">
+                <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 px-3 py-1.5 rounded-full">
+                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                  <span className="text-xs font-semibold text-green-700">
+                    {CONFIG.LIVE_STATUS} • {CONFIG.AVERAGE_PROCESS_TIME}
+                  </span>
+                </div>
+                <RealtimeProof />
               </div>
 
               <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6">

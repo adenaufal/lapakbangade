@@ -22,6 +22,14 @@ import {
 } from 'lucide-react';
 import { Transaction } from '../types';
 import { TransactionDetailModal } from './TransactionDetailModal';
+import { MilestoneBadges } from './MilestoneBadges';
+import { GoalProgress } from './GoalProgress';
+import { StatusTier } from './StatusTier';
+import { PendingTransactionUrgency } from './PendingTransactionUrgency';
+import { ReferralProgram } from './ReferralProgram';
+import { SavedDrafts } from './SavedDrafts';
+import { StreakCounter } from './StreakCounter';
+import { ReferralLeaderboard } from './ReferralLeaderboard';
 
 // Type definitions for API responses
 // Local Transaction interface removed in favor of '../types'
@@ -377,6 +385,15 @@ export const Dashboard = () => {
                         </div>
                     </div>
 
+                    {/* Status Tier & Streak */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <StatusTier
+                            completedCount={completedCount}
+                            totalVolume={totalVolume}
+                        />
+                        <StreakCounter userId={user?.sub || user?.id || 'anonymous'} />
+                    </div>
+
                     {/* Stats Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                         <div className="bg-white rounded-xl border border-gray-200 p-5">
@@ -482,6 +499,47 @@ export const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Pending Transaction Urgency */}
+                    {pendingCount > 0 && (
+                        <div className="mb-8">
+                            <PendingTransactionUrgency transactions={transactions} />
+                        </div>
+                    )}
+
+                    {/* Goals & Achievements Section */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <GoalProgress
+                            completedCount={completedCount}
+                            totalVolume={totalVolume}
+                            transactionCount={transactions.length}
+                        />
+                        <MilestoneBadges
+                            completedCount={completedCount}
+                            totalVolume={totalVolume}
+                            transactionCount={transactions.length}
+                        />
+                    </div>
+
+                    {/* Saved Drafts */}
+                    <div className="mb-8">
+                        <SavedDrafts
+                            onResumeDraft={(draft) => {
+                                // TODO: Implement resume draft in TransactionWizard
+                                setIsWizardOpen(true);
+                                console.log('Resume draft:', draft);
+                            }}
+                        />
+                    </div>
+
+                    {/* Referral Section */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <ReferralProgram
+                            userId={user?.sub || user?.id || ''}
+                            userName={user?.name || 'User'}
+                        />
+                        <ReferralLeaderboard />
                     </div>
 
                     {/* Quick Actions */}

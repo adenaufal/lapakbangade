@@ -11,6 +11,8 @@ import { CallToAction } from './CallToAction';
 import { Footer } from './Footer';
 import { SEO } from './SEO';
 import { ProgrammaticLinks } from './ProgrammaticLinks';
+import { SocialProofTicker } from './SocialProofTicker';
+import { ExitIntentPopup } from './ExitIntentPopup';
 import { trackEvent, trackViewContent, trackLeadWithValue } from '../services/analytics';
 import { CONFIG, FAQS } from '../constants';
 import { MessageCircle } from 'lucide-react';
@@ -51,9 +53,11 @@ export const LandingPage: React.FC = () => {
         keywords="convert paypal ke rupiah, jual saldo paypal, beli saldo paypal, top up paypal, jasa convert paypal, tukar usd ke idr, cairkan paypal ke bank, lapak bang ade"
         structuredData={structuredData}
       />
+      <ExitIntentPopup isAuthenticated={false} />
       <Navbar />
       <main>
         <Hero />
+        <SocialProofTicker />
         <TrustSection />
         <Testimonials />
         <HowItWorks />
