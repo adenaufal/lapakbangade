@@ -81,23 +81,6 @@ export const LandingPage: React.FC = () => {
         </section>
 
         <CallToAction />
-
-        {/* Sticky Mobile CTA */}
-        <div className="fixed bottom-0 left-0 w-full p-3 bg-white border-t border-gray-200 md:hidden z-40 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-          <a
-            href={CONFIG.MESSENGER_URL}
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => {
-              trackEvent('click_sticky_mobile_cta');
-              trackLeadWithValue({ value: 0, currency: 'USD', mode: 'convert', rate: 0 });
-            }}
-            className="flex items-center justify-center gap-2 w-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold py-3 rounded-lg shadow-sm transition-colors"
-          >
-            <MessageCircle size={18} />
-            Chat Admin Sekarang
-          </a>
-        </div>
       </main>
       <Footer />
     </div>

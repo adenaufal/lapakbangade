@@ -28,14 +28,14 @@ export const CallToAction = () => {
                         target="_blank"
                         rel="noreferrer"
                         onClick={handleClick}
-                        className="group relative inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-brand-700 font-bold text-xl px-12 py-5 rounded-2xl shadow-2xl shadow-brand-900/50 transition-all hover:scale-105 hover:shadow-white/10 w-full md:w-auto justify-center"
+                        className="group relative hidden md:inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-brand-700 font-bold text-xl px-12 py-5 rounded-2xl shadow-2xl shadow-brand-900/50 transition-all hover:scale-105 hover:shadow-white/10 w-full md:w-auto justify-center"
                     >
                         <div className="absolute inset-0 rounded-2xl ring-4 ring-white/20 group-hover:ring-white/40 transition-all"></div>
                         <MessageCircle size={28} className="text-brand-600 group-hover:scale-110 transition-transform" />
                         <span>Chat Admin Sekarang</span>
                     </a>
 
-                    <div className="flex items-center gap-2 text-sm text-gray-400 font-medium">
+                    <div className="hidden md:flex items-center gap-2 text-sm text-gray-400 font-medium">
                         <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                         Diproses di jam operasional {CONFIG.OPERATIONAL_HOURS}
                     </div>
