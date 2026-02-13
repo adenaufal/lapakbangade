@@ -55,66 +55,66 @@ export const FAQS = [
   // Info Dasar
   {
     question: 'Apa saja layanan Lapak Bang Ade?',
-    answer: 'Kami punya berbagai layanan: Convert PayPal - Pencairan (USD ke IDR), Convert PayPal - Topup (IDR ke USD), jasa belanja online (Gumroad, Etsy, Amazon), jasa belanja software (CSP, Paint Tool SAI), dan jasa proteksi gambar ilustrasi (Glaze/Nightshade). Beberapa layanan belum ada di bot, info lebih lanjut hubungi Facebook @aadenaufall atau WhatsApp 0821-1330-4116.',
+    answer: 'Layanan utama yang bisa langsung kamu gunakan: (1) Convert PayPal ke Rupiah—pencairan USD ke rekening/e-wallet kamu, (2) Top-up PayPal—isi saldo PayPal dari Rupiah.',
   },
   {
     question: 'Berapa minimal dan maksimal transaksi?',
-    answer: 'Untuk convert PayPal ke Rupiah maupun top-up: Min $1, Max $5,000 per hari. Fee bertingkat: untuk transaksi di bawah $50 dikenakan fee 10% dari nominal (contoh: $10 = fee $1), sedangkan $50 ke atas fee flat $5. Khusus Jumat: Diskon 50% untuk fee transaksi di bawah $50 (khusus transaksi pertama di hari Jumat).',
+    answer: 'Min $1 (cocok untuk coba-coba dulu!), Max $5,000 per hari. Fee bertingkat dan fair: transaksi $1-$49 fee 10% (contoh: $10 dapat $9), sedangkan $50 ke atas fee flat $5 saja—makin besar makin worth it! 💰 Promo Jumat: Diskon 50% fee untuk transaksi pertama di hari Jumat (khusus di bawah $50). 🎉',
   },
   {
     question: 'Support bank dan e-wallet apa aja?',
-    answer: 'Kami support semua bank (BCA, Mandiri, BNI, BRI, CIMB, Permata, dan bank lainnya) dan e-wallet (GoPay, OVO, DANA, LinkAja, ShopeePay). Support semua bank & e-wallet resmi!',
+    answer: 'Semua bank besar (BCA, Mandiri, BNI, BRI, CIMB, Permata, dll) dan semua e-wallet utama (GoPay, OVO, DANA, LinkAja, ShopeePay) kami support! Bank kecil atau digital bank juga bisa. Basically, semua bank & e-wallet resmi Indonesia kami terima. 💳',
   },
 
   // Rate & Biaya
   {
     question: 'Berapa dan kapan update rate-nya?',
-    answer: 'Update otomatis tiap 1 jam di jam operasional (08.00-20.00 WIB) dan tiap 3 jam di luar jam operasional untuk monitoring market. Rate convert pencairan bedanya tipis banget dengan rate PayPal, sedangkan rate top-up 100 rupiah lebih murah dari rate market sekarang!',
+    answer: 'Update otomatis setiap 1 jam saat jam operasional (08.00-20.00 WIB)—artinya kamu selalu dapat rate terbaru dan fair, nggak perlu khawatir rugi karena rate lama. Rate pencairan kami biasanya hanya selisih Rp50-200 dari rate resmi PayPal. Rate top-up 100 rupiah lebih murah dari market (kamu hemat!). 📊',
   },
   {
     question: 'Ada biaya admin tidak?',
-    answer: 'Khusus convert pencairan: fee bertingkat berdasarkan jumlah. Di bawah $50 fee 10% dari nominal (contoh: $10 = fee $1, $25 = fee $2.5), sedangkan $50 ke atas fee flat $5. Promo Jumat: Diskon 50% untuk fee transaksi di bawah $50 (khusus transaksi pertama di hari Jumat). Tidak ada fee untuk top-up. No hidden fee! Free transfer ke semua bank/e-wallet.',
+    answer: 'Fee transparan, no hidden cost! ✅ Transaksi di bawah $50: fee 10% dari nominal (contoh: $10 = fee $1). Transaksi $50 ke atas: fee flat $5 saja (cuma 5% untuk $100, makin besar makin worth it!). Top-up: GRATIS fee. Transfer ke semua bank/e-wallet juga GRATIS. Promo Jumat: Diskon 50% fee untuk transaksi pertama di hari Jumat (khusus di bawah $50).',
   },
   {
     question: 'Berapa lama prosesnya?',
-    answer: 'Jam operasional: 08.00-20.00 WIB. Proses: 30-60 menit setelah transfer (mungkin delay di jam siang-sore). Di luar jam operasional? Next day.',
+    answer: 'Cepat! ⚡ Biasanya 30-60 menit setelah transfer—artinya dana bisa masuk hari yang sama, nggak perlu nunggu berhari-hari. Di jam sibuk (12.00-15.00) mungkin sampai 90 menit. Transfer di luar jam operasional (08.00-20.00 WIB)? No worries, diproses first thing pagi berikutnya.',
   },
   {
-    question: 'Bisa refund kalo ada masalah?',
-    answer: 'Tenang aja! Kita jamin 100% uang kamu aman. Kalo ada masalah, langsung kontak admin ya.',
+    question: 'Bisa refund kalau ada masalah?',
+    answer: 'Tenang, uang kamu 100% aman! 🛡️ Kalau ada masalah apapun dari sisi kami, langsung refund penuh—no questions asked. Kami sudah proses ribuan transaksi tanpa masalah, tapi jika ada kendala, kami tangani langsung. Kontak admin kapan saja!',
   },
 
   // Cara Convert
   {
     question: 'Perlu nyiapin apa aja untuk convert?',
-    answer: 'Kamu perlu siapkan: email PayPal sendiri, nomor rekening/e-wallet, minimal saldo $1 (untuk pencairan), dan jangan lupa tulis notes sewajarnya!',
+    answer: 'Simple! Cuma perlu: (1) Email PayPal kamu, (2) Nomor rekening/e-wallet tujuan, (3) Minimal saldo $1 di PayPal, (4) Note wajar saat transfer. Belum punya semuanya? No problem—chat dulu, kami bantu persiapan! 😊',
   },
   {
     question: 'Step by step convert gimana?',
-    answer: 'Gampang! 1) Chat bot di Messenger, 2) Pilih nominal convert, 3) Transfer ke weiss.schrodinger@gmail.com a.n Ade Naufal Ammar (WAJIB pake mode Friends & Family), 4) Kirim bukti transfer, 5) Tunggu 30-60 menit.',
+    answer: 'Mudah! (1) Chat bot di Messenger, (2) Pilih nominal convert, (3) Transfer ke weiss.schrodinger@gmail.com a.n Ade Naufal Ammar—gunakan mode Friends & Family untuk menghindari fee PayPal (kamu dapat full amount!), (4) Kirim bukti transfer, (5) Tunggu 30-60 menit, done! ✅',
   },
   {
-    question: 'Bisa pake PayPal luar negeri?',
-    answer: 'Bisa! Rules-nya: untuk transaksi <$102.50 gunakan Goods & Services + note umum (misal: "Thanks for the groceries"), sedangkan >$102.50 gunakan Friends & Family + note umum (misal: "Birthday gift"). Note penting buat hindarin flag PayPal.',
+    question: 'Bisa pakai PayPal luar negeri?',
+    answer: 'Bisa! Panduan mudah: Transaksi di bawah $100 pakai Goods & Services + note casual (contoh: "Thanks for lunch"). Transaksi di atas $100 pakai Friends & Family + note casual (contoh: "Birthday gift"). Bingung? No worries—tanya admin dulu sebelum transfer, kami guide step-by-step! 😊',
   },
   {
     question: 'Kenapa perlu notes yang wajar?',
-    answer: 'Untuk hindari flag dari sistem PayPal, pastikan transaksi aman & lancar, dan kurangi risiko hold/limit.',
+    answer: 'Notes yang natural (seperti transaksi antar teman biasa) membantu menghindari flag dari sistem anti-fraud PayPal. Hindari note seperti "convert PayPal", "exchange", atau yang terlalu formal. Contoh notes yang baik: "Thanks for the help", "Birthday gift", "Lunch money". Ini melindungi akun PayPal kamu dan kami! 🔒',
   },
 
   // Security
   {
     question: 'Apakah transaksinya aman?',
-    answer: 'Sangat aman! Semua transaksi diproses manual oleh admin, bukti transfer selalu kami simpan, dan kami melakukan verifikasi ketat untuk mencegah penipuan. Double check email tujuan transfer (weiss.schrodinger@gmail.com), pake email PayPal sendiri, pake note yang wajar, dan keep semua bukti transaksi.',
+    answer: 'Sangat aman—keamanan adalah prioritas utama kami! 🔒 Setiap transaksi diproses manual oleh admin (bukan bot), semua bukti transfer kami simpan, dan kami verifikasi ketat di setiap tahap. Ribuan customer sudah transaksi dengan aman. Tips keamanan: Double-check email tujuan (weiss.schrodinger@gmail.com), pakai email PayPal sendiri, tulis note wajar, dan simpan semua bukti.',
   },
   {
     question: 'Apa yang tidak bisa diproses?',
-    answer: 'Dana dari PayPal reward/cashback, transaksi dari pihak ketiga, transfer antar negara tanpa notes, dan invoice untuk pihak ketiga tidak bisa kami proses demi keamanan.',
+    answer: 'Demi keamanan bersama, kami tidak bisa proses: (1) Dana dari PayPal reward/cashback (tidak bisa ditransfer), (2) Transaksi pihak ketiga (risiko dispute tinggi), (3) Transfer antar negara tanpa note (mudah di-flag PayPal), (4) Invoice untuk pihak ketiga (melanggar ToS PayPal). ⚠️',
   },
 
   // Bantuan
   {
     question: 'Bagaimana cara menghubungi admin?',
-    answer: 'Kontak admin via Facebook @aadenaufall, WhatsApp 0821-1330-4116, atau Email ade.naufal@gmail.com. Jam operasional: 08.00-20.00 WIB. Response time: 30-60 menit (mungkin delay di jam siang-sore). Tips: Keep it friendly, lampirkan screenshot chat dengan bot dan bukti transfer (kalo sudah), tunggu 60 menit sebelum follow up.',
+    answer: 'Kontak admin via WhatsApp 0821-1330-4116 (prioritas), Facebook @aadenaufall, atau Email ade.naufal@gmail.com. Jam operasional: 08.00-20.00 WIB. Response time: biasanya 15-30 menit, maksimal 60 menit di jam sibuk. Tips: Lampirkan screenshot chat bot + bukti transfer (jika sudah), tunggu minimal 60 menit sebelum follow up. 💬',
   },
 ];
