@@ -19,7 +19,7 @@ export const CallToAction = () => {
                     Mulai Transaksi <span className="text-brand-400">Aman Sekarang</span>
                 </h2>
                 <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                    Gabung dengan ribuan freelancer yang sudah percaya. Rate kompetitif, tanpa biaya tersembunyi, langsung cair.
+                    Dipercaya 500+ freelancer dan kreator. Fee transparan, no hidden fee, proses cepat 30-60 menit!
                 </p>
 
                 <div className="flex flex-col items-center gap-6">

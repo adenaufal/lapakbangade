@@ -160,7 +160,7 @@ export const Hero = () => {
               </h1>
 
               <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
-                Langsung cair ke bank atau e-wallet kamu. Rate terbaik setiap hari.
+                Langsung cair ke bank atau e-wallet kamu. Rate update otomatis setiap jam, fee transparan, no hidden fee!
               </p>
             </motion.div>
 
@@ -173,15 +173,15 @@ export const Hero = () => {
             >
               <li className="flex items-center gap-2">
                 <CheckCircle size={20} className="text-brand-600 flex-shrink-0" />
-                <span>Diproses manual oleh admin</span>
+                <span>Verifikasi manual aman anti-fraud</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle size={20} className="text-brand-600 flex-shrink-0" />
-                <span>Anti ribet, tinggal kirim bukti</span>
+                <span>Support semua bank & e-wallet</span>
               </li>
               <li className="flex items-center gap-2">
                 <Clock size={20} className="text-brand-600 flex-shrink-0" />
-                <span>Respon 30-60 menit</span>
+                <span>Proses cepat 30-60 menit</span>
               </li>
             </motion.ul>
 

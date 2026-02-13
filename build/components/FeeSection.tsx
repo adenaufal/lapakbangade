@@ -67,8 +67,11 @@ export const FeeSection = () => {
                             </div>
                         </div>
 
-                        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-                            <p className="text-sm text-gray-500">Makin besar nominal, makin hemat fee-nya.</p>
+                        <div className="mt-8 pt-6 border-t border-gray-100 space-y-2">
+                            <p className="text-sm text-gray-500 text-center">Makin besar nominal, makin hemat fee-nya.</p>
+                            <div className="bg-blue-50 p-3 rounded-lg">
+                                <p className="text-xs text-blue-700 font-medium">💡 <strong>Pro Tips:</strong> Untuk nominal di bawah $50, lebih hemat convert di hari Jumat dengan diskon 50% fee. Top-up PayPal tidak ada fee tambahan!</p>
+                            </div>
                         </div>
                     </motion.div>
 
@@ -101,7 +104,7 @@ export const FeeSection = () => {
                                 </div>
 
                                 <p className="text-brand-50 text-lg font-medium leading-relaxed mb-6">
-                                    Khusus transaksi pertama kamu di hari Jumat, dapatkan potongan spesial!
+                                    Khusus transaksi pertama kamu di hari Jumat, dapatkan diskon 50% untuk fee transaksi di bawah $50!
                                 </p>
                             </div>
 

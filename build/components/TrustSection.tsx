@@ -5,26 +5,26 @@ import { motion } from 'motion/react';
 export const TrustSection = () => {
   const points = [
     {
-      title: 'Sudah bantu banyak kreator',
-      desc: 'Partner terpercaya freelancer & seller sejak 2020.',
+      title: 'Dipercaya 500+ Freelancer',
+      desc: 'Partner terpercaya kreator, freelancer, dan seller sejak 2020. Money back guarantee!',
       icon: Users,
       color: 'bg-blue-50 text-blue-600'
     },
     {
-      title: 'Sistem sederhana',
-      desc: 'Fokus ke kemudahan dan kenyamanan transaksi kamu.',
+      title: 'Proses Manual Aman',
+      desc: 'Semua transaksi dicek manual satu per satu. Bukti transfer selalu disimpan untuk keamanan.',
       icon: ShieldCheck,
       color: 'bg-emerald-50 text-emerald-600'
     },
     {
-      title: 'CS responsif & transparan',
-      desc: 'Info rate dan fee jelas di awal, tanpa biaya gaib.',
+      title: 'Fee Transparan, No Hidden Fee',
+      desc: 'Rate update otomatis tiap jam. Fee jelas di awal, free transfer ke semua bank & e-wallet.',
       icon: MessageSquare,
       color: 'bg-purple-50 text-purple-600'
     },
     {
-      title: 'Verifikasi Manual Admin',
-      desc: 'Dibantu Bot untuk respon cepat, tapi dana tetap dicek manual oleh Admin.',
+      title: 'Fast Response 30-60 Menit',
+      desc: 'Bot otomatis bantu respon 24/7. Admin proses transaksi dalam 30-60 menit di jam operasional.',
       icon: UserCheck,
       color: 'bg-orange-50 text-orange-600'
     }

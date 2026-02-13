@@ -66,7 +66,7 @@ export const PaymentMethods = () => {
               ))}
             </div>
             <div className="mt-8 pt-6 border-t border-gray-100">
-              <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1 rounded-full">+ puluhan bank lainnya</span>
+              <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1 rounded-full">Support semua bank resmi Indonesia</span>
             </div>
           </motion.div>
 
@@ -100,7 +100,7 @@ export const PaymentMethods = () => {
               ))}
             </div>
             <div className="mt-8 pt-6 border-t border-gray-100">
-              <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1 rounded-full">Convert pulsa / e-wallet</span>
+              <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1 rounded-full">Free transfer ke semua e-wallet</span>
             </div>
           </motion.div>
         </div>

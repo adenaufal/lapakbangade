@@ -5,26 +5,26 @@ import { motion } from 'motion/react';
 export const HowItWorks = () => {
   const steps = [
     {
-      title: '1. Chat di Messenger',
-      description: 'Klik tombol chat. Bot akan berikan info rate & instruksi otomatis.',
+      title: '1. Chat Bot di Messenger',
+      description: 'Klik tombol chat. Bot otomatis akan tanya nama, email PayPal, bank/e-wallet, dan nominal convert.',
       icon: MessageCircle,
       color: 'bg-blue-500',
     },
     {
-      title: '2. Kirim USD',
-      description: 'Transfer saldo PayPal sesuai instruksi yang diberikan.',
+      title: '2. Pilih Nominal Convert',
+      description: 'Input nominal yang mau diconvert. Bot akan hitung fee otomatis dan tampilkan total yang kamu terima.',
       icon: Send,
       color: 'bg-indigo-500',
     },
     {
-      title: '3. Upload Bukti',
-      description: 'Kirim screenshot transfer. Admin akan cek mutasi secara manual.',
+      title: '3. Transfer & Upload Bukti',
+      description: 'Transfer ke weiss.schrodinger@gmail.com (Ade Naufal Ammar) pakai Friends & Family, lalu kirim screenshot bukti.',
       icon: Upload,
       color: 'bg-purple-500',
     },
     {
-      title: '4. Terima Rupiah',
-      description: 'Setelah valid, Admin langsung transfer IDR ke rekeningmu.',
+      title: '4. Tunggu 30-60 Menit',
+      description: 'Admin akan cek mutasi manual. Setelah valid, langsung transfer IDR ke rekening/e-wallet kamu. Selesai!',
       icon: CreditCard,
       color: 'bg-emerald-500',
     }
