@@ -37,6 +37,18 @@ Thumbs.db
 # Docs (optional)
 /docs
 /docs/*
+!/docs
+!/docs/
+!/docs/architecture/
+!/docs/architecture/overview.md
+!/docs/api/
+!/docs/api/endpoints.md
+!/docs/deployment/
+!/docs/deployment/cloudflare.md
+!/docs/troubleshooting/
+!/docs/troubleshooting/common-issues.md
+!/docs/security/
+!/docs/security/best-practices.md
 
 # Social media & marketing content (unrelated to codebase)
 /social-library/
