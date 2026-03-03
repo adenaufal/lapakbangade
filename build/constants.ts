@@ -8,7 +8,7 @@ const {
 
 export const CONFIG = {
   APP_NAME: 'Lapak Bang Ade',
-  WHATSAPP_NUMBER: VITE_WHATSAPP_NUMBER || '6281234567890', // Placeholder
+  WHATSAPP_NUMBER: VITE_WHATSAPP_NUMBER || '6282113304116', // Placeholder
   MESSENGER_URL: VITE_MESSENGER_URL || 'https://m.me/lapakbangade', // Placeholder
   GA_MEASUREMENT_ID: VITE_GA_MEASUREMENT_ID || 'G-ZTR1QX14YK',
   META_PIXEL_ID: VITE_META_PIXEL_ID || '837636162306241',
@@ -32,7 +32,7 @@ export const RATE = {
   MIN_TRANSACTION: 1,
   MAX_TRANSACTION: 5000,
   FEE_UNDER_50_PERCENT: 0.10, // 10%
-  FEE_OVER_50_FLAT: 4.97, // $4.97 (charm pricing)
+  FEE_OVER_50_FLAT: 5, // $4.97 (charm pricing)
 };
 
 export const NAV_LINKS = [

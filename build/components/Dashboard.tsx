@@ -18,7 +18,11 @@ import {
     Gamepad2,
     Link,
     Copy,
-    RefreshCw
+    RefreshCw,
+    Search,
+    Download,
+    FileText,
+    FilterX
 } from 'lucide-react';
 import { Transaction } from '../types';
 import { TransactionDetailModal } from './TransactionDetailModal';
@@ -30,6 +34,9 @@ import { ReferralProgram } from './ReferralProgram';
 import { SavedDrafts } from './SavedDrafts';
 import { StreakCounter } from './StreakCounter';
 import { ReferralLeaderboard } from './ReferralLeaderboard';
+import { useTransactionUpdates } from '../hooks/useTransactionUpdates';
+import { buildTrustSummary } from '../utils/fraudDetection';
+import { TrustIndicators } from './TrustIndicators';
 
 // Type definitions for API responses
 // Local Transaction interface removed in favor of '../types'
@@ -45,11 +52,6 @@ interface UserRefreshResponse {
     linked_accounts?: LinkedAccounts;
 }
 
-interface TransactionsListResponse {
-    success: boolean;
-    transactions?: Transaction[];
-}
-
 interface LinkGenerateResponse {
     success: boolean;
     code?: string;
@@ -58,7 +60,7 @@ interface LinkGenerateResponse {
 }
 
 // Mock transactions for demo - will be replaced with API call
-const mockTransactions = [
+const mockTransactions: Transaction[] = [
     {
         id: '1',
         type: 'convert',
@@ -90,6 +92,23 @@ const mockTransactions = [
     },
 ];
 
+const escapeCsvCell = (value: string | number): string => {
+    const text = String(value ?? '');
+    if (text.includes(',') || text.includes('"') || text.includes('\n')) {
+        return `"${text.replace(/"/g, '""')}"`;
+    }
+    return text;
+};
+
+const escapeHtmlCell = (value: string | number): string => {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+};
+
 const StatusBadge = ({ status }: { status: string }) => {
     const config = {
         pending: { bg: 'bg-yellow-100', text: 'text-yellow-700', icon: Clock, label: 'Pending' },
@@ -111,7 +130,7 @@ const StatusBadge = ({ status }: { status: string }) => {
 
 // TransactionDetailModal moved to separate file
 
-const TransactionCard = ({ tx, onClick }: { tx: Transaction; onClick: (tx: Transaction) => void }) => {
+const TransactionCard: React.FC<{ tx: Transaction; onClick: (tx: Transaction) => void }> = ({ tx, onClick }) => {
     const isConvert = tx.type === 'convert';
     const date = new Date(tx.created_at).toLocaleDateString('id-ID', {
         day: 'numeric',
@@ -174,25 +193,9 @@ import { TransactionWizard } from './TransactionWizard';
 
 export const Dashboard = () => {
     const { user, isLoading, isAuthenticated } = useAuth();
-
-    if (isLoading) {
-        return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <Loader2 size={32} className="animate-spin text-brand-600" />
-            </div>
-        );
-    }
-
-    if (!isAuthenticated) {
-        return <Navigate to="/" replace />;
-    }
-
-    const [transactions, setTransactions] = React.useState<Transaction[]>([]);
-    const [isLoadingTransactions, setIsLoadingTransactions] = React.useState(true);
     const [selectedTransaction, setSelectedTransaction] = React.useState<Transaction | null>(null);
     const [isWizardOpen, setIsWizardOpen] = React.useState(false);
-
-    const [linkedAccounts, setLinkedAccounts] = React.useState<{ google?: boolean; facebook?: boolean; discord?: boolean }>({
+    const [linkedAccounts, setLinkedAccounts] = React.useState<LinkedAccounts>({
         google: true, // Always true if logged in via Google
         facebook: false,
         discord: false
@@ -200,40 +203,197 @@ export const Dashboard = () => {
     const [isLinkModalOpen, setIsLinkModalOpen] = React.useState(false);
     const [linkCode, setLinkCode] = React.useState<string | null>(null);
     const [isGeneratingCode, setIsGeneratingCode] = React.useState(false);
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [statusFilter, setStatusFilter] = React.useState<string>('all');
+    const [typeFilter, setTypeFilter] = React.useState<string>('all');
+    const [dateFrom, setDateFrom] = React.useState('');
+    const [dateTo, setDateTo] = React.useState('');
 
-    const fetchTransactions = () => {
-        setIsLoadingTransactions(true);
-        fetch('/api/transactions/list')
-            .then(res => res.json())
-            .then((data: TransactionsListResponse) => {
-                if (data.success && Array.isArray(data.transactions)) {
-                    setTransactions(data.transactions);
-                }
-            })
-            .catch(console.error)
-            .finally(() => setIsLoadingTransactions(false));
-    };
+    const {
+        transactions,
+        isLoading: isLoadingTransactions,
+        isRefreshing: isRefreshingTransactions,
+        error: transactionError,
+        lastUpdatedAt,
+        statusChanges,
+        refreshNow,
+        clearStatusChanges,
+    } = useTransactionUpdates({
+        enabled: !!user,
+        pollIntervalMs: 30_000,
+        useMockData: true,
+        mockTransactions,
+    });
 
     React.useEffect(() => {
-        if (user) {
-            // Initial fetch of linked status
-            fetch('/api/user/refresh')
-                .then(res => res.json())
-                .then((data: UserRefreshResponse) => {
-                    if (data.success && data.linked_accounts) {
-                        setLinkedAccounts(prev => ({ ...prev, ...data.linked_accounts }));
-                    }
-                })
-                .catch(console.error);
-
-            // Fetch Transactions
-            fetchTransactions();
+        if (!user) {
+            return;
         }
+
+        fetch('/api/user/refresh')
+            .then(res => res.json())
+            .then((data: UserRefreshResponse) => {
+                if (data.success && data.linked_accounts) {
+                    setLinkedAccounts(prev => ({ ...prev, ...data.linked_accounts }));
+                }
+            })
+            .catch(console.error);
     }, [user]);
 
+    const trustSummary = React.useMemo(() => buildTrustSummary(transactions), [transactions]);
     const completedCount = transactions.filter(t => t.status === 'completed' || t.status === 'success').length;
     const pendingCount = transactions.filter(t => ['pending', 'processing', 'waiting_payment', 'waiting_transfer'].includes(t.status)).length;
     const totalVolume = transactions.reduce((sum, t) => sum + (t.amount_usd || 0), 0);
+    const normalizedSearch = searchQuery.trim().toLowerCase();
+
+    const availableStatuses = React.useMemo(
+        () => ['all', ...new Set(transactions.map((tx) => (tx.status || 'unknown').toLowerCase()))],
+        [transactions],
+    );
+
+    const filteredTransactions = React.useMemo(() => {
+        const fromDate = dateFrom ? new Date(`${dateFrom}T00:00:00`).getTime() : null;
+        const toDate = dateTo ? new Date(`${dateTo}T23:59:59.999`).getTime() : null;
+
+        return transactions.filter((tx) => {
+            if (statusFilter !== 'all' && (tx.status || '').toLowerCase() !== statusFilter.toLowerCase()) {
+                return false;
+            }
+
+            if (typeFilter !== 'all' && (tx.type || '').toLowerCase() !== typeFilter.toLowerCase()) {
+                return false;
+            }
+
+            const txTime = new Date(tx.created_at).getTime();
+            if (fromDate && txTime < fromDate) {
+                return false;
+            }
+            if (toDate && txTime > toDate) {
+                return false;
+            }
+
+            if (!normalizedSearch) {
+                return true;
+            }
+
+            const haystack = [
+                tx.id,
+                tx.display_id || '',
+                tx.status || '',
+                tx.type || '',
+                tx.account_name || '',
+                tx.account_number || '',
+                tx.bank_name || '',
+            ].join(' ').toLowerCase();
+
+            return haystack.includes(normalizedSearch);
+        });
+    }, [transactions, statusFilter, typeFilter, dateFrom, dateTo, normalizedSearch]);
+
+    const filteredVolume = filteredTransactions.reduce((sum, tx) => sum + (tx.amount_usd || 0), 0);
+    const filteredCompleted = filteredTransactions.filter((tx) => tx.status === 'completed' || tx.status === 'success').length;
+    const filteredPending = filteredTransactions.filter((tx) => ['pending', 'processing', 'waiting_payment', 'waiting_transfer'].includes(tx.status)).length;
+    const latestStatusChange = statusChanges[0];
+
+    const resetFilters = React.useCallback(() => {
+        setSearchQuery('');
+        setStatusFilter('all');
+        setTypeFilter('all');
+        setDateFrom('');
+        setDateTo('');
+    }, []);
+
+    const exportCsv = React.useCallback(() => {
+        if (filteredTransactions.length === 0) {
+            alert('Tidak ada data untuk diexport.');
+            return;
+        }
+
+        const header = ['Transaction ID', 'Type', 'Status', 'Amount USD', 'Amount IDR', 'Rate', 'Created At'];
+        const rows = filteredTransactions.map((tx) => [
+            tx.display_id || tx.id,
+            tx.type,
+            tx.status,
+            tx.amount_usd || 0,
+            tx.amount_idr || 0,
+            tx.rate || 0,
+            tx.created_at,
+        ]);
+
+        const csv = [header, ...rows]
+            .map((row) => row.map((cell) => escapeCsvCell(cell)).join(','))
+            .join('\n');
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `transactions-${new Date().toISOString().slice(0, 10)}.csv`;
+        link.click();
+        URL.revokeObjectURL(url);
+    }, [filteredTransactions]);
+
+    const exportPdf = React.useCallback(() => {
+        if (filteredTransactions.length === 0) {
+            alert('Tidak ada data untuk diexport.');
+            return;
+        }
+
+        const rowsHtml = filteredTransactions.map((tx) => `
+            <tr>
+                <td>${escapeHtmlCell(tx.display_id || tx.id)}</td>
+                <td>${escapeHtmlCell(tx.type)}</td>
+                <td>${escapeHtmlCell(tx.status)}</td>
+                <td>${escapeHtmlCell((tx.amount_usd || 0).toLocaleString('en-US'))}</td>
+                <td>${escapeHtmlCell((tx.amount_idr || 0).toLocaleString('id-ID'))}</td>
+                <td>${escapeHtmlCell((tx.rate || 0).toLocaleString('id-ID'))}</td>
+                <td>${escapeHtmlCell(new Date(tx.created_at).toLocaleString('id-ID'))}</td>
+            </tr>
+        `).join('');
+
+        const popup = window.open('', '_blank', 'width=1200,height=900');
+        if (!popup) {
+            alert('Popup diblokir browser. Izinkan pop-up untuk export PDF.');
+            return;
+        }
+
+        popup.document.write(`
+            <html>
+                <head>
+                    <title>Transaction Export</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 24px; color: #111827; }
+                        h1 { margin-bottom: 12px; }
+                        .meta { color: #6b7280; margin-bottom: 16px; }
+                        table { width: 100%; border-collapse: collapse; }
+                        th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; font-size: 12px; }
+                        th { background: #f3f4f6; font-weight: 600; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Riwayat Transaksi</h1>
+                    <p class="meta">Generated: ${escapeHtmlCell(new Date().toLocaleString('id-ID'))}</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>USD</th>
+                                <th>IDR</th>
+                                <th>Rate</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHtml}</tbody>
+                    </table>
+                </body>
+            </html>
+        `);
+        popup.document.close();
+        popup.focus();
+        popup.print();
+    }, [filteredTransactions]);
 
     const generateLinkCode = async () => {
         setIsGeneratingCode(true);
@@ -254,6 +414,18 @@ export const Dashboard = () => {
         }
     };
 
+    if (isLoading) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <Loader2 size={32} className="animate-spin text-brand-600" />
+            </div>
+        );
+    }
+
+    if (!isAuthenticated) {
+        return <Navigate to="/" replace />;
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
             <Navbar />
@@ -263,7 +435,7 @@ export const Dashboard = () => {
                 <TransactionWizard
                     onClose={() => setIsWizardOpen(false)}
                     onSuccess={() => {
-                        fetchTransactions(); // Refresh
+                        void refreshNow(); // Refresh
                         // Don't close immediately, wizard shows success step
                     }}
                     user={user}
@@ -385,6 +557,29 @@ export const Dashboard = () => {
                         </div>
                     </div>
 
+                    {transactionError && (
+                        <div className="mb-6 bg-rose-50 border border-rose-200 rounded-xl p-4 text-sm text-rose-700">
+                            Gagal memuat update transaksi terbaru: {transactionError}
+                        </div>
+                    )}
+
+                    {latestStatusChange && (
+                        <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+                            <div className="text-sm text-emerald-800">
+                                Update terbaru: #{latestStatusChange.displayId} berubah dari
+                                {' '}<span className="font-semibold">{latestStatusChange.fromStatus}</span>
+                                {' '}ke
+                                {' '}<span className="font-semibold">{latestStatusChange.toStatus}</span>.
+                            </div>
+                            <button
+                                onClick={clearStatusChanges}
+                                className="text-xs font-semibold text-emerald-700 hover:text-emerald-900"
+                            >
+                                Sembunyikan
+                            </button>
+                        </div>
+                    )}
+
                     {/* Status Tier & Streak */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                         <StatusTier
@@ -395,7 +590,7 @@ export const Dashboard = () => {
                     </div>
 
                     {/* Stats Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                         <div className="bg-white rounded-xl border border-gray-200 p-5">
                             <p className="text-sm text-gray-500 mb-1">Total Transaksi</p>
                             <p className="text-2xl font-bold text-gray-900">{transactions.length}</p>
@@ -412,6 +607,22 @@ export const Dashboard = () => {
                             <p className="text-sm text-gray-500 mb-1">Total Volume</p>
                             <p className="text-2xl font-bold text-gray-900">${totalVolume.toLocaleString()}</p>
                         </div>
+                        <div className="bg-white rounded-xl border border-gray-200 p-5">
+                            <p className="text-sm text-gray-500 mb-1">Hasil Filter</p>
+                            <p className="text-2xl font-bold text-gray-900">{filteredTransactions.length}</p>
+                            <p className="text-xs text-gray-500 mt-1">
+                                ${filteredVolume.toLocaleString()} • {filteredCompleted} selesai / {filteredPending} pending
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="mb-8">
+                        <TrustIndicators summary={trustSummary} />
+                        {lastUpdatedAt && (
+                            <p className="text-xs text-gray-500 mt-2">
+                                Last synced: {new Date(lastUpdatedAt).toLocaleString('id-ID')}
+                            </p>
+                        )}
                     </div>
 
                     {/* Linked Accounts */}
@@ -578,16 +789,99 @@ export const Dashboard = () => {
 
                     {/* Transactions */}
                     <div>
-                        <div className="flex items-center justify-between mb-4">
+                        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                             <h2 className="text-lg font-bold text-gray-900">Riwayat Transaksi</h2>
-                            <a
-                                href="https://m.me/lapakbangade"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-sm text-brand-600 hover:text-brand-700 font-medium flex items-center gap-1"
-                            >
-                                Lihat Semua <ExternalLink size={14} />
-                            </a>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={() => void refreshNow()}
+                                    disabled={isRefreshingTransactions}
+                                    className="inline-flex items-center gap-1.5 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg font-medium transition-colors disabled:opacity-60"
+                                >
+                                    <RefreshCw size={14} className={isRefreshingTransactions ? 'animate-spin' : ''} />
+                                    Refresh
+                                </button>
+                                <button
+                                    onClick={exportCsv}
+                                    className="inline-flex items-center gap-1.5 text-sm bg-emerald-100 hover:bg-emerald-200 text-emerald-800 px-3 py-2 rounded-lg font-medium transition-colors"
+                                >
+                                    <Download size={14} />
+                                    Export CSV
+                                </button>
+                                <button
+                                    onClick={exportPdf}
+                                    className="inline-flex items-center gap-1.5 text-sm bg-indigo-100 hover:bg-indigo-200 text-indigo-800 px-3 py-2 rounded-lg font-medium transition-colors"
+                                >
+                                    <FileText size={14} />
+                                    Export PDF
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-xl border border-gray-200 p-4 mb-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3">
+                                <div className="relative md:col-span-2">
+                                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                                    <input
+                                        type="text"
+                                        value={searchQuery}
+                                        onChange={(event) => setSearchQuery(event.target.value)}
+                                        placeholder="Cari ID, status, tipe, bank..."
+                                        className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-200 focus:border-brand-400"
+                                    />
+                                </div>
+
+                                <select
+                                    value={statusFilter}
+                                    onChange={(event) => setStatusFilter(event.target.value)}
+                                    className="px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
+                                >
+                                    {availableStatuses.map((status) => (
+                                        <option key={status} value={status}>
+                                            {status === 'all' ? 'Semua Status' : status}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <select
+                                    value={typeFilter}
+                                    onChange={(event) => setTypeFilter(event.target.value)}
+                                    className="px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
+                                >
+                                    <option value="all">Semua Tipe</option>
+                                    <option value="convert">Convert</option>
+                                    <option value="topup">Top-up</option>
+                                </select>
+
+                                <input
+                                    type="date"
+                                    value={dateFrom}
+                                    onChange={(event) => setDateFrom(event.target.value)}
+                                    className="px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
+                                />
+                                <input
+                                    type="date"
+                                    value={dateTo}
+                                    onChange={(event) => setDateTo(event.target.value)}
+                                    className="px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
+                                />
+                            </div>
+                            <div className="mt-3 flex items-center justify-between">
+                                <a
+                                    href="https://m.me/lapakbangade"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm text-brand-600 hover:text-brand-700 font-medium flex items-center gap-1"
+                                >
+                                    Lihat Semua <ExternalLink size={14} />
+                                </a>
+                                <button
+                                    onClick={resetFilters}
+                                    className="inline-flex items-center gap-1 text-xs font-semibold text-gray-600 hover:text-gray-900"
+                                >
+                                    <FilterX size={12} />
+                                    Reset Filter
+                                </button>
+                            </div>
                         </div>
 
                         {isLoadingTransactions ? (
@@ -605,9 +899,20 @@ export const Dashboard = () => {
                                     Mulai Transaksi Pertama
                                 </a>
                             </div>
+                        ) : filteredTransactions.length === 0 ? (
+                            <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
+                                <p className="text-gray-500 mb-3">Tidak ada transaksi yang cocok dengan filter saat ini.</p>
+                                <button
+                                    onClick={resetFilters}
+                                    className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors"
+                                >
+                                    <FilterX size={14} />
+                                    Hapus Filter
+                                </button>
+                            </div>
                         ) : (
                             <div className="grid gap-4">
-                                {transactions.map((tx) => (
+                                {filteredTransactions.map((tx) => (
                                     <TransactionCard
                                         key={tx.id}
                                         tx={tx}
