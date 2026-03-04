@@ -54,7 +54,7 @@ export const FeeSection = () => {
     }, []);
 
     return (
-        <section id="fees" className="py-24 relative overflow-hidden bg-gradient-to-b from-white via-blue-50/50 to-white">
+        <section id="fees" className="py-16 md:py-20 relative overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-white">
             {/* Background Decor */}
             <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-30"></div>
 
@@ -80,14 +80,14 @@ export const FeeSection = () => {
                     </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
                     {/* Standard Fees */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group"
+                        className="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 transition-all duration-300 group"
                     >
                         <div className="flex items-center gap-4 mb-8">
                             <div className="p-3.5 bg-blue-50 rounded-2xl text-blue-600 shadow-sm group-hover:scale-110 transition-transform duration-300">

@@ -31,10 +31,9 @@ export const HowItWorks = () => {
   ];
 
   return (
-    <section id="how-it-works" className="py-24 relative overflow-hidden">
+    <section id="how-it-works" className="py-16 md:py-20 relative overflow-hidden bg-slate-50/80">
       {/* Background Decor */}
-      <div className="absolute inset-0 bg-gray-50/50"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-50"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(#cbd5e11a_1px,transparent_1px)] [background-size:24px_24px] opacity-50"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
@@ -58,7 +57,7 @@ export const HowItWorks = () => {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map((step, index) => {
             const Icon = step.icon;
             return (
@@ -70,7 +69,7 @@ export const HowItWorks = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="relative group"
               >
-                <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 h-full z-10 relative group-hover:-translate-y-1">
+                <div className="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 transition-all duration-300 h-full z-10 relative group-hover:-translate-y-1">
 
                   {/* Step Number Badge */}
                   <div className={`w-14 h-14 rounded-2xl ${step.color} text-white flex items-center justify-center mb-6 text-xl font-bold shadow-lg shadow-gray-200 group-hover:scale-110 transition-transform duration-300`}>

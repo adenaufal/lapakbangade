@@ -47,11 +47,11 @@ export const Testimonials = () => {
   const allTestimonials = TESTIMONIALS;
 
   return (
-    <section id="testimonials" className="py-24 relative overflow-hidden bg-white">
+    <section id="testimonials" className="py-16 md:py-20 relative overflow-hidden bg-white">
       {/* Background Decor: Soft Blobs */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-brand-50/50 rounded-full blur-[100px] pointer-events-none opacity-60"></div>
-      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-[100px] pointer-events-none opacity-60"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-20"></div>
+      <div className="absolute top-0 right-0 -mr-24 -mt-24 w-[420px] h-[420px] bg-brand-50/60 rounded-full blur-[90px] pointer-events-none opacity-55"></div>
+      <div className="absolute bottom-0 left-0 -ml-24 -mb-24 w-[420px] h-[420px] bg-blue-50/60 rounded-full blur-[90px] pointer-events-none opacity-55"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:26px_26px] opacity-20"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">

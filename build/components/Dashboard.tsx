@@ -13,7 +13,6 @@ import {
     ExternalLink,
     MessageCircle,
     User,
-    Settings,
     Facebook,
     Gamepad2,
     Link,
@@ -143,11 +142,11 @@ const TransactionCard: React.FC<{ tx: Transaction; onClick: (tx: Transaction) =>
     return (
         <div
             onClick={() => onClick(tx)}
-            className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-all cursor-pointer group"
+            className="bg-white/95 backdrop-blur rounded-2xl border border-slate-200/80 p-4 sm:p-5 hover:shadow-lg hover:shadow-slate-900/10 transition-all cursor-pointer group hover:-translate-y-0.5"
         >
-            <div className="flex items-start justify-between mb-3">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2.5 sm:gap-3 mb-3">
                 <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${isConvert ? 'bg-blue-100 group-hover:bg-blue-200' : 'bg-green-100 group-hover:bg-green-200'}`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${isConvert ? 'bg-blue-100 group-hover:bg-blue-200' : 'bg-green-100 group-hover:bg-green-200'}`}>
                         {isConvert ? (
                             <ArrowRightLeft size={20} className="text-blue-600" />
                         ) : (
@@ -156,7 +155,7 @@ const TransactionCard: React.FC<{ tx: Transaction; onClick: (tx: Transaction) =>
                     </div>
                     <div>
                         <p className="font-semibold text-gray-900 group-hover:text-brand-600 transition-colors">
-                            {isConvert ? 'Convert PayPal → IDR' : 'Top-up PayPal'}
+                            {isConvert ? 'Convert PayPal -> IDR' : 'Top-up PayPal'}
                         </p>
                         <p className="text-sm text-gray-500">{date}</p>
                     </div>
@@ -164,7 +163,7 @@ const TransactionCard: React.FC<{ tx: Transaction; onClick: (tx: Transaction) =>
                 <StatusBadge status={tx.status} />
             </div>
 
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div>
                     <p className="text-gray-500">Amount USD</p>
                     <p className="font-semibold text-gray-900">${(tx.amount_usd || 0).toLocaleString()}</p>
@@ -416,7 +415,7 @@ export const Dashboard = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-slate-50 flex items-center justify-center">
                 <Loader2 size={32} className="animate-spin text-brand-600" />
             </div>
         );
@@ -427,7 +426,7 @@ export const Dashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-slate-50/90 flex flex-col">
             <Navbar />
 
             {/* Transaction Wizard */}
@@ -453,10 +452,10 @@ export const Dashboard = () => {
             {/* Link Account Modal */}
             {isLinkModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 relative animate-in fade-in zoom-in duration-200">
+                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-4 sm:p-6 relative animate-in fade-in zoom-in duration-200">
                         <button
                             onClick={() => setIsLinkModalOpen(false)}
-                            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+                            className="absolute top-3 sm:top-4 right-3 sm:right-4 text-gray-400 hover:text-gray-600"
                         >
                             <XCircle size={24} />
                         </button>
@@ -474,7 +473,7 @@ export const Dashboard = () => {
                         <div className="bg-gray-100 rounded-xl p-4 mb-6 text-center">
                             <p className="text-xs text-gray-500 mb-2 uppercase tracking-wide font-semibold">Kode Link Anda</p>
                             <div className="flex items-center justify-center gap-2">
-                                <code className="text-3xl font-mono font-bold text-brand-600 tracking-wider">
+                                <code className="text-2xl sm:text-3xl font-mono font-bold text-brand-600 tracking-wider break-all">
                                     {linkCode}
                                 </code>
                                 <button
@@ -496,18 +495,18 @@ export const Dashboard = () => {
                                 <div className="bg-blue-100 p-2 rounded-full">
                                     <MessageCircle size={18} className="text-blue-600" />
                                 </div>
-                                <div className="text-sm">
+                                <div className="text-xs sm:text-sm">
                                     <p className="font-semibold text-gray-900">Facebook Messenger</p>
-                                    <p className="text-gray-500">Kirim chat: <code className="bg-gray-100 px-1 rounded">!link {linkCode}</code></p>
+                                    <p className="text-gray-500 break-all">Kirim chat: <code className="bg-gray-100 px-1 rounded">!link {linkCode}</code></p>
                                 </div>
                             </div>
                             <div className="p-3 border border-gray-200 rounded-lg flex items-center gap-3">
                                 <div className="bg-indigo-100 p-2 rounded-full">
                                     <Gamepad2 size={18} className="text-indigo-600" />
                                 </div>
-                                <div className="text-sm">
+                                <div className="text-xs sm:text-sm">
                                     <p className="font-semibold text-gray-900">Discord Bot</p>
-                                    <p className="text-gray-500">Kirim chat: <code className="bg-gray-100 px-1 rounded">/link {linkCode}</code></p>
+                                    <p className="text-gray-500 break-all">Kirim chat: <code className="bg-gray-100 px-1 rounded">/link {linkCode}</code></p>
                                 </div>
                             </div>
                         </div>
@@ -522,49 +521,53 @@ export const Dashboard = () => {
                 </div>
             )}
 
-            <main className="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+            <main className="flex-grow pt-24 pb-14 px-3 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
-                    {/* Info Banner - Moved to Top */}
-                    <div className="mb-8 bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                            <MessageCircle size={16} className="text-blue-600" />
-                        </div>
-                        <div>
-                            <p className="text-sm text-blue-900 font-medium">Transaksi via Messenger/Discord</p>
-                            <p className="text-sm text-blue-700">
-                                Untuk saat ini, transaksi dilakukan melalui chat Messenger atau Discord.
-                                Dashboard ini menampilkan riwayat transaksi Anda.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Header */}
-                    <div className="mb-8">
-                        <div className="flex items-center gap-4 mb-2">
-                            {user?.picture ? (
-                                <img src={user.picture} alt={user.name || ''} className="w-14 h-14 rounded-full border-2 border-brand-200" />
-                            ) : (
-                                <div className="w-14 h-14 rounded-full bg-brand-100 flex items-center justify-center">
-                                    <User size={24} className="text-brand-600" />
+                    <section className="mb-8 rounded-3xl border border-slate-200 bg-white/90 shadow-[0_16px_38px_rgba(15,23,42,0.07)] p-5 md:p-7">
+                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+                            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                                {user?.picture ? (
+                                    <img src={user.picture} alt={user.name || ''} className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-brand-200 flex-shrink-0" />
+                                ) : (
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-brand-100 flex items-center justify-center flex-shrink-0">
+                                        <User size={24} className="text-brand-600" />
+                                    </div>
+                                )}
+                                <div className="min-w-0">
+                                    <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+                                        Halo, {user?.name?.split(' ')[0] || 'User'}!
+                                    </h1>
+                                    <p className="text-sm text-gray-500 break-all">{user?.email}</p>
                                 </div>
-                            )}
-                            <div>
-                                <h1 className="text-2xl font-bold text-gray-900">
-                                    Halo, {user?.name?.split(' ')[0] || 'User'}! 👋
-                                </h1>
-                                <p className="text-gray-500">{user?.email}</p>
+                            </div>
+                            <div className="inline-flex items-center justify-center sm:justify-start gap-2 rounded-full bg-emerald-50 border border-emerald-200 px-3 sm:px-4 py-2 text-xs sm:text-sm text-emerald-700 font-semibold w-full sm:w-fit">
+                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                Dashboard aktif dan sinkron otomatis
                             </div>
                         </div>
-                    </div>
+
+                        <div className="mt-5 bg-blue-50 border border-blue-200 rounded-2xl p-3.5 sm:p-4 flex items-start gap-3">
+                            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                <MessageCircle size={16} className="text-blue-600" />
+                            </div>
+                            <div>
+                                <p className="text-xs sm:text-sm text-blue-900 font-medium">Transaksi via Messenger/Discord</p>
+                                <p className="text-xs sm:text-sm text-blue-700">
+                                    Untuk saat ini, transaksi dilakukan melalui chat Messenger atau Discord.
+                                    Dashboard ini menampilkan riwayat transaksi Anda.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
 
                     {transactionError && (
-                        <div className="mb-6 bg-rose-50 border border-rose-200 rounded-xl p-4 text-sm text-rose-700">
+                        <div className="mb-6 bg-rose-50 border border-rose-200 rounded-2xl p-4 text-sm text-rose-700 shadow-sm">
                             Gagal memuat update transaksi terbaru: {transactionError}
                         </div>
                     )}
 
                     {latestStatusChange && (
-                        <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+                        <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 shadow-sm">
                             <div className="text-sm text-emerald-800">
                                 Update terbaru: #{latestStatusChange.displayId} berubah dari
                                 {' '}<span className="font-semibold">{latestStatusChange.fromStatus}</span>
@@ -591,33 +594,33 @@ export const Dashboard = () => {
 
                     {/* Stats Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                        <div className="bg-white rounded-xl border border-gray-200 p-5">
+                        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-4 md:p-5">
                             <p className="text-sm text-gray-500 mb-1">Total Transaksi</p>
-                            <p className="text-2xl font-bold text-gray-900">{transactions.length}</p>
+                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{transactions.length}</p>
                         </div>
-                        <div className="bg-white rounded-xl border border-gray-200 p-5">
+                        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-4 md:p-5">
                             <p className="text-sm text-gray-500 mb-1">Selesai / Pending</p>
-                            <p className="text-2xl font-bold text-gray-900">
+                            <p className="text-xl sm:text-2xl font-bold text-gray-900">
                                 <span className="text-green-600">{completedCount}</span>
                                 <span className="text-gray-400 mx-1">/</span>
                                 <span className="text-yellow-600">{pendingCount}</span>
                             </p>
                         </div>
-                        <div className="bg-white rounded-xl border border-gray-200 p-5">
+                        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-4 md:p-5">
                             <p className="text-sm text-gray-500 mb-1">Total Volume</p>
-                            <p className="text-2xl font-bold text-gray-900">${totalVolume.toLocaleString()}</p>
+                            <p className="text-xl sm:text-2xl font-bold text-gray-900">${totalVolume.toLocaleString()}</p>
                         </div>
-                        <div className="bg-white rounded-xl border border-gray-200 p-5">
+                        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-4 md:p-5">
                             <p className="text-sm text-gray-500 mb-1">Hasil Filter</p>
-                            <p className="text-2xl font-bold text-gray-900">{filteredTransactions.length}</p>
+                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{filteredTransactions.length}</p>
                             <p className="text-xs text-gray-500 mt-1">
-                                ${filteredVolume.toLocaleString()} • {filteredCompleted} selesai / {filteredPending} pending
+                                ${filteredVolume.toLocaleString()} | {filteredCompleted} selesai / {filteredPending} pending
                             </p>
                         </div>
                     </div>
 
                     <div className="mb-8">
-                        <TrustIndicators summary={trustSummary} />
+                        <TrustIndicators summary={trustSummary} className="rounded-2xl border border-slate-200/80 shadow-sm" />
                         {lastUpdatedAt && (
                             <p className="text-xs text-gray-500 mt-2">
                                 Last synced: {new Date(lastUpdatedAt).toLocaleString('id-ID')}
@@ -628,24 +631,24 @@ export const Dashboard = () => {
                     {/* Linked Accounts */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         {/* Account Status Card */}
-                        <div className="bg-white rounded-xl border border-gray-200 p-5 col-span-1 md:col-span-3">
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="font-bold text-gray-900">Linked Accounts</h3>
-                                <div className="flex gap-2">
-                                    <button
-                                        onClick={() => setIsWizardOpen(true)}
-                                        className="text-sm bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors flex items-center gap-1.5 shadow-sm shadow-brand-200"
-                                    >
-                                        <ArrowRightLeft size={14} />
-                                        Transaksi Baru
-                                    </button>
-                                    <button
-                                        onClick={generateLinkCode}
-                                        disabled={isGeneratingCode}
-                                        className="text-sm bg-brand-50 hover:bg-brand-100 text-brand-700 px-3 py-1.5 rounded-lg font-medium transition-colors flex items-center gap-1.5"
-                                    >
-                                        {isGeneratingCode ? <Loader2 size={14} className="animate-spin" /> : <Link size={14} />}
-                                        Link New Account
+                    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-4 sm:p-5 col-span-1 md:col-span-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+                            <h3 className="font-bold text-gray-900 text-sm sm:text-base">Linked Accounts</h3>
+                            <div className="flex flex-col sm:flex-row flex-wrap gap-2 w-full sm:w-auto">
+                                <button
+                                    onClick={() => setIsWizardOpen(true)}
+                                    className="text-xs sm:text-sm bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 rounded-xl font-medium transition-colors flex items-center justify-center gap-1.5 shadow-sm shadow-brand-200 w-full sm:w-auto"
+                                >
+                                    <ArrowRightLeft size={14} />
+                                    Transaksi Baru
+                                </button>
+                                <button
+                                    onClick={generateLinkCode}
+                                    disabled={isGeneratingCode}
+                                    className="text-xs sm:text-sm bg-brand-50 hover:bg-brand-100 text-brand-700 px-3 py-2 rounded-xl font-medium transition-colors flex items-center justify-center gap-1.5 w-full sm:w-auto"
+                                >
+                                    {isGeneratingCode ? <Loader2 size={14} className="animate-spin" /> : <Link size={14} />}
+                                    Link New Account
                                     </button>
                                 </div>
                             </div>
@@ -753,71 +756,40 @@ export const Dashboard = () => {
                         <ReferralLeaderboard />
                     </div>
 
-                    {/* Quick Actions */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-                        <button
-                            onClick={() => setIsWizardOpen(true)}
-                            className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-3 rounded-lg font-medium text-sm transition-colors text-left"
-                        >
-                            <ArrowRightLeft size={18} />
-                            Convert
-                        </button>
-                        <button
-                            onClick={() => setIsWizardOpen(true)}
-                            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium text-sm transition-colors text-left"
-                        >
-                            <ArrowUpCircle size={18} />
-                            Top-up
-                        </button>
-                        <a
-                            href="https://m.me/lapakbangade"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-3 rounded-lg font-medium text-sm transition-colors"
-                        >
-                            <MessageCircle size={18} />
-                            Chat Admin
-                        </a>
-                        <button
-                            className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-3 rounded-lg font-medium text-sm transition-colors"
-                            onClick={() => alert('Settings coming soon!')}
-                        >
-                            <Settings size={18} />
-                            Settings
-                        </button>
-                    </div>
-
                     {/* Transactions */}
-                    <div>
-                        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-                            <h2 className="text-lg font-bold text-gray-900">Riwayat Transaksi</h2>
-                            <div className="flex items-center gap-2">
+                    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-3.5 sm:p-5">
+                        <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+                            <h2 className="text-base sm:text-lg font-bold text-gray-900">Riwayat Transaksi</h2>
+                            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto sm:justify-end">
                                 <button
                                     onClick={() => void refreshNow()}
                                     disabled={isRefreshingTransactions}
-                                    className="inline-flex items-center gap-1.5 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg font-medium transition-colors disabled:opacity-60"
+                                    className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 text-gray-700 px-2.5 sm:px-3 py-2 rounded-xl font-medium transition-colors disabled:opacity-60 flex-1 sm:flex-none"
                                 >
                                     <RefreshCw size={14} className={isRefreshingTransactions ? 'animate-spin' : ''} />
-                                    Refresh
+                                    <span className="max-[360px]:hidden">Refresh</span>
+                                    <span className="hidden max-[360px]:inline">Sync</span>
                                 </button>
                                 <button
                                     onClick={exportCsv}
-                                    className="inline-flex items-center gap-1.5 text-sm bg-emerald-100 hover:bg-emerald-200 text-emerald-800 px-3 py-2 rounded-lg font-medium transition-colors"
+                                    className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm bg-emerald-100 hover:bg-emerald-200 text-emerald-800 px-2.5 sm:px-3 py-2 rounded-xl font-medium transition-colors flex-1 sm:flex-none"
                                 >
                                     <Download size={14} />
-                                    Export CSV
+                                    <span className="max-[360px]:hidden">Export CSV</span>
+                                    <span className="hidden max-[360px]:inline">CSV</span>
                                 </button>
                                 <button
                                     onClick={exportPdf}
-                                    className="inline-flex items-center gap-1.5 text-sm bg-indigo-100 hover:bg-indigo-200 text-indigo-800 px-3 py-2 rounded-lg font-medium transition-colors"
+                                    className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm bg-indigo-100 hover:bg-indigo-200 text-indigo-800 px-2.5 sm:px-3 py-2 rounded-xl font-medium transition-colors flex-1 sm:flex-none"
                                 >
                                     <FileText size={14} />
-                                    Export PDF
+                                    <span className="max-[360px]:hidden">Export PDF</span>
+                                    <span className="hidden max-[360px]:inline">PDF</span>
                                 </button>
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-xl border border-gray-200 p-4 mb-4">
+                        <div className="bg-slate-50 rounded-xl border border-slate-200/80 p-3 sm:p-4 mb-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3">
                                 <div className="relative md:col-span-2">
                                     <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -826,14 +798,14 @@ export const Dashboard = () => {
                                         value={searchQuery}
                                         onChange={(event) => setSearchQuery(event.target.value)}
                                         placeholder="Cari ID, status, tipe, bank..."
-                                        className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-200 focus:border-brand-400"
+                                        className="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-200 focus:border-brand-400"
                                     />
                                 </div>
 
                                 <select
                                     value={statusFilter}
                                     onChange={(event) => setStatusFilter(event.target.value)}
-                                    className="px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
+                                    className="px-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
                                 >
                                     {availableStatuses.map((status) => (
                                         <option key={status} value={status}>
@@ -845,7 +817,7 @@ export const Dashboard = () => {
                                 <select
                                     value={typeFilter}
                                     onChange={(event) => setTypeFilter(event.target.value)}
-                                    className="px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
+                                    className="px-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
                                 >
                                     <option value="all">Semua Tipe</option>
                                     <option value="convert">Convert</option>
@@ -856,16 +828,16 @@ export const Dashboard = () => {
                                     type="date"
                                     value={dateFrom}
                                     onChange={(event) => setDateFrom(event.target.value)}
-                                    className="px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
+                                    className="px-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
                                 />
                                 <input
                                     type="date"
                                     value={dateTo}
                                     onChange={(event) => setDateTo(event.target.value)}
-                                    className="px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
+                                    className="px-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-200"
                                 />
                             </div>
-                            <div className="mt-3 flex items-center justify-between">
+                            <div className="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                                 <a
                                     href="https://m.me/lapakbangade"
                                     target="_blank"
@@ -889,22 +861,22 @@ export const Dashboard = () => {
                                 <Loader2 size={32} className="animate-spin text-brand-600" />
                             </div>
                         ) : transactions.length === 0 ? (
-                            <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
+                            <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 sm:p-8 text-center">
                                 <p className="text-gray-500 mb-4">Belum ada transaksi</p>
                                 <a
                                     href="#"
                                     onClick={(e) => { e.preventDefault(); setIsWizardOpen(true); }}
-                                    className="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                                    className="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-xl font-medium transition-colors w-full sm:w-auto"
                                 >
                                     Mulai Transaksi Pertama
                                 </a>
                             </div>
                         ) : filteredTransactions.length === 0 ? (
-                            <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
+                            <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 sm:p-8 text-center">
                                 <p className="text-gray-500 mb-3">Tidak ada transaksi yang cocok dengan filter saat ini.</p>
                                 <button
                                     onClick={resetFilters}
-                                    className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors"
+                                    className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
                                 >
                                     <FilterX size={14} />
                                     Hapus Filter

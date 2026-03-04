@@ -20,9 +20,9 @@ const WALLET_LOGOS = [
 
 export const PaymentMethods = () => {
   return (
-    <section className="py-24 relative overflow-hidden bg-gray-50">
-      {/* Background Decor: Diagonal Lines */}
-      <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#e5e7eb_10px,#e5e7eb_11px)] opacity-60"></div>
+    <section className="py-16 md:py-20 relative overflow-hidden bg-white">
+      {/* Background Decor */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,#dbeafe66_0%,transparent_42%)]"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <motion.h2
@@ -35,14 +35,14 @@ export const PaymentMethods = () => {
           Bisa cair <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-500">kemana aja?</span>
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Banks */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group"
+            className="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 transition-all duration-300 group"
           >
             <div className="flex items-center justify-center gap-3 mb-8">
               <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:scale-110 transition-transform">
@@ -76,7 +76,7 @@ export const PaymentMethods = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group"
+            className="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 transition-all duration-300 group"
           >
             <div className="flex items-center justify-center gap-3 mb-8">
               <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:scale-110 transition-transform">

@@ -27,17 +27,17 @@ export const SocialProofTicker = () => {
     const [events] = useState<ProofEvent[]>(generateProofEvents());
 
     return (
-        <div className="bg-gradient-to-r from-brand-600 to-blue-500 py-3 overflow-hidden relative">
+        <div className="bg-gradient-to-r from-brand-700 to-blue-600 py-3 overflow-hidden relative border-y border-brand-500/40 shadow-[0_8px_24px_rgba(37,99,235,0.25)]">
             {/* Gradient overlays for fade effect */}
-            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-brand-600 to-transparent z-10"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-blue-500 to-transparent z-10"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 lg:w-32 bg-gradient-to-r from-brand-700 to-transparent z-10"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 lg:w-32 bg-gradient-to-l from-blue-600 to-transparent z-10"></div>
 
-            <div className="flex animate-marquee gap-8 whitespace-nowrap">
+            <div className="flex animate-marquee gap-5 sm:gap-8 whitespace-nowrap">
                 {/* Duplicate events for seamless loop */}
                 {[...events, ...events].map((event, idx) => (
                     <div
                         key={`${event.id}-${idx}`}
-                        className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20 flex-shrink-0"
+                        className="inline-flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/20 flex-shrink-0"
                     >
                         <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
                             {event.type === 'convert' ? (
@@ -46,13 +46,13 @@ export const SocialProofTicker = () => {
                                 <TrendingUp size={14} className="text-white" />
                             )}
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-white font-medium">
+                        <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-white font-medium">
                             <User size={14} className="opacity-70" />
                             <span>User dari {event.location}</span>
-                            <span className="opacity-50">•</span>
+                            <span className="hidden sm:inline opacity-50">|</span>
                             <span className="font-bold">${event.amount}</span>
-                            <span className="opacity-50">•</span>
-                            <span className="opacity-70 text-xs">{event.timeAgo}</span>
+                            <span className="hidden sm:inline opacity-50">|</span>
+                            <span className="hidden sm:inline opacity-70 text-xs">{event.timeAgo}</span>
                         </div>
                     </div>
                 ))}

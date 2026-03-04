@@ -136,14 +136,16 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-white">
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30"></div>
+    <section className="relative pt-28 pb-14 md:pt-32 md:pb-16 lg:pt-40 lg:pb-24 overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] opacity-35"></div>
+      <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-brand-100/70 blur-3xl" />
+      <div className="absolute -right-24 top-28 w-80 h-80 rounded-full bg-blue-100/70 blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Rate Volatility Alert */}
         <RateVolatilityAlert currentRate={convertRate} />
 
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-24">
 
           {/* Text Content */}
           <div className="flex-1 text-center lg:text-left z-10">
@@ -157,17 +159,17 @@ export const Hero = () => {
                 <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 px-3 py-1.5 rounded-full">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                   <span className="text-xs font-semibold text-green-700">
-                    {CONFIG.LIVE_STATUS} • {CONFIG.AVERAGE_PROCESS_TIME}
+                    {CONFIG.LIVE_STATUS} | {CONFIG.AVERAGE_PROCESS_TIME}
                   </span>
                 </div>
                 <RealtimeProof />
               </div>
 
-              <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6">
+              <h1 className="text-[1.75rem] max-[360px]:text-[1.62rem] sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-5 md:mb-6">
                 Convert PayPal ke Rupiah, <span className="text-brand-600 bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-blue-400">Cepat & Aman</span>
               </h1>
 
-              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-7 md:mb-8 max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
                 Langsung cair ke bank atau e-wallet kamu. Rate update otomatis setiap jam, fee transparan, no hidden fee!
               </p>
             </motion.div>
@@ -194,12 +196,12 @@ export const Hero = () => {
             </motion.ul>
 
             {/* Social Proof Avatars */}
-            <div className="flex items-center justify-center lg:justify-start gap-4 mb-8">
+            <div className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-7 md:mb-8">
               <div className="flex -space-x-3">
                 {heroAvatars.map((avatar, idx) => (
                   <img
                     key={avatar.avatar + idx}
-                    className="w-12 h-12 rounded-full border-2 border-white shadow-sm"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white shadow-sm"
                     src={avatar.avatar}
                     alt={avatar.name}
                     width="48"
@@ -208,7 +210,7 @@ export const Hero = () => {
                     decoding="async"
                   />
                 ))}
-                <div className="w-12 h-12 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 shadow-sm">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 shadow-sm">
                   99+
                 </div>
               </div>
@@ -228,18 +230,18 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="flex flex-col items-center lg:items-start gap-4 mb-8"
+              className="flex flex-col items-center lg:items-start gap-3 md:gap-4 mb-8"
             >
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleConvertClick}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white font-bold text-lg rounded-xl shadow-lg shadow-brand-500/30 transition-all flex items-center justify-center gap-2 ring-4 ring-brand-500/10"
+                className="w-full sm:w-auto px-6 sm:px-7 md:px-8 py-3.5 md:py-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white font-bold text-sm sm:text-base md:text-lg rounded-xl shadow-lg shadow-brand-500/30 transition-all flex items-center justify-center gap-2 ring-4 ring-brand-500/10"
               >
-                <MessageCircle size={24} />
+                <MessageCircle size={22} />
                 Chat via Messenger
               </motion.button>
-              <div className="flex items-center gap-2 text-sm text-gray-600 font-medium bg-white/50 backdrop-blur-sm px-4 py-1.5 rounded-full border border-gray-200">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 font-medium bg-white/50 backdrop-blur-sm px-4 py-1.5 rounded-full border border-gray-200">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 Jam operasional {CONFIG.OPERATIONAL_HOURS}
               </div>
@@ -254,7 +256,7 @@ export const Hero = () => {
             className="flex-1 w-full max-w-md z-10"
             id="calculator"
           >
-            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/50 overflow-hidden ring-1 ring-black/5 transform transition-all hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+            <div className="bg-white/85 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/70 overflow-hidden ring-1 ring-slate-900/5 transform transition-all hover:shadow-[0_20px_50px_rgba(15,23,42,0.14)]">
               <div className="bg-gray-900 p-4 text-white text-center">
                 <div className="font-bold text-lg">
                   1 USD = Rp {(mode === 'convert' ? convertRate : effectiveTopupRate).toLocaleString('id-ID')}
@@ -265,7 +267,7 @@ export const Hero = () => {
                 </div>
               </div>
 
-              <div className="p-6 md:p-8 space-y-6">
+              <div className="p-5 sm:p-6 md:p-8 space-y-5 md:space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <button
                     className={`w-full px-4 py-3 rounded-lg border text-sm font-semibold transition ${mode === 'convert' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
@@ -299,7 +301,7 @@ export const Hero = () => {
                 </div>
 
                 {mode === 'convert' ? (
-                  <div className="flex flex-col gap-4 min-h-[160px]">
+                  <div className="flex flex-col gap-4 min-h-[132px] md:min-h-[160px]">
                     <div className="bg-blue-50/50 p-4 rounded-lg space-y-2 border border-dashed border-blue-100">
                       <div className="flex justify-between text-sm text-gray-600">
                         <span>Estimasi Fee</span>
@@ -321,13 +323,13 @@ export const Hero = () => {
                           readOnly
                           aria-label="Jumlah Rupiah yang kamu terima"
                           value={formatIDR(idrReceived)}
-                          className="w-full pl-4 pr-4 py-3 bg-brand-50 border border-brand-200 rounded-lg text-2xl font-bold text-brand-700"
+                          className="w-full pl-4 pr-4 py-3 bg-brand-50 border border-brand-200 rounded-lg text-xl md:text-2xl font-bold text-brand-700"
                         />
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col gap-4 min-h-[160px]">
+                  <div className="flex flex-col gap-4 min-h-[132px] md:min-h-[160px]">
                     <div className="rounded-lg border border-blue-100 bg-blue-50/50 p-4 space-y-1.5">
                       <div className="text-sm text-gray-700 font-semibold">Top-up rate (saldo tersedia)</div>
                       <p className="text-xs text-gray-600">Jika saldo admin kosong, rate normal akan dikonfirmasi dulu.</p>

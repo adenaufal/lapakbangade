@@ -17,16 +17,16 @@ export const ProgrammaticLinks: React.FC<ProgrammaticLinksProps> = ({
 
   if (variant === 'compact') {
     return (
-      <div className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 ${className}`}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 ${className}`}>
         {/* Banks */}
         <div>
-          <h3 className="font-bold text-gray-900 mb-3">Convert ke Bank</h3>
+          <h3 className="font-bold text-gray-900 mb-3 text-base">Convert ke Bank</h3>
           <ul className="space-y-2">
             {popularBanks.map(bank => (
               <li key={bank.id}>
                 <a
                   href={`/convert-paypal-ke-${bank.id}`}
-                  className="text-sm text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1 group"
+                  className="text-[13px] sm:text-sm text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1 group leading-snug"
                 >
                   <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                   Convert PayPal ke {bank.name}
@@ -38,13 +38,13 @@ export const ProgrammaticLinks: React.FC<ProgrammaticLinksProps> = ({
 
         {/* E-Wallets */}
         <div>
-          <h3 className="font-bold text-gray-900 mb-3">Convert ke E-Wallet</h3>
+          <h3 className="font-bold text-gray-900 mb-3 text-base">Convert ke E-Wallet</h3>
           <ul className="space-y-2">
             {popularEWallets.map(ewallet => (
               <li key={ewallet.id}>
                 <a
                   href={`/convert-paypal-ke-${ewallet.id}`}
-                  className="text-sm text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1 group"
+                  className="text-[13px] sm:text-sm text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1 group leading-snug"
                 >
                   <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                   Convert PayPal ke {ewallet.name}
@@ -56,13 +56,13 @@ export const ProgrammaticLinks: React.FC<ProgrammaticLinksProps> = ({
 
         {/* Use Cases */}
         <div>
-          <h3 className="font-bold text-gray-900 mb-3">Solusi untuk Anda</h3>
+          <h3 className="font-bold text-gray-900 mb-3 text-base">Solusi untuk Anda</h3>
           <ul className="space-y-2">
             {featuredUseCases.map(useCase => (
               <li key={useCase.id}>
                 <a
                   href={`/untuk-${useCase.slug}`}
-                  className="text-sm text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1 group"
+                  className="text-[13px] sm:text-sm text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1 group leading-snug"
                 >
                   <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                   {useCase.title}
@@ -79,15 +79,15 @@ export const ProgrammaticLinks: React.FC<ProgrammaticLinksProps> = ({
     <div className={className}>
       {/* Banks Section */}
       <div className="mb-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-5 sm:mb-6">
           Convert PayPal ke Bank Indonesia
         </h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           {BANKS_DATA.map(bank => (
             <a
               key={bank.id}
               href={`/convert-paypal-ke-${bank.id}`}
-              className="block p-4 bg-white border border-gray-200 hover:border-brand-300 hover:bg-brand-50 rounded-lg transition-all group"
+              className="block p-3.5 sm:p-4 bg-white border border-gray-200 hover:border-brand-300 hover:bg-brand-50 rounded-lg transition-all group"
             >
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-gray-900 group-hover:text-brand-600">
@@ -103,15 +103,15 @@ export const ProgrammaticLinks: React.FC<ProgrammaticLinksProps> = ({
 
       {/* E-Wallets Section */}
       <div className="mb-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-5 sm:mb-6">
           Convert PayPal ke E-Wallet
         </h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           {EWALLETS_DATA.map(ewallet => (
             <a
               key={ewallet.id}
               href={`/convert-paypal-ke-${ewallet.id}`}
-              className="block p-4 bg-white border border-gray-200 hover:border-green-300 hover:bg-green-50 rounded-lg transition-all group"
+              className="block p-3.5 sm:p-4 bg-white border border-gray-200 hover:border-green-300 hover:bg-green-50 rounded-lg transition-all group"
             >
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-gray-900 group-hover:text-green-600">
@@ -127,15 +127,15 @@ export const ProgrammaticLinks: React.FC<ProgrammaticLinksProps> = ({
 
       {/* Use Cases Section */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-5 sm:mb-6">
           Solusi Convert PayPal untuk Profesi Anda
         </h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           {USE_CASES_DATA.map(useCase => (
             <a
               key={useCase.id}
               href={`/untuk-${useCase.slug}`}
-              className="block p-6 bg-white border border-gray-200 hover:border-purple-300 hover:bg-purple-50 rounded-lg transition-all group"
+              className="block p-5 sm:p-6 bg-white border border-gray-200 hover:border-purple-300 hover:bg-purple-50 rounded-lg transition-all group"
             >
               <h3 className="font-bold text-gray-900 group-hover:text-purple-600 mb-2">
                 {useCase.title}

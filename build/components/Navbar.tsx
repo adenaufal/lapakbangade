@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, LayoutDashboard } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { CONFIG, NAV_LINKS } from '../constants';
 import { LoginButton } from './LoginButton';
-import { useAuth } from '../hooks/useAuth';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { isAuthenticated } = useAuth();
   const location = useLocation();
 
   useEffect(() => {
@@ -24,19 +22,19 @@ export const Navbar = () => {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-300 border-b ${scrolled ? 'bg-white/95 backdrop-blur-sm border-gray-200 py-3 shadow-sm' : 'bg-white border-transparent py-4'
+      className={`fixed w-full z-50 transition-all duration-300 border-b ${scrolled ? 'bg-white/90 backdrop-blur-xl border-slate-200 py-3 shadow-[0_8px_28px_rgba(15,23,42,0.08)]' : 'bg-transparent border-transparent py-4'
         }`}
     >
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <Link to="/" className="flex items-center gap-3 group">
+          <div className="flex items-center gap-3 min-w-0">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 group min-w-0">
               <img
                 src="/favicon/apple-icon-180x180.png"
                 alt="Lapak Bang Ade Logo"
-                className="h-10 w-10 rounded-lg group-hover:opacity-90 transition-opacity"
+                className="h-9 w-9 sm:h-10 sm:w-10 rounded-lg group-hover:opacity-90 transition-opacity flex-shrink-0"
               />
-              <span className="font-bold text-xl text-gray-900 tracking-tight">
+              <span className="font-bold text-base sm:text-lg md:text-xl text-gray-900 tracking-tight truncate max-w-[9.5rem] sm:max-w-none">
                 {CONFIG.APP_NAME}
               </span>
             </Link>
@@ -64,7 +62,7 @@ export const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-800 p-2"
+              className="text-gray-800 p-1.5"
               aria-label="Toggle menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -75,9 +73,9 @@ export const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-200 shadow-lg">
+        <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-lg">
           <div className="px-4 py-4 space-y-3">
-            {NAV_LINKS.map((link) => (
+            {!isDashboard && NAV_LINKS.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}

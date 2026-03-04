@@ -49,7 +49,7 @@ export const TrustIndicators: React.FC<TrustIndicatorsProps> = ({ summary, class
   const risk = riskStyles[summary.riskLevel];
 
   return (
-    <section className={`bg-white rounded-xl border border-gray-200 p-5 ${className}`}>
+    <section className={`bg-white rounded-xl border border-gray-200 p-4 sm:p-5 ${className}`}>
       <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
         <div>
           <h3 className="font-bold text-gray-900">Trust Indicators</h3>
@@ -64,7 +64,7 @@ export const TrustIndicators: React.FC<TrustIndicatorsProps> = ({ summary, class
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         <div className="rounded-lg border border-gray-200 p-3 bg-gray-50">
           <p className="text-xs text-gray-500 mb-1">Trust Score</p>
-          <p className="text-2xl font-bold text-gray-900">{summary.trustScore}</p>
+          <p className="text-xl sm:text-2xl font-bold text-gray-900">{summary.trustScore}</p>
           <div className="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-brand-600"
@@ -76,7 +76,7 @@ export const TrustIndicators: React.FC<TrustIndicatorsProps> = ({ summary, class
           <p className="text-xs text-gray-500 mb-1 flex items-center gap-1">
             <TrendingUp size={12} /> Tx Last 24h
           </p>
-          <p className="text-2xl font-bold text-gray-900">{summary.metrics.transactionsLast24h}</p>
+          <p className="text-xl sm:text-2xl font-bold text-gray-900">{summary.metrics.transactionsLast24h}</p>
         </div>
         <div className="rounded-lg border border-gray-200 p-3 bg-gray-50">
           <p className="text-xs text-gray-500 mb-1 flex items-center gap-1">

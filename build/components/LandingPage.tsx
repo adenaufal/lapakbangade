@@ -45,7 +45,7 @@ export const LandingPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white selection:bg-brand-100 selection:text-brand-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-brand-100 selection:text-brand-900">
       <SEO
         title="Lapak Bang Ade - Jasa Convert PayPal ke Rupiah Terpercaya"
         description="Jasa convert PayPal USD ke IDR dan Top Up saldo PayPal. Rate kompetitif, fee transparan, cair ke BCA, Mandiri, BRI, BNI, DANA, OVO, GoPay. Proses manual aman & anti-fraud."
@@ -55,7 +55,7 @@ export const LandingPage: React.FC = () => {
       />
       <ExitIntentPopup isAuthenticated={false} />
       <Navbar />
-      <main>
+      <main className="relative">
         <Hero />
         <SocialProofTicker />
         <TrustSection />
@@ -66,17 +66,19 @@ export const LandingPage: React.FC = () => {
         <FAQ />
 
         {/* Programmatic SEO Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">
+        <section className="py-16 md:py-20">
+          <div className="mx-auto px-4 max-w-6xl">
+            <div className="text-center mb-10 md:mb-12">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-slate-900 mb-4">
                 Layanan Convert PayPal Kami
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
                 Pilih bank, e-wallet, atau temukan solusi yang sesuai dengan profesi Anda
               </p>
             </div>
-            <ProgrammaticLinks variant="full" />
+            <div className="rounded-3xl border border-slate-200 bg-white/90 backdrop-blur-sm p-5 md:p-8 shadow-[0_14px_40px_rgba(15,23,42,0.08)]">
+              <ProgrammaticLinks variant="full" />
+            </div>
           </div>
         </section>
 

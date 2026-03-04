@@ -65,14 +65,14 @@ export const LoginButton: React.FC<LoginButtonProps> = ({
                     </div>
                     <Link
                         to="/dashboard"
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-brand-600 bg-brand-50 mx-2"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-brand-600 bg-brand-50"
                     >
                         <LayoutDashboard size={18} />
                         <span>Dashboard</span>
                     </Link>
                     <button
                         onClick={logout}
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors text-sm font-medium w-full text-left mx-2"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors text-sm font-medium w-full text-left"
                     >
                         <LogOut size={18} />
                         <span>Logout</span>

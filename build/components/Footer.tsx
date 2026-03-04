@@ -6,16 +6,16 @@ import { ProgrammaticLinks } from './ProgrammaticLinks';
 
 export const Footer = () => {
   return (
-    <footer className="bg-white border-t border-gray-200 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-white border-t border-gray-200 py-10 md:py-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Programmatic SEO Links Section */}
-        <div className="mb-12 pb-12 border-b border-gray-200">
+        <div className="mb-8 md:mb-12 pb-8 md:pb-12 border-b border-gray-200">
           <ProgrammaticLinks variant="compact" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div className="col-span-1 md:col-span-2 pr-8">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">{CONFIG.APP_NAME}</h3>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 mb-8">
+          <div className="col-span-1 md:col-span-2 pr-0 md:pr-8">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">{CONFIG.APP_NAME}</h3>
             <p className="text-gray-700 text-sm leading-relaxed mb-6">
               Jasa convert PayPal ke Rupiah yang mengutamakan keamanan dan kepercayaan.
               Diproses manual, rate transparan, dan tanpa biaya tersembunyi.
@@ -53,7 +53,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
+        <div className="border-t border-gray-100 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-4 text-xs text-gray-400">
           <p className="text-gray-700">&copy; {new Date().getFullYear()} {CONFIG.APP_NAME}. All rights reserved.</p>
           <p className="text-gray-700">
             Disclaimer: Kami bukan bagian dari PayPal Inc.

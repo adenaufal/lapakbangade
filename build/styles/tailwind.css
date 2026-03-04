@@ -4,12 +4,21 @@
 
 :root {
   scroll-behavior: smooth;
+  --surface-bg: #f8fafc;
+  --surface-tint: #e0e7ff;
+  --text-base: #0f172a;
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background-color: #ffffff;
-  color: #111827;
+  font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 12% 12%, color-mix(in srgb, var(--surface-tint) 24%, transparent) 0%, transparent 46%),
+    radial-gradient(circle at 92% 10%, color-mix(in srgb, var(--surface-tint) 20%, transparent) 0%, transparent 42%),
+    var(--surface-bg);
+  color: var(--text-base);
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 img {
