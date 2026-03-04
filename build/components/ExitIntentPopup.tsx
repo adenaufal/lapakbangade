@@ -4,6 +4,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import { CONFIG } from '../constants';
 import { trackEvent } from '../services/analytics';
 
+const EXIT_INTENT_LISTENER_DELAY_MS = 5000;
+const EXIT_INTENT_AUTO_SHOW_DELAY_MS = 8000;
+
 interface ExitIntentPopupProps {
     isAuthenticated?: boolean;
 }
@@ -20,23 +23,40 @@ export const ExitIntentPopup: React.FC<ExitIntentPopupProps> = ({ isAuthenticate
             return;
         }
 
+        const showPopup = (triggerSource: 'exit_intent' | 'auto_timer') => {
+            if (sessionStorage.getItem('exit_intent_shown') || hasShown || isVisible) {
+                return;
+            }
+
+            setIsVisible(true);
+            setHasShown(true);
+            sessionStorage.setItem('exit_intent_shown', 'true');
+            trackEvent('exit_intent_triggered', {
+                is_authenticated: isAuthenticated,
+                trigger_source: triggerSource,
+            });
+        };
+
         const handleMouseLeave = (e: MouseEvent) => {
             // Only trigger if mouse leaves from top of viewport (toward browser chrome)
-            if (e.clientY <= 10 && !hasShown && !isVisible) {
-                setIsVisible(true);
-                setHasShown(true);
-                sessionStorage.setItem('exit_intent_shown', 'true');
-                trackEvent('exit_intent_triggered', { is_authenticated: isAuthenticated });
+            if (e.clientY <= 10) {
+                showPopup('exit_intent');
             }
         };
 
         // Add listener after 5 second delay (avoid triggering immediately)
-        const timer = setTimeout(() => {
+        const listenerTimer = setTimeout(() => {
             document.addEventListener('mouseleave', handleMouseLeave);
-        }, 5000);
+        }, EXIT_INTENT_LISTENER_DELAY_MS);
+
+        // Auto show after several seconds on landing page
+        const autoShowTimer = setTimeout(() => {
+            showPopup('auto_timer');
+        }, EXIT_INTENT_AUTO_SHOW_DELAY_MS);
 
         return () => {
-            clearTimeout(timer);
+            clearTimeout(listenerTimer);
+            clearTimeout(autoShowTimer);
             document.removeEventListener('mouseleave', handleMouseLeave);
         };
     }, [hasShown, isVisible, isAuthenticated]);
