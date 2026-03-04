@@ -51,4 +51,15 @@ describe('ExitIntentPopup', () => {
     });
     expect(screen.getByText(/Tunggu Dulu!/i)).toBeInTheDocument();
   });
+
+  it('still auto-shows even when legacy session flag already exists', () => {
+    sessionStorage.setItem('exit_intent_shown', 'true');
+    render(<ExitIntentPopup isAuthenticated={false} />);
+
+    act(() => {
+      vi.advanceTimersByTime(8000);
+    });
+
+    expect(screen.getByText(/Tunggu Dulu!/i)).toBeInTheDocument();
+  });
 });

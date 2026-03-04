@@ -16,21 +16,13 @@ export const ExitIntentPopup: React.FC<ExitIntentPopupProps> = ({ isAuthenticate
     const [hasShown, setHasShown] = useState(false);
 
     useEffect(() => {
-        // Check if already shown in this session
-        const shown = sessionStorage.getItem('exit_intent_shown');
-        if (shown) {
-            setHasShown(true);
-            return;
-        }
-
         const showPopup = (triggerSource: 'exit_intent' | 'auto_timer') => {
-            if (sessionStorage.getItem('exit_intent_shown') || hasShown || isVisible) {
+            if (hasShown || isVisible) {
                 return;
             }
 
             setIsVisible(true);
             setHasShown(true);
-            sessionStorage.setItem('exit_intent_shown', 'true');
             trackEvent('exit_intent_triggered', {
                 is_authenticated: isAuthenticated,
                 trigger_source: triggerSource,

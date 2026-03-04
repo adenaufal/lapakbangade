@@ -143,7 +143,7 @@ export const Hero = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Rate Volatility Alert */}
-        <RateVolatilityAlert currentRate={convertRate} />
+        <RateVolatilityAlert currentRate={convertRate} rateSource={rateSource} />
 
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-24">
 
