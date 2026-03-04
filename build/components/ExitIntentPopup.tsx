@@ -80,7 +80,7 @@ export const ExitIntentPopup: React.FC<ExitIntentPopupProps> = ({ isAuthenticate
                         transition={{ type: 'spring', duration: 0.5 }}
                         className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg z-[101]"
                     >
-                        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden mx-4">
+                        <div className="bg-white rounded-2xl shadow-2xl mx-4 max-h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden">
                             {/* Close Button */}
                             <button
                                 onClick={handleClose}
