@@ -32,7 +32,7 @@ describe('ExitIntentPopup', () => {
     const popupCard = heading.closest('div.bg-white');
 
     expect(popupCard).not.toBeNull();
-    expect(popupCard).toHaveClass('max-h-[calc(100vh-2rem)]');
+    expect(popupCard).toHaveClass('max-h-[calc(100dvh-2rem)]');
     expect(popupCard).toHaveClass('overflow-y-auto');
   });
 });
