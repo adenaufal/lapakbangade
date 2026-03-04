@@ -19,6 +19,8 @@ import { MessageCircle } from 'lucide-react';
 import { generateFAQSchema, generateOrganizationSchema } from '../utils/seo';
 
 export const LandingPage: React.FC = () => {
+  const isSpecialOfferEnabled = false;
+
   useEffect(() => {
     trackViewContent({ page: 'landing', section: 'hero' });
 
@@ -53,7 +55,7 @@ export const LandingPage: React.FC = () => {
         keywords="convert paypal ke rupiah, jual saldo paypal, beli saldo paypal, top up paypal, jasa convert paypal, tukar usd ke idr, cairkan paypal ke bank, lapak bang ade"
         structuredData={structuredData}
       />
-      <ExitIntentPopup isAuthenticated={false} />
+      <ExitIntentPopup isAuthenticated={false} enabled={isSpecialOfferEnabled} />
       <Navbar />
       <main className="relative">
         <Hero />

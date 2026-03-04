@@ -62,4 +62,19 @@ describe('ExitIntentPopup', () => {
 
     expect(screen.getByText(/Tunggu Dulu!/i)).toBeInTheDocument();
   });
+
+  it('does not show when disabled', () => {
+    render(<ExitIntentPopup isAuthenticated={false} enabled={false} />);
+
+    act(() => {
+      vi.advanceTimersByTime(8000);
+    });
+    fireEvent.mouseLeave(document, { clientY: 0 });
+
+    expect(screen.queryByText(/Tunggu Dulu!/i)).not.toBeInTheDocument();
+    expect(analyticsMocks.trackEvent).not.toHaveBeenCalledWith(
+      'exit_intent_triggered',
+      expect.anything(),
+    );
+  });
 });
