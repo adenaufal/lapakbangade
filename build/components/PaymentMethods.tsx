@@ -20,39 +20,41 @@ const WALLET_LOGOS = [
 
 export const PaymentMethods = () => {
   return (
-    <section className="py-16 md:py-20 relative overflow-hidden bg-white">
-      {/* Background Decor */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,#dbeafe66_0%,transparent_42%)]"></div>
+    <section className="relative overflow-hidden bg-white py-20 md:py-24">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,#dbeafe_0%,transparent_42%)] opacity-60"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <p className="mb-3 text-xs font-black uppercase text-brand-600">
+          Mitra pencairan
+        </p>
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-16"
+          transition={{ duration: 0.2 }}
+          className="mb-14 text-balance text-3xl font-black leading-tight text-slate-950 md:text-5xl"
         >
-          Bisa cair <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-500">kemana aja?</span>
+          Bisa cair <span className="text-brand-600">kemana aja?</span>
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Banks */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 transition-all duration-300 group"
+            transition={{ duration: 0.2, delay: 0.05 }}
+            className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg group"
           >
             <div className="flex items-center justify-center gap-3 mb-8">
-              <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:scale-110 transition-transform">
+              <div className="rounded-2xl bg-brand-50 p-3 text-brand-600">
                 <Landmark size={24} />
               </div>
-              <span className="font-bold text-lg text-gray-900">TRANSFER BANK</span>
+              <span className="text-lg font-black text-slate-950">TRANSFER BANK</span>
             </div>
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-8 items-center grayscale group-hover:grayscale-0 transition-all duration-500">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-8 grayscale transition duration-200 group-hover:grayscale-0">
               {BANK_LOGOS.map((bank) => (
-                <div key={bank.name} className="h-10 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                <div key={bank.name} className="flex h-10 items-center justify-center transition duration-200 hover:-translate-y-0.5">
                   <img
                     src={bank.src}
                     alt={bank.name}
@@ -66,27 +68,27 @@ export const PaymentMethods = () => {
               ))}
             </div>
             <div className="mt-8 pt-6 border-t border-gray-100">
-              <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1 rounded-full">Support semua bank resmi Indonesia</span>
+              <span className="rounded-full bg-slate-50 px-3 py-1 text-xs font-bold text-slate-500">Support semua bank resmi Indonesia</span>
             </div>
           </motion.div>
 
           {/* E-Wallets */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 transition-all duration-300 group"
+            transition={{ duration: 0.2, delay: 0.1 }}
+            className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg group"
           >
             <div className="flex items-center justify-center gap-3 mb-8">
-              <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:scale-110 transition-transform">
+              <div className="rounded-2xl bg-brand-50 p-3 text-brand-600">
                 <Smartphone size={24} />
               </div>
-              <span className="font-bold text-lg text-gray-900">E-WALLET</span>
+              <span className="text-lg font-black text-slate-950">E-WALLET</span>
             </div>
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-8 items-center grayscale group-hover:grayscale-0 transition-all duration-500">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-8 grayscale transition duration-200 group-hover:grayscale-0">
               {WALLET_LOGOS.map((wallet) => (
-                <div key={wallet.name} className="h-10 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                <div key={wallet.name} className="flex h-10 items-center justify-center transition duration-200 hover:-translate-y-0.5">
                   <img
                     src={wallet.src}
                     alt={wallet.name}
@@ -100,19 +102,19 @@ export const PaymentMethods = () => {
               ))}
             </div>
             <div className="mt-8 pt-6 border-t border-gray-100">
-              <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1 rounded-full">Free transfer ke semua e-wallet</span>
+              <span className="rounded-full bg-slate-50 px-3 py-1 text-xs font-bold text-slate-500">Free transfer ke semua e-wallet</span>
             </div>
           </motion.div>
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-16 text-sm text-gray-500 flex items-center justify-center gap-2"
+          transition={{ duration: 0.2, delay: 0.15 }}
+          className="mt-14 flex items-center justify-center gap-2 text-sm font-bold text-slate-500"
         >
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <div className="size-2 rounded-full bg-green-500"></div>
           Transaksi aman & langsung ke akun kamu sendiri.
         </motion.div>
       </div>

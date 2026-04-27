@@ -54,27 +54,29 @@ export const FeeSection = () => {
     }, []);
 
     return (
-        <section id="fees" className="py-16 md:py-20 relative overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-white">
-            {/* Background Decor */}
+        <section id="fees" className="relative overflow-hidden bg-white py-20 md:py-24">
             <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-30"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-16">
+                <div className="text-center mb-14">
+                    <p className="mb-3 text-xs font-black uppercase text-brand-600">
+                        Fee & Promo
+                    </p>
                     <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                        className="text-3xl md:text-4xl font-extrabold mb-4 text-gray-900"
+                        transition={{ duration: 0.2 }}
+                        className="text-balance text-3xl font-black leading-tight text-slate-950 md:text-5xl"
                     >
-                        Biaya Convert <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-500">(Fee)</span>
+                        Biaya convert <span className="text-brand-600">transparan.</span>
                     </motion.h2>
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                        className="text-lg text-gray-600 max-w-2xl mx-auto"
+                        transition={{ duration: 0.2, delay: 0.05 }}
+                        className="mx-auto mt-4 max-w-2xl text-pretty text-lg leading-8 text-slate-600"
                     >
                         Rate update otomatis menyesuaikan market, tetap kompetitif.
                     </motion.p>
@@ -83,14 +85,14 @@ export const FeeSection = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
                     {/* Standard Fees */}
                     <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 transition-all duration-300 group"
+                        transition={{ duration: 0.2, delay: 0.05 }}
+                        className="bg-white p-7 rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition duration-200 group"
                     >
                         <div className="flex items-center gap-4 mb-8">
-                            <div className="p-3.5 bg-blue-50 rounded-2xl text-blue-600 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                            <div className="p-3.5 bg-brand-50 rounded-2xl text-brand-600 shadow-sm">
                                 <Percent size={28} />
                             </div>
                             <div>
@@ -125,29 +127,25 @@ export const FeeSection = () => {
                         </div>
                     </motion.div>
 
-                    {/* Friday Promo */}
                     <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                        className="relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                        transition={{ duration: 0.2, delay: 0.1 }}
+                        className="relative group overflow-hidden rounded-3xl bg-slate-950 shadow-lg transition duration-200 hover:-translate-y-0.5"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-br from-brand-600 to-indigo-600 transition-all duration-500 group-hover:scale-105"></div>
-
-                        {/* Decorative glow */}
-                        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-all"></div>
+                        <div className="absolute -right-16 -top-16 size-64 rounded-full bg-brand-600/25"></div>
 
                         <div className="relative z-10 p-8 flex flex-col h-full justify-between">
                             <div>
                                 <div className="flex items-center gap-4 mb-6">
-                                    <div className="p-3.5 bg-white/20 backdrop-blur-md rounded-2xl text-white shadow-inner border border-white/20 group-hover:scale-110 transition-transform duration-300">
+                                    <div className="p-3.5 bg-amber-400 rounded-2xl text-slate-950 shadow-inner">
                                         <Gift size={28} />
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-bold text-white">Promo Jumat Spesial</h3>
-                                        <div className="flex items-center gap-2 text-xs font-semibold text-brand-100 bg-brand-800/40 px-2 py-1 rounded-full w-fit mt-1 border border-brand-400/30">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                                        <div className="flex items-center gap-2 text-xs font-semibold text-brand-100 bg-white/10 px-2 py-1 rounded-full w-fit mt-1 border border-white/10">
+                                            <span className="size-1.5 rounded-full bg-green-400"></span>
                                             {isFriday ? (
                                                 <span className="flex items-center gap-1">
                                                     <Clock size={12} />
@@ -165,9 +163,8 @@ export const FeeSection = () => {
                                 </p>
                             </div>
 
-                            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl text-center relative overflow-hidden group-hover:border-white/30 transition-all">
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
-                                <span className="block text-sm text-brand-100 uppercase tracking-widest font-semibold mb-1">Diskon Fee</span>
+                            <div className="rounded-3xl border border-white/10 bg-white/10 p-6 text-center">
+                                <span className="block text-sm font-bold uppercase text-brand-100 mb-1">Diskon Fee</span>
                                 <div className="flex items-center justify-center gap-2">
                                     <span className="block text-5xl font-black text-white drop-shadow-lg">50%</span>
                                     <span className="text-xl font-bold text-brand-200 self-end mb-2">OFF</span>

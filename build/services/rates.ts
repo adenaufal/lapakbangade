@@ -8,6 +8,16 @@ export interface RateResult {
   source: 'api' | 'fallback';
 }
 
+const isRateResponse = (data: unknown): data is { baseRate: number; source?: string } => {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'baseRate' in data &&
+    typeof data.baseRate === 'number' &&
+    data.baseRate > 0
+  );
+};
+
 /**
  * Fetch USD->IDR market rate from API endpoint.
  * Falls back to a default base rate when the request fails.
@@ -18,8 +28,8 @@ export const fetchUsdIdrRate = async (): Promise<RateResult> => {
     if (!res.ok) {
       throw new Error(`Rate function error ${res.status}`);
     }
-    const data = await res.json();
-    if (typeof data?.baseRate === 'number' && data.baseRate > 0) {
+    const data: unknown = await res.json();
+    if (isRateResponse(data)) {
       return { baseRate: data.baseRate, source: data.source === 'api' ? 'api' : 'fallback' };
     }
   } catch (error) {
