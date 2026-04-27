@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Hero } from './Hero';
-import { HowItWorks } from './HowItWorks';
-import { FeeSection } from './FeeSection';
-import { PaymentMethods } from './PaymentMethods';
-import { TrustSection } from './TrustSection';
-import { Testimonials } from './Testimonials';
-import { FAQ } from './FAQ';
 import { CallToAction } from './CallToAction';
 import { Footer } from './Footer';
 import { SEO } from './SEO';
 import { ProgrammaticLinks } from './ProgrammaticLinks';
-import { SocialProofTicker } from './SocialProofTicker';
 import { ExitIntentPopup } from './ExitIntentPopup';
+import {
+  BlogSection,
+  CaraSection,
+  KenapaSection,
+  LayananSection,
+  MitraSection,
+  PromoSection,
+  ReferenceFAQSection,
+  TestimonialMarquee,
+} from './ReferenceHomepageSections';
 import { trackEvent, trackViewContent } from '../services/analytics';
 import { FAQS } from '../constants';
 import { generateFAQSchema, generateOrganizationSchema } from '../utils/seo';
@@ -58,15 +61,16 @@ export const LandingPage: React.FC = () => {
       <Navbar />
       <main className="relative">
         <Hero />
-        <SocialProofTicker />
-        <TrustSection />
-        <Testimonials />
-        <HowItWorks />
-        <FeeSection />
-        <PaymentMethods />
-        <FAQ />
+        <MitraSection />
+        <KenapaSection />
+        <TestimonialMarquee />
+        <CaraSection />
+        <PromoSection />
+        <BlogSection />
+        <LayananSection />
+        <ReferenceFAQSection />
 
-        <section className="bg-white py-16 md:py-20">
+        <section className="bg-white px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <div className="mx-auto px-4 max-w-6xl">
             <div className="text-center mb-10 md:mb-12">
               <p className="mb-3 text-xs font-black uppercase text-brand-600">

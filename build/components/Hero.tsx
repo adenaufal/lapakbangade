@@ -126,7 +126,7 @@ export const Hero = () => {
   };
 
   return (
-    <section id="calculator" className="relative overflow-hidden px-4 pb-16 pt-28 sm:px-6 md:pb-24 md:pt-36 lg:px-8">
+    <section id="calc" className="relative overflow-hidden px-4 py-16 sm:px-6 md:py-20 lg:px-8">
       <div className="pointer-events-none absolute -left-28 -top-28 size-96 rounded-full bg-brand-100/80" />
       <div className="pointer-events-none absolute -right-32 top-28 size-96 rounded-full bg-amber-100/70" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-30" />
@@ -150,11 +150,11 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, delay: 0.05 }}
-              className="mt-5 text-balance text-4xl font-black leading-none text-slate-950 sm:text-5xl md:text-6xl lg:text-7xl"
+              className="mt-5 text-balance text-4xl font-extrabold leading-none text-slate-950 sm:text-5xl md:text-6xl"
             >
-              Convert <span className="text-brand-600">PayPal</span> ke IDR, cepat & aman dalam{' '}
-              <span className="relative inline-block text-brand-600">
-                30 menit
+              Convert <span className="text-brand-600">PayPal</span> ke IDR, <br className="hidden sm:block" />
+              <span className="relative inline-block">
+                cepat &amp; aman
                 <svg
                   className="absolute -bottom-2 left-0 h-3 w-full text-amber-500"
                   viewBox="0 0 280 12"
@@ -163,8 +163,8 @@ export const Hero = () => {
                 >
                   <path d="M2,8 Q70,2 140,7 T278,5" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
                 </svg>
-              </span>
-              .
+              </span>{' '}
+              dalam <span className="text-brand-600">30 menit</span>.
             </motion.h1>
 
             <motion.p
@@ -173,7 +173,7 @@ export const Hero = () => {
               transition={{ duration: 0.2, delay: 0.1 }}
               className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-8 text-slate-600 sm:text-lg lg:mx-0"
             >
-              Jasa convert PayPal terpercaya untuk freelancer Indonesia sejak 2020. Dijalankan oleh bot 24/7 dan admin manusia, bukan auto-bot asal jalan.
+              Jasa convert PayPal terpercaya untuk freelancer Indonesia sejak 2020. Dijalankan oleh <strong className="font-extrabold text-slate-950">bot 24/7</strong> dan <strong className="font-extrabold text-slate-950">admin manusia</strong>, bukan auto-bot asal jalan.
             </motion.p>
 
             <motion.div
@@ -192,7 +192,7 @@ export const Hero = () => {
                 <ArrowRight size={16} />
               </button>
               <a
-                href="#calculator"
+                href="#calc"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-7 py-4 text-sm font-bold text-slate-950 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-brand-200 hover:text-brand-700"
               >
                 Cek rate

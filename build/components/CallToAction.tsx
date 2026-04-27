@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Facebook } from 'lucide-react';
+import { ArrowRight, MessageCircle } from 'lucide-react';
 import { CONFIG } from '../constants';
 import { trackEvent } from '../services/analytics';
 
@@ -9,64 +9,44 @@ export const CallToAction = () => {
     };
 
     return (
-        <section className="py-16 md:py-20 relative overflow-hidden bg-gray-900">
-            {/* Background Decor */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-brand-600/20 rounded-full blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <section className="relative overflow-hidden bg-slate-950 px-4 py-20 text-slate-100 sm:px-6 md:py-24 lg:px-8">
+            <div className="pointer-events-none absolute left-1/2 top-1/2 size-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-600/30 blur-3xl" />
 
-            <div className="max-w-4xl mx-auto px-3 sm:px-4 text-center relative z-10">
-                <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-5 sm:mb-6 tracking-tight">
-                    Mulai Transaksi <span className="text-brand-400">Aman Sekarang</span>
+            <div className="relative z-10 mx-auto max-w-3xl text-center">
+                <div className="inline-flex items-center gap-2 rounded-full border border-green-400/30 bg-green-400/15 px-4 py-1.5 text-xs font-bold uppercase text-green-300">
+                    <span className="size-1.5 rounded-full bg-green-500" />
+                    Bot online · Admin standby
+                </div>
+                <h2 className="mt-5 text-balance text-5xl font-extrabold leading-none text-white md:text-6xl">
+                    Siap convert <br />
+                    <span className="text-brand-400">PayPal kamu?</span>
                 </h2>
-                <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
-                    Dipercaya 500+ freelancer dan kreator. Fee transparan, no hidden fee, proses cepat 30-60 menit!
+                <p className="mx-auto mt-5 max-w-xl text-pretty text-lg leading-8 text-slate-300">
+                    Buka chat sekarang, bot bakal langsung balas. Admin standby sampai 20:00 WIB.
                 </p>
 
-                <div className="flex flex-col items-center gap-6">
+                <div className="mt-8 flex flex-wrap justify-center gap-3">
                     <a
                         href={CONFIG.MESSENGER_URL}
                         target="_blank"
                         rel="noreferrer"
                         onClick={handleClick}
-                        className="group relative hidden md:inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-brand-700 font-bold text-xl px-12 py-5 rounded-2xl shadow-2xl shadow-brand-900/50 transition-all hover:scale-105 hover:shadow-white/10 w-full md:w-auto justify-center"
-                    >
-                        <div className="absolute inset-0 rounded-2xl ring-4 ring-white/20 group-hover:ring-white/40 transition-all"></div>
-                        <MessageCircle size={28} className="text-brand-600 group-hover:scale-110 transition-transform" />
-                        <span>Chat Admin Sekarang</span>
-                    </a>
-
-                    <a
-                        href={CONFIG.MESSENGER_URL}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={handleClick}
-                        className="md:hidden inline-flex items-center gap-2 bg-white text-brand-700 font-bold text-sm sm:text-base px-5 sm:px-6 py-3 rounded-xl shadow-lg w-full justify-center"
+                        className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-base font-extrabold text-slate-950 transition duration-200 hover:-translate-y-0.5"
                     >
                         <MessageCircle size={20} />
-                        Chat Admin Sekarang
+                        Chat di Messenger
+                        <ArrowRight size={16} />
                     </a>
 
-                    <div className="hidden md:flex items-center gap-2 text-sm text-gray-400 font-medium">
-                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                        Diproses di jam operasional {CONFIG.OPERATIONAL_HOURS}
-                    </div>
-
-                    {/* Social Follow Link */}
-                    <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-white/10 w-full max-w-sm text-center">
-                        <p className="text-gray-500 text-xs sm:text-sm mb-4">Mau update rate harian?</p>
-                        <a
-                            href={CONFIG.FACEBOOK_URL}
-                            target="_blank"
-                            rel="noreferrer"
-                            onClick={() => trackEvent('social_follow_click', { platform: 'facebook' })}
-                            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-xs sm:text-sm font-semibold group/social"
-                        >
-                            <div className="p-2 bg-gray-800 rounded-lg group-hover/social:bg-[#1877F2] transition-colors">
-                                <Facebook size={18} />
-                            </div>
-                            Follow Lapak Bang Ade di Facebook
-                        </a>
-                    </div>
+                    <a
+                        href={`https://wa.me/${CONFIG.WHATSAPP_SUPPORT}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={handleClick}
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-base font-extrabold text-white backdrop-blur transition duration-200 hover:-translate-y-0.5"
+                    >
+                        WhatsApp
+                    </a>
                 </div>
             </div>
         </section>

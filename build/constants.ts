@@ -36,10 +36,10 @@ export const RATE = {
 };
 
 export const NAV_LINKS = [
-  { name: 'Cek Rate', href: '/#calculator' },
-  { name: 'Keunggulan', href: '/#trust' },
-  { name: 'Cara Convert', href: '/#how-it-works' },
-  { name: 'Fee & Biaya', href: '/#fees' },
+  { name: 'Cek Rate', href: '/#calc' },
+  { name: 'Kenapa Kami', href: '/#kenapa' },
+  { name: 'Cara Convert', href: '/#cara' },
+  { name: 'Blog', href: '/#blog' },
   { name: 'FAQ', href: '/#faq' },
 ];
 
