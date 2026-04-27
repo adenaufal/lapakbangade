@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { CheckCircle2, TrendingUp, User } from 'lucide-react';
 
 interface ProofEvent {
@@ -27,19 +27,19 @@ export const SocialProofTicker = () => {
     const [events] = useState<ProofEvent[]>(generateProofEvents());
 
     return (
-        <div className="bg-gradient-to-r from-brand-700 to-blue-600 py-3 overflow-hidden relative border-y border-brand-500/40 shadow-[0_8px_24px_rgba(37,99,235,0.25)]">
+        <div className="relative overflow-hidden border-y border-slate-800 bg-slate-950 py-3">
             {/* Gradient overlays for fade effect */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 lg:w-32 bg-gradient-to-r from-brand-700 to-transparent z-10"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 lg:w-32 bg-gradient-to-l from-blue-600 to-transparent z-10"></div>
+            <div className="absolute bottom-0 left-0 top-0 z-10 w-16 bg-slate-950 sm:w-24 lg:w-32"></div>
+            <div className="absolute bottom-0 right-0 top-0 z-10 w-16 bg-slate-950 sm:w-24 lg:w-32"></div>
 
             <div className="flex animate-marquee gap-5 sm:gap-8 whitespace-nowrap">
                 {/* Duplicate events for seamless loop */}
                 {[...events, ...events].map((event, idx) => (
                     <div
                         key={`${event.id}-${idx}`}
-                        className="inline-flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/20 flex-shrink-0"
+                        className="inline-flex flex-shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 sm:gap-3 sm:px-4 sm:py-2"
                     >
-                        <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                        <div className="flex size-6 items-center justify-center rounded-full bg-white/20">
                             {event.type === 'convert' ? (
                                 <CheckCircle2 size={14} className="text-white" />
                             ) : (
@@ -57,23 +57,6 @@ export const SocialProofTicker = () => {
                     </div>
                 ))}
             </div>
-
-            <style>{`
-                @keyframes marquee {
-                    0% {
-                        transform: translateX(0);
-                    }
-                    100% {
-                        transform: translateX(-50%);
-                    }
-                }
-                .animate-marquee {
-                    animation: marquee 40s linear infinite;
-                }
-                .animate-marquee:hover {
-                    animation-play-state: paused;
-                }
-            `}</style>
         </div>
     );
 };

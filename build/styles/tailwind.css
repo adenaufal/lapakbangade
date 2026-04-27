@@ -11,10 +11,7 @@
 
 body {
   font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
-  background:
-    radial-gradient(circle at 12% 12%, color-mix(in srgb, var(--surface-tint) 24%, transparent) 0%, transparent 46%),
-    radial-gradient(circle at 92% 10%, color-mix(in srgb, var(--surface-tint) 20%, transparent) 0%, transparent 42%),
-    var(--surface-bg);
+  background: #fff;
   color: var(--text-base);
   min-height: 100vh;
   text-rendering: optimizeLegibility;
@@ -27,8 +24,94 @@ img {
 }
 
 @layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
   .mask-linear-fade {
-    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+
+  .font-display {
+    font-family: 'Caveat', cursive;
+  }
+
+  @keyframes lba-pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  .animate-lba-pulse {
+    animation: lba-pulse 2s infinite;
+  }
+
+  @keyframes lba-marquee {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: lba-marquee 40s linear infinite;
+  }
+
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes lba-marquee-left {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes lba-marquee-right {
+    from {
+      transform: translateX(-50%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .lba-marquee-left {
+    animation: lba-marquee-left 60s linear infinite;
+  }
+
+  .lba-marquee-right {
+    animation: lba-marquee-right 60s linear infinite;
+  }
+
+  .lba-marquee-left:hover,
+  .lba-marquee-right:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee,
+    .lba-marquee-left,
+    .lba-marquee-right,
+    .animate-lba-pulse {
+      animation: none;
+    }
   }
 }

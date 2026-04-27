@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Send, Clock, CheckCircle, MessageCircle, RefreshCw, Star } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
-import { RATE, CONFIG, TESTIMONIALS } from '../constants';
+import React, { useState, useEffect } from 'react';
+import { ArrowDownUp, ArrowRight, CheckCircle, MessageCircle, RefreshCw, Star } from 'lucide-react';
+import { motion } from 'motion/react';
+import { RATE, CONFIG } from '../constants';
 import { trackEvent, trackInitiateCheckout, trackLeadWithValue } from '../services/analytics';
 import { fetchUsdIdrRate, rateConfig } from '../services/rates';
-import { RealtimeProof } from './RealtimeProof';
 import { RateVolatilityAlert } from './RateVolatilityAlert';
+
+import { cn } from '../utils/cn';
 
 type Mode = 'convert' | 'topup';
 type TopupCondition = 'promo' | 'normal' | 'mixed';
@@ -26,12 +27,6 @@ export const Hero = () => {
     const today = new Date();
     setIsFriday(today.getDay() === 5);
   }, []);
-  const heroAvatars = useMemo(() => {
-    // Pick 4 random avatars from the central TESTIMONIALS list
-    const shuffled = [...TESTIMONIALS].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 4);
-  }, []);
-
   const rawUsd = Number(usdAmount) || 0;
 
   useEffect(() => {
@@ -99,11 +94,6 @@ export const Hero = () => {
     return `${CONFIG.MESSENGER_URL}?text=${message}`;
   };
 
-  const getWhatsAppUrl = (): string => {
-    const message = encodeURIComponent(generatePrefilledMessage());
-    return `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${message}`;
-  };
-
   const handleConvertClick = () => {
     const currentRate = mode === 'convert' ? convertRate : effectiveTopupRate;
 
@@ -136,221 +126,211 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative pt-28 pb-14 md:pt-32 md:pb-16 lg:pt-40 lg:pb-24 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] opacity-35"></div>
-      <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-brand-100/70 blur-3xl" />
-      <div className="absolute -right-24 top-28 w-80 h-80 rounded-full bg-blue-100/70 blur-3xl" />
+    <section id="calc" className="relative overflow-hidden px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+      <div className="pointer-events-none absolute -left-28 -top-28 size-96 rounded-full bg-brand-100/80" />
+      <div className="pointer-events-none absolute -right-32 top-28 size-96 rounded-full bg-amber-100/70" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-30" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Rate Volatility Alert */}
+      <div className="relative mx-auto max-w-7xl">
         <RateVolatilityAlert currentRate={convertRate} rateSource={rateSource} />
 
-        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-24">
-
-          {/* Text Content */}
-          <div className="flex-1 text-center lg:text-left z-10">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
+          <div className="text-center lg:text-left">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.2 }}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-900 shadow-sm"
             >
-              {/* Live Status Badge */}
-              <div className="flex flex-col gap-3 mb-6 mx-auto lg:mx-0 items-center lg:items-start">
-                <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 px-3 py-1.5 rounded-full">
-                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                  <span className="text-xs font-semibold text-green-700">
-                    {CONFIG.LIVE_STATUS} | {CONFIG.AVERAGE_PROCESS_TIME}
-                  </span>
-                </div>
-                <RealtimeProof />
-              </div>
-
-              <h1 className="text-[1.75rem] max-[360px]:text-[1.62rem] sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-5 md:mb-6">
-                Convert PayPal ke Rupiah, <span className="text-brand-600 bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-blue-400">Cepat & Aman</span>
-              </h1>
-
-              <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-7 md:mb-8 max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
-                Langsung cair ke bank atau e-wallet kamu. Rate update otomatis setiap jam, fee transparan, no hidden fee!
-              </p>
+              <span className="size-1.5 rounded-full bg-green-500" />
+              Bot online · admin standby
             </motion.div>
 
-            {/* Quick Points */}
-            <motion.ul
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="space-y-3 mb-8 text-gray-600 inline-block text-left"
+            <motion.h1
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, delay: 0.05 }}
+              className="mt-5 text-balance text-4xl font-extrabold leading-none text-slate-950 sm:text-5xl md:text-6xl"
             >
-              <li className="flex items-center gap-2">
-                <CheckCircle size={20} className="text-brand-600 flex-shrink-0" />
-                <span>Verifikasi manual aman anti-fraud</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircle size={20} className="text-brand-600 flex-shrink-0" />
-                <span>Support semua bank & e-wallet</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Clock size={20} className="text-brand-600 flex-shrink-0" />
-                <span>Proses cepat 30-60 menit</span>
-              </li>
-            </motion.ul>
+              Convert <span className="text-brand-600">PayPal</span> ke IDR, <br className="hidden sm:block" />
+              <span className="relative inline-block">
+                cepat &amp; aman
+                <svg
+                  className="absolute -bottom-2 left-0 h-3 w-full text-amber-500"
+                  viewBox="0 0 280 12"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <path d="M2,8 Q70,2 140,7 T278,5" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
+                </svg>
+              </span>{' '}
+              dalam <span className="text-brand-600">30 menit</span>.
+            </motion.h1>
 
-            {/* Social Proof Avatars */}
-            <div className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-7 md:mb-8">
-              <div className="flex -space-x-3">
-                {heroAvatars.map((avatar, idx) => (
-                  <img
-                    key={avatar.avatar + idx}
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white shadow-sm"
-                    src={avatar.avatar}
-                    alt={avatar.name}
-                    width="48"
-                    height="48"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ))}
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 shadow-sm">
-                  99+
-                </div>
-              </div>
-              <div className="text-left">
-                <div className="flex items-center gap-1">
-                  <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                  <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                  <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                  <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                  <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                </div>
-                <p className="text-xs text-gray-600 font-medium">Dipercaya <span className="text-gray-900 font-bold">500+ Freelancer</span></p>
-              </div>
-            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
+              className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-8 text-slate-600 sm:text-lg lg:mx-0"
+            >
+              Jasa convert PayPal terpercaya untuk freelancer Indonesia sejak 2020. Dijalankan oleh <strong className="font-extrabold text-slate-950">bot 24/7</strong> dan <strong className="font-extrabold text-slate-950">admin manusia</strong>, bukan auto-bot asal jalan.
+            </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="flex flex-col items-center lg:items-start gap-3 md:gap-4 mb-8"
+              transition={{ duration: 0.2, delay: 0.15 }}
+              className="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start"
             >
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <button
+                type="button"
                 onClick={handleConvertClick}
-                className="w-full sm:w-auto px-6 sm:px-7 md:px-8 py-3.5 md:py-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white font-bold text-sm sm:text-base md:text-lg rounded-xl shadow-lg shadow-brand-500/30 transition-all flex items-center justify-center gap-2 ring-4 ring-brand-500/10"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-7 py-4 text-sm font-black text-white shadow-lg shadow-brand-600/25 transition duration-200 hover:-translate-y-0.5 hover:bg-brand-700"
               >
-                <MessageCircle size={22} />
-                Chat via Messenger
-              </motion.button>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 font-medium bg-white/50 backdrop-blur-sm px-4 py-1.5 rounded-full border border-gray-200">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                Jam operasional {CONFIG.OPERATIONAL_HOURS}
+                <MessageCircle size={18} />
+                Chat Bang Ade
+                <ArrowRight size={16} />
+              </button>
+              <a
+                href="#calc"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-7 py-4 text-sm font-bold text-slate-950 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-brand-200 hover:text-brand-700"
+              >
+                Cek rate
+                <ArrowRight size={16} />
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, delay: 0.2 }}
+              className="mt-8 flex flex-col items-center gap-4 sm:flex-row lg:items-center lg:justify-start"
+            >
+              <div className="flex -space-x-2">
+                {['SD', 'BR', 'LK', 'YP'].map((initial, index) => (
+                  <span
+                    key={initial}
+                    className={cn(
+                      'grid size-9 place-items-center rounded-full border-2 border-white text-xs font-black text-slate-950',
+                      ['bg-blue-100', 'bg-amber-100', 'bg-pink-100', 'bg-green-100'][index],
+                    )}
+                  >
+                    {initial}
+                  </span>
+                ))}
+              </div>
+              <div>
+                <div className="flex justify-center gap-0.5 sm:justify-start">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star key={star} size={15} className="fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <p className="mt-1 text-pretty text-sm text-slate-600">
+                  <strong className="font-black text-slate-950">500+</strong> freelancer · <strong className="font-black text-slate-950">99.8%</strong> berhasil
+                </p>
               </div>
             </motion.div>
           </div>
 
-          {/* Calculator Card */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 100 }}
-            className="flex-1 w-full max-w-md z-10"
-            id="calculator"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2, delay: 0.1 }}
+            className="mx-auto w-full max-w-xl"
           >
-            <div className="bg-white/85 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/70 overflow-hidden ring-1 ring-slate-900/5 transform transition-all hover:shadow-[0_20px_50px_rgba(15,23,42,0.14)]">
-              <div className="bg-gray-900 p-4 text-white text-center">
-                <div className="font-bold text-lg">
-                  1 USD = Rp {(mode === 'convert' ? convertRate : effectiveTopupRate).toLocaleString('id-ID')}
-                </div>
-                <div className="text-xs text-gray-400 mt-1 flex items-center justify-center gap-1">
-                  <RefreshCw size={12} className={isLoadingRate ? 'animate-spin' : ''} />
-                  {isLoadingRate ? 'Memuat rate...' : `Sumber: ${rateSource === 'api' ? 'API' : 'Fallback'}`}
+            <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-2xl shadow-slate-900/10 sm:p-7">
+              <div className="mb-5 flex rounded-2xl bg-slate-100 p-1">
+                {[
+                  { key: 'convert' as Mode, label: 'Convert PayPal → IDR' },
+                  { key: 'topup' as Mode, label: 'Top-up USD' },
+                ].map((option) => (
+                  <button
+                    key={option.key}
+                    type="button"
+                    onClick={() => setMode(option.key)}
+                    className={cn(
+                      'flex-1 rounded-xl px-3 py-2.5 text-xs font-black transition duration-200 sm:text-sm',
+                      mode === option.key ? 'bg-white text-slate-950 shadow-sm' : 'text-slate-500 hover:text-slate-900',
+                    )}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="space-y-3">
+                <label htmlFor="hero-usd-amount" className="block text-xs font-black uppercase text-slate-500">
+                  {mode === 'convert' ? 'Kamu transfer' : 'PayPal kamu terisi'}
+                </label>
+                <div className="flex items-center gap-3 rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-4">
+                  <span className="font-mono text-sm font-bold text-slate-500 tabular-nums">USD</span>
+                  <input
+                    id="hero-usd-amount"
+                    type="number"
+                    min="1"
+                    value={usdAmount}
+                    onChange={handleInputChange}
+                    className="min-w-0 flex-1 bg-transparent font-mono text-3xl font-bold text-slate-950 outline-none tabular-nums"
+                  />
+                  <span className="text-xs font-bold text-slate-400">PayPal</span>
                 </div>
               </div>
 
-              <div className="p-5 sm:p-6 md:p-8 space-y-5 md:space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <button
-                    className={`w-full px-4 py-3 rounded-lg border text-sm font-semibold transition ${mode === 'convert' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
-                    onClick={() => setMode('convert')}
-                  >
-                    Convert USD ke IDR
-                  </button>
-                  <button
-                    className={`w-full px-4 py-3 rounded-lg border text-sm font-semibold transition ${mode === 'topup' ? 'bg-brand-50 border-brand-200 text-brand-700' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-200'}`}
-                    onClick={() => setMode('topup')}
-                  >
-                    Top-up USD
-                  </button>
-                </div>
+              <div className="-my-1 flex justify-center">
+                <span className="grid size-10 place-items-center rounded-full bg-brand-600 text-white shadow-lg shadow-brand-600/30">
+                  <ArrowDownUp size={18} />
+                </span>
+              </div>
 
+              <div className="space-y-3">
+                <p className="text-xs font-black uppercase text-slate-500">
+                  {mode === 'convert' ? 'Kamu terima' : 'Total bayar'}
+                </p>
+                <div className="flex items-center gap-3 rounded-2xl border-2 border-brand-600 bg-brand-50 px-4 py-4">
+                  <span className="font-mono text-sm font-bold text-brand-700 tabular-nums">IDR</span>
+                  <span className="min-w-0 flex-1 truncate font-mono text-2xl font-bold text-brand-700 tabular-nums sm:text-3xl">
+                    {mode === 'convert' ? formatIDR(idrReceived) : formatIDR(topupIdrTotal)}
+                  </span>
+                  <span className="text-xs font-black text-brand-700">→ BCA</span>
+                </div>
+              </div>
+
+              <div className="mt-4 grid gap-2 text-xs text-slate-500 sm:grid-cols-3">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2" htmlFor="usd-amount">Nominal (USD)</label>
-                  <div className="relative group">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">$</span>
-                    <input
-                      type="number"
-                      value={usdAmount}
-                      onChange={handleInputChange}
-                      id="usd-amount"
-                      className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none text-xl font-bold text-gray-900 transition-all"
-                      placeholder="50"
-                      min={RATE.MIN_TRANSACTION}
-                    />
-                  </div>
-                  <p className="text-xs text-gray-600 mt-1">Min ${RATE.MIN_TRANSACTION}, maks ${RATE.MAX_TRANSACTION} per hari.</p>
+                  <span className="sr-only">
+                    1 USD = Rp {(mode === 'convert' ? convertRate : effectiveTopupRate).toLocaleString('id-ID')}
+                  </span>
+                  1 USD ={' '}
+                  <strong className="font-mono font-black text-slate-800 tabular-nums">
+                    Rp {(mode === 'convert' ? convertRate : effectiveTopupRate).toLocaleString('id-ID')}
+                  </strong>
                 </div>
+                <div>
+                  Fee: <strong className="font-mono font-black text-slate-800 tabular-nums">${fee.toFixed(2)}</strong>
+                  {isPromoApplied && <span className="ml-1 font-bold text-green-600">Promo</span>}
+                </div>
+                <div className="flex items-center gap-1 sm:justify-end">
+                  <RefreshCw size={12} className={isLoadingRate ? 'animate-spin' : ''} />
+                  <span>{isLoadingRate ? 'Memuat rate...' : `Sumber: ${rateSource === 'api' ? 'API' : 'Fallback'}`}</span>
+                </div>
+              </div>
 
-                {mode === 'convert' ? (
-                  <div className="flex flex-col gap-4 min-h-[132px] md:min-h-[160px]">
-                    <div className="bg-blue-50/50 p-4 rounded-lg space-y-2 border border-dashed border-blue-100">
-                      <div className="flex justify-between text-sm text-gray-600">
-                        <span>Estimasi Fee</span>
-                        <span className="font-medium">-${fee.toFixed(2)}</span>
-                      </div>
-                      {isPromoApplied && (
-                        <div className="flex justify-between text-xs text-green-600 font-bold">
-                          <span>Promo Jumat (50% Off Fee)</span>
-                          <span>Applied!</span>
-                        </div>
-                      )}
-                    </div>
+              <button
+                type="button"
+                onClick={handleConvertClick}
+                className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-4 text-sm font-black text-white shadow-lg shadow-brand-600/30 transition duration-200 hover:-translate-y-0.5 hover:bg-brand-700 sm:text-base"
+              >
+                <MessageCircle size={18} />
+                <span>{mode === 'convert' ? 'Lanjut Convert ke Rupiah' : 'Lanjut Top-up USD'}</span>
+                <ArrowRight size={18} />
+              </button>
 
-                    <div className="flex-1">
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Kamu Terima (IDR)</label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          readOnly
-                          aria-label="Jumlah Rupiah yang kamu terima"
-                          value={formatIDR(idrReceived)}
-                          className="w-full pl-4 pr-4 py-3 bg-brand-50 border border-brand-200 rounded-lg text-xl md:text-2xl font-bold text-brand-700"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-4 min-h-[132px] md:min-h-[160px]">
-                    <div className="rounded-lg border border-blue-100 bg-blue-50/50 p-4 space-y-1.5">
-                      <div className="text-sm text-gray-700 font-semibold">Top-up rate (saldo tersedia)</div>
-                      <p className="text-xs text-gray-600">Jika saldo admin kosong, rate normal akan dikonfirmasi dulu.</p>
-                      <div className="flex justify-between text-sm text-gray-600 pt-1 border-t border-blue-100">
-                        <span>IDR yang harus dibayar</span>
-                        <span className="font-bold text-gray-900">{formatIDR(topupIdrTotal)}</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleConvertClick}
-                  className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-lg transition-colors flex items-center justify-center gap-2 relative overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
-                  <span>{mode === 'convert' ? 'Lanjut Convert ke Rupiah' : 'Lanjut Top-up USD'}</span>
-                  <Send size={18} />
-                </motion.button>
+              <div className="mt-4 rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-bold text-slate-500">
+                  <span className="flex items-center gap-2"><CheckCircle size={15} className="text-brand-600" />Verifikasi manual aman</span>
+                  <span>30–60 menit</span>
+                  <span>Semua bank & e-wallet</span>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -358,4 +338,5 @@ export const Hero = () => {
       </div>
     </section>
   );
+
 };

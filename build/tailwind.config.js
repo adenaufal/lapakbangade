@@ -26,6 +26,8 @@ export default {
       },
       fontFamily: {
         sans: ['Nunito', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+        display: ['Caveat', 'cursive'],
       },
     },
   },

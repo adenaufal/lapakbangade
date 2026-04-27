@@ -8,11 +8,11 @@ export const FloatingChatButton = () => {
             href={CONFIG.MESSENGER_URL}
             target="_blank"
             rel="noreferrer"
-            className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-brand-600 text-white rounded-full shadow-lg hover:bg-brand-700 hover:scale-110 transition-all duration-300 group"
+            className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-[calc(1.5rem+env(safe-area-inset-right))] z-50 flex size-14 items-center justify-center rounded-full bg-brand-600 text-white shadow-lg transition duration-200 hover:-translate-y-0.5 hover:bg-brand-700 group"
             aria-label="Chat with Admin"
         >
-            <MessageCircle size={28} className="group-hover:animate-pulse" />
-            <span className="absolute right-full mr-4 px-3 py-1 bg-gray-900 text-white text-sm font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            <MessageCircle size={28} />
+            <span className="pointer-events-none absolute right-full mr-4 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-1 text-sm font-bold text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                 Hubungi Admin
             </span>
         </a>

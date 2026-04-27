@@ -1,6 +1,7 @@
 import React from 'react';
-import { MessageCircle, Send, Upload, CreditCard } from 'lucide-react';
+import { CreditCard, MessageCircle, Send, Upload } from 'lucide-react';
 import { motion } from 'motion/react';
+import { cn } from '../utils/cn';
 
 export const HowItWorks = () => {
   const steps = [
@@ -8,103 +9,83 @@ export const HowItWorks = () => {
       title: '1. Chat Bot di Messenger',
       description: 'Klik tombol chat. Bot otomatis akan tanya nama, email PayPal, bank/e-wallet, dan nominal convert.',
       icon: MessageCircle,
-      color: 'bg-blue-500',
+      color: 'bg-brand-50 text-brand-600',
     },
     {
       title: '2. Pilih Nominal Convert',
       description: 'Input nominal yang mau diconvert. Bot akan hitung fee otomatis dan tampilkan total yang kamu terima.',
       icon: Send,
-      color: 'bg-indigo-500',
+      color: 'bg-brand-50 text-brand-600',
     },
     {
       title: '3. Transfer & Upload Bukti',
       description: 'Transfer ke weiss.schrodinger@gmail.com (Ade Naufal Ammar) pakai Friends & Family, lalu kirim screenshot bukti.',
       icon: Upload,
-      color: 'bg-purple-500',
+      color: 'bg-brand-50 text-brand-600',
     },
     {
       title: '4. Tunggu 30-60 Menit',
       description: 'Admin akan cek mutasi manual. Setelah valid, langsung transfer IDR ke rekening/e-wallet kamu. Selesai!',
       icon: CreditCard,
-      color: 'bg-emerald-500',
+      color: 'bg-brand-50 text-brand-600',
     }
   ];
 
   return (
-    <section id="how-it-works" className="py-16 md:py-20 relative overflow-hidden bg-slate-50/80">
-      {/* Background Decor */}
-      <div className="absolute inset-0 bg-[radial-gradient(#cbd5e11a_1px,transparent_1px)] [background-size:24px_24px] opacity-50"></div>
+    <section id="how-it-works" className="relative overflow-hidden bg-slate-50 px-4 py-20 sm:px-6 md:py-24 lg:px-8">
+      <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-30"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="mx-auto mb-14 max-w-3xl text-center">
+          <p className="mb-3 text-xs font-black uppercase text-brand-600">
+            Cara Convert
+          </p>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4"
+            transition={{ duration: 0.2 }}
+            className="text-balance text-3xl font-black leading-tight text-slate-950 md:text-5xl"
           >
-            Cara kerjanya <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-500">simpel banget</span>
+            4 langkah, <span className="text-brand-600">nggak ada yang bikin pusing.</span>
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-lg text-gray-600 max-w-2xl mx-auto"
+            transition={{ duration: 0.2, delay: 0.05 }}
+            className="mx-auto mt-4 max-w-2xl text-pretty text-lg leading-8 text-slate-600"
           >
-            Gabungan sistem otomatis & pengecekan manual yang aman.
+            Sebagian besar transaksi selesai dalam satu chat. Pertama kali pakai? Bot bakal nuntun step-by-step, lalu admin verifikasi manual.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {steps.map((step, index) => {
             const Icon = step.icon;
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative group"
+                transition={{ duration: 0.2, delay: index * 0.04 }}
+                className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-lg"
               >
-                <div className="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 transition-all duration-300 h-full z-10 relative group-hover:-translate-y-1">
-
-                  {/* Step Number Badge */}
-                  <div className={`w-14 h-14 rounded-2xl ${step.color} text-white flex items-center justify-center mb-6 text-xl font-bold shadow-lg shadow-gray-200 group-hover:scale-110 transition-transform duration-300`}>
-                    <Icon size={24} />
+                <div className="flex gap-5">
+                  <div className={cn('grid size-14 shrink-0 place-items-center rounded-2xl', step.color)}>
+                    <Icon size={24} aria-hidden="true" />
                   </div>
-
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-brand-600 transition-colors">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {step.description}
-                  </p>
+                  <div>
+                    <p className="font-mono text-xs font-bold text-slate-400 tabular-nums">STEP {String(index + 1).padStart(2, '0')}</p>
+                    <h3 className="mt-1 text-lg font-black text-slate-950">{step.title}</h3>
+                    <p className="mt-2 text-pretty text-sm leading-6 text-slate-600">{step.description}</p>
+                  </div>
                 </div>
-
-                {/* Connector Line for Desktop */}
-                {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-16 left-1/2 w-full h-0.5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 -z-0 opacity-50"></div>
-                )}
               </motion.div>
             );
           })}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-16 text-center"
-        >
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-50 to-emerald-50 text-emerald-700 rounded-full text-sm font-semibold border border-green-100 shadow-sm">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-            Transaksi aman, hati tenang!
-          </div>
-        </motion.div>
       </div>
     </section>
   );

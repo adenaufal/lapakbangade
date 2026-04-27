@@ -1,64 +1,47 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CONFIG } from '../constants';
-import { MessageCircle } from 'lucide-react';
-import { ProgrammaticLinks } from './ProgrammaticLinks';
 
 export const Footer = () => {
+  const columns = [
+    { title: 'Layanan', items: ['Convert PayPal → IDR', 'Top-up PayPal', 'Convert Stripe', 'Convert Wise', 'Bisnis & Bulk'] },
+    { title: 'Resources', items: ['Blog', 'Cara Convert', 'Tips Freelancer', 'Update Rate', 'Pajak'] },
+    { title: 'Kontak', items: ['Messenger', 'WhatsApp', 'Discord', 'Email', '08:00–20:00 WIB'] },
+    { title: 'Hukum', items: ['Privacy Policy', 'Terms of Service', 'Refund Policy', 'Sitemap'] },
+  ];
+
   return (
-    <footer className="bg-white border-t border-gray-200 py-10 md:py-12">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        {/* Programmatic SEO Links Section */}
-        <div className="mb-8 md:mb-12 pb-8 md:pb-12 border-b border-gray-200">
-          <ProgrammaticLinks variant="compact" />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 mb-8">
-          <div className="col-span-1 md:col-span-2 pr-0 md:pr-8">
-            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">{CONFIG.APP_NAME}</h3>
-            <p className="text-gray-700 text-sm leading-relaxed mb-6">
-              Jasa convert PayPal ke Rupiah yang mengutamakan keamanan dan kepercayaan.
-              Diproses manual, rate transparan, dan tanpa biaya tersembunyi.
-            </p>
-            <div className="flex items-center gap-2 text-sm font-semibold text-brand-600">
-              <span className="w-2 h-2 rounded-full bg-green-500"></span>
-              Operasional: {CONFIG.OPERATIONAL_HOURS}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-gray-900 mb-4">Menu</h4>
-            <ul className="space-y-2 text-sm text-gray-600">
-              <li><Link to="/#calculator" className="hover:text-brand-600 transition">Hitung Rate</Link></li>
-              <li><Link to="/#how-it-works" className="hover:text-brand-600 transition">Cara Convert</Link></li>
-              <li><Link to="/#testimonials" className="hover:text-brand-600 transition">Testimoni</Link></li>
-              <li><Link to="/#faq" className="hover:text-brand-600 transition">FAQ</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-gray-900 mb-4">Legal & Kontak</h4>
-            <ul className="space-y-2 text-sm text-gray-600 mb-6">
-              <li><Link to="/privacy" className="hover:text-brand-600 transition">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="hover:text-brand-600 transition">Terms of Service</Link></li>
-            </ul>
-            <a
-              href={CONFIG.MESSENGER_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 text-gray-600 hover:text-brand-600 transition-colors mb-2"
-            >
-              <MessageCircle size={18} /> Messenger
-            </a>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-100 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-4 text-xs text-gray-400">
-          <p className="text-gray-700">&copy; {new Date().getFullYear()} {CONFIG.APP_NAME}. All rights reserved.</p>
-          <p className="text-gray-700">
-            Disclaimer: Kami bukan bagian dari PayPal Inc.
+    <footer className="border-t border-white/5 bg-[#0a0f1c] px-4 py-12 text-slate-400 sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-9 lg:grid-cols-[1.6fr_repeat(4,1fr)]">
+        <div>
+          <Link to="/" className="flex items-center gap-3">
+            <span className="grid size-9 place-items-center rounded-xl bg-brand-600 font-extrabold text-white">L</span>
+            <span className="text-lg font-extrabold text-white">{CONFIG.APP_NAME}</span>
+          </Link>
+          <p className="mt-4 max-w-xs text-sm leading-6">
+            Jasa convert PayPal ke Rupiah terpercaya untuk freelancer Indonesia. Dijalankan oleh bot &amp; admin manusia sejak 2020.
           </p>
         </div>
+
+        {columns.map((column) => (
+          <div key={column.title}>
+            <h3 className="text-xs font-bold uppercase text-white">{column.title}</h3>
+            <ul className="mt-4 space-y-2">
+              {column.items.map((item) => (
+                <li key={item}>
+                  <a href={item === 'Privacy Policy' ? '/privacy' : item === 'Terms of Service' ? '/terms' : '#'} className="text-sm transition hover:text-white">
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <div className="mx-auto mt-10 flex max-w-7xl flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 text-xs text-slate-500">
+        <div>© {new Date().getFullYear()} {CONFIG.APP_NAME} · PT XYZ Digital Indonesia</div>
+        <div>Made with ☕ in Indonesia</div>
       </div>
     </footer>
   );

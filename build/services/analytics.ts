@@ -28,9 +28,9 @@ export const initAnalytics = () => {
 
   const runOnIdle = (cb: () => void, timeout = 1500) => {
     if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(cb, { timeout });
+      (window as Window & { requestIdleCallback: (callback: () => void, options?: { timeout: number }) => void }).requestIdleCallback(cb, { timeout });
     } else {
-      window.setTimeout(cb, timeout);
+      globalThis.setTimeout(cb, timeout);
     }
   };
 

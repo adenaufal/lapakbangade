@@ -4,6 +4,8 @@ import { motion } from 'motion/react';
 import { FAQS } from '../constants';
 import { trackEvent } from '../services/analytics';
 
+import { cn } from '../utils/cn';
+
 // Local FAQ override to include specific Chatbot Q&A
 const CUSTOM_FAQS = [
   ...FAQS,
@@ -24,44 +26,56 @@ export const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="py-16 md:py-20 bg-white border-t border-slate-200/70">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
-            Pertanyaan <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-500">Umum</span>
+    <section id="faq" className="bg-slate-50 py-20 md:py-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <p className="mb-3 text-xs font-black uppercase text-brand-600">
+            FAQ
+          </p>
+          <h2 className="text-balance text-3xl font-black leading-tight text-slate-950 md:text-5xl">
+            Pertanyaan yang <span className="text-brand-600">sering ditanya.</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="mx-auto mt-4 max-w-2xl text-pretty text-lg leading-8 text-slate-600">
             Jawaban simpel buat kamu yang baru pertama kali convert.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="rounded-3xl border border-slate-200 bg-white px-5 py-2 shadow-sm md:px-8">
           {CUSTOM_FAQS.map((faq, index) => (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
+              transition={{ duration: 0.2, delay: index * 0.02 }}
               key={index}
-              className={`bg-white rounded-2xl border transition-all duration-300 ${openIndex === index ? 'shadow-md border-brand-200 ring-4 ring-brand-50' : 'shadow-sm border-transparent hover:border-gray-200'}`}
+              className="border-b border-slate-200 last:border-b-0"
             >
               <button
-                className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
+                className="w-full py-5 flex items-center justify-between gap-4 text-left focus:outline-none"
                 onClick={() => toggleFAQ(index)}
                 aria-expanded={openIndex === index}
               >
-                <span className={`font-bold text-base md:text-lg transition-colors ${openIndex === index ? 'text-brand-700' : 'text-gray-900'}`}>
+                <span className={cn(
+                  'font-black text-base md:text-lg transition-colors',
+                  openIndex === index ? 'text-brand-700' : 'text-slate-950',
+                )}>
                   {faq.question}
                 </span>
-                <span className={`ml-4 p-1 rounded-full transition-colors ${openIndex === index ? 'bg-brand-100 text-brand-600' : 'bg-gray-100 text-gray-400'}`}>
+                <span className={cn(
+                  'grid size-8 place-items-center rounded-full transition-colors',
+                  openIndex === index ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-500',
+                )}>
                   {openIndex === index ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </span>
               </button>
 
               <div
-                className={`transition-all duration-300 ease-in-out overflow-hidden ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+                className={cn(
+                  'overflow-hidden transition-all duration-200 ease-out',
+                  openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0',
+                )}
               >
-                <div className="px-6 pb-6 text-gray-600 leading-relaxed">
+                <div className="pb-6 pr-10 text-pretty leading-7 text-slate-600">
                   {faq.answer}
                 </div>
               </div>
